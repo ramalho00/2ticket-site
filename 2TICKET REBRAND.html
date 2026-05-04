@@ -1,0 +1,3675 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2TICKET — Software de Gestão de Bilhética</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #1874EF;
+    --blue-dark: #0057CC;
+    --blue-light: rgba(24,116,239,0.15);
+    --blue-mid: #6AABFF;
+    --ink: #08112A;
+    --ink-2: #0D1A3A;
+    --ink-3: #111F45;
+    --muted: #8899BB;
+    --surface: #0D1A3A;
+    --white: #ffffff;
+    --border: rgba(24,116,239,0.18);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #08112A;
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 72px;
+    background: none;
+    border-bottom: none;
+    transition: background 0.45s ease, box-shadow 0.45s ease;
+  }
+
+  nav.scrolled {
+    background: rgba(8,17,42,0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 4px 32px rgba(0,0,0,0.3);
+  }
+
+  .logo {
+    display: flex; align-items: center;
+    text-decoration: none;
+    height: 36px;
+  }
+
+  .logo svg {
+    height: 32px;
+    width: auto;
+  }
+
+  /* Logo branco no hero, preto ao fazer scroll */
+  .nav-logo-poly { fill: white; transition: fill 0.45s ease; }
+  nav.scrolled .nav-logo-poly { fill: white; }
+
+  nav ul {
+    list-style: none;
+    display: flex; align-items: center; gap: 36px;
+  }
+
+  nav ul a {
+    font-size: 14px; font-weight: 400;
+    color: rgba(255,255,255,0.85); text-decoration: none;
+    transition: color 0.2s;
+    letter-spacing: 0.01em;
+  }
+  nav ul a:hover { color: white; }
+
+  nav.scrolled ul a { color: rgba(255,255,255,0.65); }
+  nav.scrolled ul a:hover { color: white; }
+
+  .btn-nav {
+    background: #0B1830;
+    color: white !important;
+    font-size: 14px; font-weight: 500;
+    padding: 10px 22px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .btn-nav:hover { background: var(--blue-dark) !important; transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+    background: #08112A;
+    text-align: center;
+  }
+
+  /* Vídeo de fundo */
+  .hero-video-bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-video-bg iframe {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 56.25vw; /* 16:9 */
+    min-height: 100vh;
+    min-width: 177.78vh; /* 16:9 */
+    border: none;
+  }
+
+  /* Overlay escuro por cima do vídeo */
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(5,10,30,0.55) 0%,
+      rgba(5,10,30,0.45) 50%,
+      rgba(5,10,30,0.75) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: 800;
+    line-height: 1.04;
+    color: white;
+    letter-spacing: -3px;
+    margin-bottom: 0;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--blue-mid);
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(24,116,239,0.15);
+    border: 1px solid rgba(24,116,239,0.35);
+    color: #7EB3FF;
+    font-size: 13px; font-weight: 500;
+    padding: 6px 14px; border-radius: 50px;
+    margin-bottom: 32px;
+    letter-spacing: 0.03em;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: white;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+
+
+  .btn-primary {
+    background: #0B1830;
+    color: white;
+    font-size: 15px; font-weight: 500;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: #1a6aff; transform: translateY(-2px); }
+
+  .btn-ghost {
+    color: rgba(255,255,255,0.7);
+    font-size: 15px; font-weight: 400;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: white; }
+
+  .arrow-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    font-size: 11px;
+  }
+
+  /* ─── FEATURES BAR ─── */
+  .features-bar {
+    background: #0B1830;
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: center;
+    gap: 0;
+  }
+
+  .feature-pill {
+    display: flex; align-items: center; gap: 12px;
+    padding: 24px 40px;
+    cursor: default;
+    transition: background 0.2s;
+  }
+  .feature-pill:hover { background: rgba(24,116,239,0.1); }
+
+  .feature-pill-icon {
+    width: 38px; height: 38px; min-width: 38px;
+    border-radius: 10px;
+    background: var(--blue-light);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--blue);
+    transition: background 0.2s, color 0.2s;
+  }
+  .feature-pill:hover .feature-pill-icon {
+    background: #0B1830;
+    color: white;
+  }
+  .feature-pill-icon svg { width: 18px; height: 18px; }
+
+  .feature-pill span {
+    font-size: 14px; font-weight: 500;
+    color: var(--blue-mid);
+    white-space: nowrap;
+  }
+
+  .feature-pill-divider {
+    width: 1px; height: 32px;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+
+  /* ─── SECTION ─── */
+  section {
+    padding: 100px 5%;
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: rgba(24,116,239,0.18);
+    color: #6AABFF;
+    font-size: 12px; font-weight: 500;
+    padding: 5px 12px; border-radius: 50px;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .section-title em {
+    font-style: normal;
+    color: var(--blue);
+  }
+
+  .section-sub {
+    font-size: 16px; color: rgba(255,255,255,0.45); font-weight: 300;
+    line-height: 1.7; max-width: 540px;
+  }
+
+  /* ─── AREAS ─── */
+  .areas-section {
+    background: #0B1830;
+    padding: 100px 0 0;
+    overflow: hidden;
+  }
+
+  .areas-header {
+    padding: 0 5%;
+    margin-bottom: 56px;
+  }
+
+  .areas-section .section-tag {
+    background: rgba(0,87,255,0.2);
+    color: #7EB3FF;
+  }
+  .areas-section .section-title { color: white; }
+
+  /* ── Strip layout ── */
+  .areas-layout {
+    display: flex;
+    height: 600px;
+    cursor: pointer;
+  }
+
+  .area-strip {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    transition: flex 0.65s cubic-bezier(0.77,0,0.18,1);
+  }
+
+  .area-strip.active { flex: 4.5; }
+
+  /* background image */
+  .area-strip-img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform: scale(1.08);
+    transition: transform 0.65s cubic-bezier(0.77,0,0.18,1);
+    filter: brightness(0.55);
+  }
+  .area-strip.active .area-strip-img {
+    transform: scale(1);
+    filter: brightness(0.45);
+  }
+
+  /* dark gradient */
+  .area-strip-grad {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 55%);
+    z-index: 1;
+  }
+
+  /* vertical label (inactive) */
+  .area-strip-label-v {
+    position: absolute;
+    bottom: 32px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+  }
+  .area-strip.active .area-strip-label-v { opacity: 0; pointer-events: none; }
+
+  .area-strip-label-v-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.15em;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+  }
+
+  .area-strip-label-v-line {
+    width: 1px; height: 32px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  .area-strip-label-v-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700;
+    color: rgba(255,255,255,0.6);
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    letter-spacing: 0.05em;
+  }
+
+  /* horizontal content (active) */
+  .area-strip-content {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 0 44px 44px;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s;
+    pointer-events: none;
+  }
+  .area-strip.active .area-strip-content {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .area-strip-icon {
+    font-size: 40px;
+    margin-bottom: 16px;
+    display: block;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+  }
+
+  .area-strip-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800;
+    color: white;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .area-strip-desc {
+    font-size: 15px; color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    margin-bottom: 28px;
+    max-width: 320px;
+  }
+
+  /* progress bar */
+  .area-strip-progress {
+    width: 100%;
+    height: 2px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    max-width: 320px;
+  }
+
+  .area-strip-progress-fill {
+    height: 100%;
+    background: #0B1830;
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.05s linear;
+  }
+
+  /* counter top-right */
+  .area-strip-counter {
+    position: absolute;
+    top: 28px; right: 28px;
+    z-index: 3;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 700;
+    color: rgba(255,255,255,0.4);
+    opacity: 0;
+    transition: opacity 0.3s ease 0.2s;
+    letter-spacing: 0.1em;
+  }
+  .area-strip.active .area-strip-counter { opacity: 1; }
+
+  /* ─── FEATURES ─── */
+  .features-section {
+    background: var(--surface);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .features-inner {
+    display: grid;
+    grid-template-columns: 420px 1fr;
+    min-height: 680px;
+  }
+
+  /* ── Left panel: feature list ── */
+  .features-nav {
+    background: #08112A;
+    padding: 72px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .features-nav-header {
+    margin-bottom: 48px;
+  }
+
+  .features-nav-header .section-tag {
+    background: rgba(0,87,255,0.2);
+    color: #7EB3FF;
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+
+  .features-nav-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px; font-weight: 800;
+    color: white;
+    letter-spacing: -1px;
+    line-height: 1.15;
+  }
+
+  .features-nav-title em { font-style: normal; color: var(--blue-mid); }
+
+  .feat-tab {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    cursor: pointer;
+    position: relative;
+    transition: opacity 0.2s;
+  }
+
+  .feat-tab:last-child { border-bottom: none; }
+  .feat-tab:not(.active) { opacity: 0.4; }
+  .feat-tab:not(.active):hover { opacity: 0.7; }
+
+  .feat-tab-line {
+    position: absolute;
+    left: -48px; top: 0; bottom: 0;
+    width: 3px;
+    background: #0B1830;
+    border-radius: 0 2px 2px 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s cubic-bezier(0.77,0,0.18,1);
+  }
+  .feat-tab.active .feat-tab-line { transform: scaleY(1); }
+
+  .feat-tab-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: var(--blue);
+    min-width: 20px;
+    margin-top: 3px;
+    letter-spacing: 0.1em;
+  }
+
+
+  .feat-tab-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+  }
+
+  .feat-tab-desc {
+    font-size: 13px; color: rgba(255,255,255,0.45);
+    font-weight: 300; line-height: 1.5;
+  }
+
+  .feat-tab-pills {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
+  }
+
+  .feat-tab-pill {
+    font-size: 11px; font-weight: 500;
+    background: rgba(24,116,239,0.15);
+    color: #7EB3FF;
+    border: 1px solid rgba(24,116,239,0.25);
+    padding: 3px 10px; border-radius: 50px;
+  }
+
+  /* ── Right panel: visual ── */
+  .features-panel {
+    position: relative;
+    background: var(--ink-3);
+    overflow: hidden;
+  }
+
+  .feat-panel {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 64px;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1);
+    pointer-events: none;
+  }
+
+  .feat-panel.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .feat-panel-card {
+    width: 100%; max-width: 480px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+  }
+
+  .feat-panel-topbar {
+    background: #08112A;
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .feat-panel-dot { width:10px;height:10px;border-radius:50%; }
+  .feat-panel-topbar-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6);
+    margin-left: 6px;
+  }
+  .feat-panel-topbar-badge {
+    margin-left: auto;
+    font-size: 10px; font-weight: 600; color: white;
+    background: #0B1830; padding: 2px 10px; border-radius: 50px;
+  }
+
+  .feat-panel-body { padding: 24px; }
+
+  /* stat row */
+  .fp-stat-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; margin-bottom: 20px;
+  }
+  .fp-stat {
+    background: rgba(255,255,255,0.02); border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 16px;
+  }
+  .fp-stat-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px; font-weight: 800;
+    color: white; line-height: 1;
+  }
+  .fp-stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  /* bar chart */
+  .fp-bar-row {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+  }
+  .fp-bar-label { font-size: 12px; color: var(--muted); min-width: 42px; }
+  .fp-bar-track {
+    flex: 1; height: 8px;
+    background: rgba(24,116,239,0.15); border-radius: 4px; overflow: hidden;
+  }
+  .fp-bar-fill {
+    height: 100%; background: var(--blue); border-radius: 4px;
+    width: 0%;
+    transition: width 1.2s cubic-bezier(0.22,1,0.36,1);
+  }
+  .fp-bar-pct { font-size: 12px; font-weight: 600; color: var(--blue); min-width: 32px; text-align: right; }
+
+  /* list rows */
+  .fp-row {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.02); border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 12px 14px; margin-bottom: 8px;
+  }
+  .fp-row-dot { width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0; }
+  .fp-row-name { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); flex:1; }
+  .fp-row-sub { font-size: 11px; color: var(--muted); display:block; }
+  .fp-row-val { font-size: 13px; font-weight: 600; color: var(--blue); }
+
+  /* gate rows */
+  .fp-gate {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.02); border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 14px; margin-bottom: 8px;
+  }
+  .fp-gate-icon {
+    width: 36px;height:36px;border-radius:8px;
+    background:rgba(24,116,239,0.2);display:flex;align-items:center;justify-content:center;font-size:16px;
+  }
+  .fp-gate-name { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); }
+  .fp-gate-ok { font-size: 11px; color: #22C55E; margin-top:2px; }
+  .fp-gate-warn { font-size: 11px; color: #F59E0B; margin-top:2px; }
+  .fp-gate-count { font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:white;margin-left:auto; }
+
+  /* mini chart */
+  .fp-chart {
+    display:flex;gap:5px;align-items:flex-end;
+    height:72px;margin-top:4px;
+  }
+  .fp-bar-col {
+    flex:1;border-radius:4px 4px 0 0;
+    transition: height 1s cubic-bezier(0.22,1,0.36,1);
+  }
+
+    /* ─── CLIENTS ─── */
+  .clients-section {
+    background: #08112A;
+    padding: 100px 0;
+    overflow: hidden;
+  }
+
+  .clients-section .section-tag {
+    background: rgba(0,87,255,0.2);
+    color: #7EB3FF;
+  }
+  .clients-section .section-title { color: white; }
+  .clients-section .section-sub { color: rgba(255,255,255,0.45); }
+
+  .clients-header {
+    padding: 0 5%;
+    margin-bottom: 64px;
+  }
+
+  /* marquee track */
+  .marquee-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    animation: marquee-left 28s linear infinite;
+  }
+
+  .marquee-track.reverse {
+    animation: marquee-right 32s linear infinite;
+  }
+
+  @keyframes marquee-left {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @keyframes marquee-right {
+    0%   { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  .marquee-wrapper:hover .marquee-track { animation-play-state: paused; }
+
+  .client-card {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 14px;
+    padding: 18px 28px;
+    white-space: nowrap;
+    transition: background 0.25s, border-color 0.25s;
+    cursor: default;
+  }
+
+  .client-card:hover {
+    background: rgba(0,87,255,0.12);
+    border-color: rgba(0,87,255,0.4);
+  }
+
+  .client-card-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #0B1830;
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .client-card-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700;
+    color: var(--blue-mid);
+    letter-spacing: 0.03em;
+  }
+
+  .client-card-type {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    font-weight: 300;
+    margin-top: 2px;
+  }
+
+  /* ─── FAQ ─── */
+  .faq-section {
+    background: var(--ink);
+    padding: 100px 5%;
+  }
+
+  .faq-list {
+    margin-top: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .faq-item {
+    padding: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    cursor: pointer;
+    transition: background 0.2s;
+    background: rgba(255,255,255,0.02);
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-item:hover { background: rgba(24,116,239,0.06); }
+  .faq-item.open { background: rgba(24,116,239,0.08); }
+
+  .faq-header {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
+    padding: 24px 32px;
+  }
+
+  .faq-q {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 600;
+    color: white;
+  }
+
+  .faq-icon {
+    width: 28px; height: 28px; min-width: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--blue);
+    transition: transform 0.3s ease, background 0.2s;
+  }
+  .faq-item.open .faq-icon {
+    transform: rotate(45deg);
+    background: #0B1830;
+    color: white;
+    border-color: var(--blue);
+  }
+
+  .faq-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.22,1,0.36,1);
+  }
+  .faq-item.open .faq-body { max-height: 200px; }
+
+  .faq-a {
+    font-size: 14px; color: rgba(255,255,255,0.5);
+    font-weight: 300; line-height: 1.7;
+    padding: 0 32px 24px;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact-section {
+    background: var(--ink-2);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 640px;
+  }
+
+  .contact-left {
+    background: #0B1830;
+    padding: 80px 64px;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-left::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    top: -150px; right: -150px;
+    pointer-events: none;
+  }
+  .contact-left::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    bottom: -80px; left: -80px;
+    pointer-events: none;
+  }
+
+  .contact-left .section-tag {
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 24px;
+    position: relative; z-index: 1;
+  }
+
+  .contact-left-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 800;
+    color: white;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    position: relative; z-index: 1;
+  }
+
+  .contact-left-sub {
+    font-size: 15px; color: rgba(255,255,255,0.7);
+    font-weight: 300; line-height: 1.7;
+    margin-bottom: 48px;
+    position: relative; z-index: 1;
+  }
+
+  .contact-info-item {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 16px;
+    position: relative; z-index: 1;
+  }
+
+  .contact-info-icon {
+    width: 40px; height: 40px; min-width: 40px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+
+  .contact-info-text { font-size: 14px; color: rgba(255,255,255,0.85); font-weight: 400; }
+  .contact-info-label { font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 2px; }
+
+  .contact-right {
+    background: var(--ink-3);
+    padding: 80px 64px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .contact-right-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 700;
+    color: white; margin-bottom: 32px;
+    letter-spacing: -0.5px;
+  }
+
+  .contact-form {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+
+  .form-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+  .form-group label {
+    font-size: 12px; font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 13px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; color: white;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--blue);
+    background: rgba(24,116,239,0.08);
+  }
+
+  .form-group select {
+    appearance: none;
+    cursor: pointer;
+    color: rgba(255,255,255,0.7);
+  }
+  .form-group select option { background: #0D1A3A; color: white; }
+
+  .form-group textarea {
+    resize: none; height: 110px;
+    line-height: 1.6;
+  }
+
+  .btn-submit {
+    background: #0B1830;
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 600;
+    padding: 16px 32px;
+    border-radius: 50px;
+    border: none; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: background 0.2s, transform 0.15s;
+    align-self: flex-start;
+    margin-top: 4px;
+  }
+  .btn-submit:hover { background: #1463D0; transform: translateY(-2px); }
+  .btn-submit:active { transform: translateY(0); }
+
+  .form-success {
+    display: none;
+    text-align: center; padding: 48px 24px;
+  }
+  .form-success-icon { font-size: 48px; margin-bottom: 16px; }
+  .form-success h3 {
+    font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700;
+    color: white; margin-bottom: 8px;
+  }
+  .form-success p { font-size: 14px; color: rgba(255,255,255,0.5); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #0A1628;
+    padding: 0;
+    color: rgba(255,255,255,0.55);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Big glowing logo watermark */
+  .footer-watermark {
+    position: absolute;
+    bottom: -40px; right: -40px;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Top accent bar */
+  .footer-accent {
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue) 0%, #5599FF 50%, transparent 100%);
+  }
+
+  /* Live ticker */
+  .footer-live-bar {
+    background: rgba(24,116,239,0.08);
+    border-bottom: 1px solid rgba(24,116,239,0.15);
+    padding: 13px 5%;
+    display: flex; align-items: center; gap: 12px;
+    overflow: hidden;
+  }
+
+  .footer-live-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #4ADE80; flex-shrink: 0;
+    animation: pulse-green 2s infinite;
+  }
+
+  @keyframes pulse-green {
+    0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.5); }
+    50%      { opacity: 0.8; box-shadow: 0 0 0 5px rgba(74,222,128,0); }
+  }
+
+  .footer-live-text { font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 300; }
+  .footer-live-count {
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #4ADE80;
+  }
+  .footer-live-spacer { flex: 1; }
+  .footer-live-tag {
+    font-size: 11px; font-weight: 600;
+    background: rgba(74,222,128,0.1);
+    border: 1px solid rgba(74,222,128,0.25);
+    color: #4ADE80;
+    padding: 3px 10px; border-radius: 50px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Main grid */
+  .footer-main {
+    padding: 72px 5% 0;
+    position: relative; z-index: 1;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 56px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    margin-bottom: 0;
+  }
+
+  /* Brand col */
+  .footer-brand-tagline {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800;
+    color: white; letter-spacing: -0.5px;
+    margin-top: 24px; margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .footer-brand-tagline em { font-style: normal; color: #6AABFF; }
+
+  .footer-brand-desc {
+    font-size: 14px; line-height: 1.75;
+    color: rgba(255,255,255,0.4); font-weight: 300;
+    margin-bottom: 28px; max-width: 280px;
+  }
+
+  .footer-brand-badges {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+
+  .footer-badge {
+    font-size: 11px; font-weight: 500;
+    background: rgba(24,116,239,0.12);
+    border: 1px solid rgba(24,116,239,0.25);
+    color: rgba(255,255,255,0.6);
+    padding: 5px 12px; border-radius: 50px;
+    letter-spacing: 0.03em;
+  }
+
+  /* Nav cols */
+  .footer-col h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px; font-weight: 700;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+
+  .footer-col a {
+    display: flex; align-items: center; gap: 0;
+    font-size: 14px; color: rgba(255,255,255,0.5);
+    text-decoration: none; margin-bottom: 14px;
+    transition: color 0.2s, padding-left 0.2s; font-weight: 300;
+    padding-left: 0;
+  }
+  .footer-col a:hover { color: white; padding-left: 6px; }
+
+  /* Bottom strip */
+  .footer-bottom-wrap {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+    padding: 24px 0 48px;
+    font-size: 12px; color: rgba(255,255,255,0.25);
+  }
+
+  .footer-bottom-right {
+    display: flex; align-items: center; gap: 24px;
+  }
+
+  .footer-bottom-right a {
+    font-size: 12px; color: rgba(255,255,255,0.25);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-bottom-right a:hover { color: rgba(255,255,255,0.7); }
+
+  /* Stats strip between top and bottom */
+  .footer-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin: 0 -5%;
+    padding: 0 5%;
+  }
+
+  .footer-stat {
+    padding: 32px 0;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-stat:last-child { border-right: none; padding-left: 32px; }
+  .footer-stat:nth-child(2) { padding-left: 32px; }
+
+  .footer-stat-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px; font-weight: 800;
+    color: white; letter-spacing: -1.5px;
+    line-height: 1;
+  }
+  .footer-stat-val span { color: var(--blue-mid); }
+
+  .footer-stat-label {
+    font-size: 13px; color: rgba(255,255,255,0.35);
+    font-weight: 300; margin-top: 6px;
+  }
+
+    @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%,60% { transform: translateX(-6px); }
+    40%,80% { transform: translateX(6px); }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  .hero-video-bg video {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 56.25vw;
+    min-height: 100vh;
+    min-width: 177.78vh;
+    object-fit: cover;
+  }
+
+  /* ─── SCROLL INDICATOR ─── */
+  .scroll-indicator {
+    position: absolute; bottom: 40px; left: 5%;
+    display: flex; align-items: center; gap: 10px;
+    color: rgba(255,255,255,0.4);
+    font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+  }
+
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    animation: scroll-anim 2s infinite;
+  }
+
+  @keyframes scroll-anim {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* Hamburger: hidden on desktop */
+  .hamburger { display: none; }
+
+  /* ══════════════════════════════════════════
+     RESPONSIVE — TABLET LANDSCAPE (≤1024px)
+  ══════════════════════════════════════════ */
+  @media (max-width: 1024px) {
+
+    /* Nav */
+    nav ul { gap: 20px; }
+    nav ul a { font-size: 13px; }
+
+    /* Features bar */
+    .feature-pill { padding: 20px 20px; }
+    .feature-pill span { font-size: 13px; }
+
+    /* Areas strips */
+    .areas-layout { height: 480px; }
+    .area-strip-name { font-size: 28px; }
+    .area-strip-content { padding: 0 28px 28px; }
+
+    /* Features */
+    .features-inner { grid-template-columns: 340px 1fr; }
+    .features-nav { padding: 48px 32px; }
+    .feat-tab-line { left: -32px; }
+    .feat-panel { padding: 40px; }
+
+    /* FAQ + Contact */
+    .contact-inner { grid-template-columns: 1fr; }
+    .contact-left { padding: 56px 40px; }
+    .contact-right { padding: 56px 40px; }
+    .faq-header { padding: 20px 24px; }
+    .faq-a { padding: 0 24px 20px; }
+
+    /* Footer */
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-stats { grid-template-columns: repeat(3,1fr); }
+  }
+
+  /* ══════════════════════════════════════════
+     RESPONSIVE — TABLET (≤768px)
+  ══════════════════════════════════════════ */
+  @media (max-width: 768px) {
+
+    /* ── Nav: hide links, show hamburger ── */
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 72px; left: 0; right: 0;
+      background: rgba(8,17,42,0.98);
+      backdrop-filter: blur(20px);
+      padding: 24px 5% 32px;
+      gap: 4px;
+      z-index: 99;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      animation: slideDown 0.3s ease;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .nav-links.open a {
+      color: rgba(255,255,255,0.75) !important;
+      font-size: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .nav-links.open a:last-child { border-bottom: none; }
+    .nav-links.open .btn-nav {
+      margin-top: 12px;
+      text-align: center;
+      padding: 14px;
+      border-radius: 12px;
+    }
+
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: white;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    nav.scrolled .hamburger span { background: white; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Hero */
+    .hero { padding: 100px 6% 60px; }
+    .hero h1 { font-size: clamp(32px, 8vw, 52px); letter-spacing: -1.5px; }
+    .scroll-indicator { display: none; }
+
+    /* Features bar: 2x2 grid */
+    .features-bar {
+      flex-wrap: wrap;
+      padding: 0;
+    }
+    .feature-pill {
+      width: 50%;
+      padding: 18px 16px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .feature-pill:nth-child(2n) { border-right: none; }
+    .feature-pill:nth-child(n+5) { border-bottom: none; }
+    .feature-pill-divider { display: none; }
+
+    /* Areas: vertical stack */
+    .areas-layout {
+      flex-direction: column;
+      height: auto;
+    }
+    .area-strip {
+      height: 100px;
+      flex: none !important;
+      transition: height 0.55s cubic-bezier(0.77,0,0.18,1);
+    }
+    .area-strip.active { height: 360px; }
+    .area-strip-label-v {
+      writing-mode: horizontal-tb;
+      flex-direction: row;
+      bottom: auto; top: 50%; left: 24px;
+      transform: translateY(-50%);
+      gap: 10px;
+    }
+    .area-strip-label-v-num,
+    .area-strip-label-v-name {
+      writing-mode: horizontal-tb;
+      transform: none;
+    }
+    .area-strip-label-v-line { display: none; }
+    .area-strip.active .area-strip-label-v { opacity: 0; }
+    .area-strip-content { padding: 0 24px 24px; }
+    .area-strip-name { font-size: 28px; letter-spacing: -1px; }
+    .area-strip-icon { font-size: 28px; margin-bottom: 8px; }
+    .area-strip-desc { font-size: 13px; }
+    .area-strip-counter { top: 16px; right: 16px; }
+
+    /* Features: stack vertically */
+    .features-inner { grid-template-columns: 1fr; }
+    .features-nav { padding: 48px 6%; }
+    .feat-tab-line { left: -6%; width: 3px; }
+    .features-panel { min-height: 420px; position: relative; }
+    .feat-panel { position: relative; inset: auto; padding: 32px 6%; opacity: 0; transform: translateX(20px); }
+    .feat-panel.active { opacity: 1; transform: translateX(0); }
+    /* Show only active panel in flow */
+    .feat-panel:not(.active) { display: none; }
+
+    /* Clients */
+    .clients-header { padding: 0 6%; }
+
+    /* FAQ: single column */
+    .faq-grid { grid-template-columns: 1fr; }
+    .faq-item { border-right: none !important; }
+    .faq-item:last-child { border-bottom: none; }
+
+    /* Footer */
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .footer-stats { grid-template-columns: 1fr; }
+    .footer-stat { border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.06); padding-left: 0 !important; }
+    .footer-stat:last-child { border-bottom: none; }
+    .footer-bottom-wrap { flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  /* ══════════════════════════════════════════
+     RESPONSIVE — MOBILE (≤480px)
+  ══════════════════════════════════════════ */
+  @media (max-width: 480px) {
+
+    /* Nav */
+    nav { padding: 0 4%; height: 64px; }
+    .logo svg { height: 26px; }
+    .nav-links.open { top: 64px; padding: 20px 4% 28px; }
+
+    /* Hero */
+    .hero { padding: 88px 4% 48px; }
+    .hero h1 { font-size: clamp(28px, 9vw, 44px); letter-spacing: -1px; }
+
+    /* Features bar: single column */
+    .features-bar { flex-direction: column; }
+    .feature-pill { width: 100%; border-right: none !important; }
+    .feature-pill:last-child { border-bottom: none; }
+
+    /* Sections */
+    section { padding: 72px 4%; }
+    .areas-header { padding: 0 4%; }
+    .clients-header { padding: 0 4%; }
+
+    /* Areas mobile */
+    .area-strip { height: 72px; }
+    .area-strip.active { height: 300px; }
+    .area-strip-name { font-size: 24px; }
+
+    /* Features */
+    .features-nav { padding: 40px 4%; }
+    .feat-panel { padding: 28px 4%; }
+    .feat-panel-body { padding: 16px; }
+    .fp-stat-val { font-size: 20px; }
+
+    /* Clients */
+    .clients-header { padding: 0 4%; }
+
+    /* FAQ + Contact */
+    .faq-header { padding: 18px 16px; }
+    .faq-a { padding: 0 16px 18px; }
+    .contact-left { padding: 40px 4%; }
+    .contact-right { padding: 40px 4%; }
+    .form-row { grid-template-columns: 1fr; }
+
+    /* CTA */
+    .cta-section { padding: 80px 4%; }
+
+    /* Footer */
+    footer { padding: 0; }
+    .footer-main { padding: 48px 4% 0; }
+    .footer-stats { margin: 0 -4%; padding: 0 4%; }
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-section {
+    background: var(--white);
+    padding: 120px 5%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .how-section::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(24,116,239,0.06) 0%, transparent 70%);
+    top: -100px; right: -100px; pointer-events: none;
+  }
+
+  .how-header { text-align: center; margin-bottom: 80px; }
+  .how-header .section-title { color: var(--ink); }
+  .how-header .section-sub { margin: 0 auto; text-align: center; color: var(--muted); }
+
+  .how-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+  }
+
+  /* connector line between steps */
+  .how-steps::before {
+    content: '';
+    position: absolute;
+    top: 52px; left: calc(16.6% + 40px); right: calc(16.6% + 40px);
+    height: 1px;
+    background: linear-gradient(90deg, var(--blue) 0%, var(--blue) 100%);
+    background-size: 8px 1px;
+    background-repeat: repeat-x;
+    border-top: 1px dashed rgba(24,116,239,0.3);
+    z-index: 0;
+  }
+
+  .how-step {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; padding: 0 32px;
+    position: relative; z-index: 1;
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .how-step.visible { opacity: 1; transform: translateY(0); }
+  .how-step:nth-child(2) { transition-delay: 0.15s; }
+  .how-step:nth-child(3) { transition-delay: 0.3s; }
+
+  .how-step-icon {
+    width: 104px; height: 104px;
+    border-radius: 28px;
+    background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 32px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 32px rgba(24,116,239,0.15);
+  }
+  .how-step:hover .how-step-icon {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(24,116,239,0.25);
+  }
+
+  .how-step-icon-inner {
+    width: 56px; height: 56px;
+    border-radius: 16px;
+    background: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+
+  .how-step-num {
+    position: absolute;
+    top: -10px; right: -10px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 2px solid white;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 800;
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .how-step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--ink); margin-bottom: 12px;
+    letter-spacing: -0.3px;
+  }
+
+  .how-step-desc {
+    font-size: 14px; color: var(--muted);
+    line-height: 1.7; font-weight: 300;
+    max-width: 240px;
+  }
+
+  .how-step-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    justify-content: center; margin-top: 16px;
+  }
+
+  .how-step-tag {
+    font-size: 11px; font-weight: 500;
+    background: var(--blue-light);
+    color: var(--blue);
+    border: 1px solid rgba(24,116,239,0.2);
+    padding: 4px 10px; border-radius: 50px;
+  }
+
+  /* Bottom CTA strip */
+  .how-cta {
+    margin-top: 80px;
+    background: var(--ink);
+    border-radius: 24px;
+    padding: 48px 56px;
+    display: flex; align-items: center; justify-content: space-between; gap: 32px;
+    position: relative; overflow: hidden;
+  }
+
+  .how-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(24,116,239,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .how-cta-text { position: relative; z-index: 1; }
+
+  .how-cta-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 700;
+    color: white; letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+
+  .how-cta-sub {
+    font-size: 14px; color: rgba(255,255,255,0.45); font-weight: 300;
+  }
+
+  .how-cta-action { position: relative; z-index: 1; flex-shrink: 0; }
+
+  /* ─── BILHETEIRA DEMO ─── */
+  .demo-section {
+    background: var(--ink);
+    padding: 120px 5%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .demo-header { margin-bottom: 64px; }
+  .demo-header .section-tag {
+    background: rgba(24,116,239,0.2); color: #7EB3FF;
+  }
+
+  .demo-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 24px;
+    max-width: 980px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  }
+
+  /* Left sidebar: steps */
+  .demo-sidebar {
+    background: rgba(255,255,255,0.04);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    padding: 32px 24px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+
+  .demo-sidebar-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .demo-step-btn {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; border-radius: 10px;
+    cursor: pointer; border: none; background: none;
+    text-align: left; width: 100%;
+    transition: background 0.2s;
+  }
+  .demo-step-btn:hover { background: rgba(255,255,255,0.05); }
+  .demo-step-btn.active { background: rgba(24,116,239,0.15); }
+
+  .demo-step-circle {
+    width: 28px; height: 28px; min-width: 28px; border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: rgba(255,255,255,0.4);
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .demo-step-btn.active .demo-step-circle {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+  }
+  .demo-step-btn.done .demo-step-circle {
+    background: rgba(34,197,94,0.2);
+    border-color: rgba(34,197,94,0.4);
+    color: #22C55E;
+  }
+  .demo-step-btn.done .demo-step-circle::after { content: '✓'; }
+
+  .demo-step-label {
+    font-size: 13px; font-weight: 400;
+    color: rgba(255,255,255,0.4);
+    transition: color 0.2s;
+  }
+  .demo-step-btn.active .demo-step-label { color: white; font-weight: 500; }
+  .demo-step-btn.done .demo-step-label { color: rgba(255,255,255,0.5); }
+
+  /* Progress bar at bottom of sidebar */
+  .demo-progress-wrap { margin-top: auto; padding-top: 24px; }
+  .demo-progress-label {
+    font-size: 11px; color: rgba(255,255,255,0.3);
+    margin-bottom: 8px; display: flex; justify-content: space-between;
+  }
+  .demo-progress-track {
+    height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;
+  }
+  .demo-progress-fill {
+    height: 100%; background: var(--blue); border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 25%;
+  }
+
+  /* Right: screen */
+  .demo-screen {
+    padding: 32px 40px 40px;
+    position: relative; min-height: 520px;
+  }
+
+  .demo-topbar {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .demo-topbar-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+
+  .demo-topbar-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,0.5); margin-left: 8px;
+  }
+
+  .demo-panel {
+    display: none;
+    animation: panelIn 0.35s cubic-bezier(0.22,1,0.36,1);
+  }
+  .demo-panel.active { display: block; }
+
+  @keyframes panelIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .demo-panel-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700;
+    color: white; margin-bottom: 6px;
+    letter-spacing: -0.3px;
+  }
+
+  .demo-panel-sub {
+    font-size: 13px; color: rgba(255,255,255,0.35);
+    margin-bottom: 28px; font-weight: 300;
+  }
+
+  /* Form fields inside demo */
+  .demo-field-group { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .demo-field { display: flex; flex-direction: column; gap: 6px; }
+  .demo-field label { font-size: 11px; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: 0.05em; }
+  .demo-field-val {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; padding: 11px 14px;
+    font-size: 14px; color: white; font-weight: 400;
+  }
+  .demo-field-val.placeholder { color: rgba(255,255,255,0.2); }
+
+  /* Seat map */
+  .demo-seat-map {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .demo-seat-stage {
+    text-align: center; margin-bottom: 20px;
+  }
+  .demo-seat-stage-bar {
+    background: rgba(24,116,239,0.3);
+    border: 1px solid rgba(24,116,239,0.5);
+    border-radius: 6px; padding: 6px;
+    font-size: 11px; color: rgba(255,255,255,0.5);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    display: inline-block;
+  }
+
+  .demo-seat-rows { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+  .demo-seat-row { display: flex; gap: 5px; }
+  .demo-seat {
+    width: 20px; height: 20px; border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.06);
+    cursor: pointer; transition: background 0.15s, border-color 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .demo-seat:hover { background: rgba(24,116,239,0.4); border-color: var(--blue); }
+  .demo-seat.taken { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.05); cursor: default; }
+  .demo-seat.selected { background: var(--blue); border-color: var(--blue); }
+  .demo-seat.vip { border-color: rgba(234,179,8,0.4); background: rgba(234,179,8,0.08); }
+  .demo-seat.vip.selected { background: #EAB308; border-color: #EAB308; }
+
+  .demo-seat-legend {
+    display: flex; gap: 16px; margin-top: 12px; justify-content: center;
+  }
+  .demo-seat-leg-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: rgba(255,255,255,0.35);
+  }
+  .demo-seat-leg-dot {
+    width: 12px; height: 12px; border-radius: 3px;
+  }
+
+  /* Order summary */
+  .demo-order-summary {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 20px;
+    margin-bottom: 20px;
+  }
+  .demo-order-row {
+    display: flex; justify-content: space-between;
+    font-size: 13px; color: rgba(255,255,255,0.6);
+    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .demo-order-row:last-child { border-bottom: none; }
+  .demo-order-total {
+    display: flex; justify-content: space-between;
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 700;
+    color: white; padding-top: 16px;
+    margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* Payment */
+  .demo-card-preview {
+    background: linear-gradient(135deg, #1874EF, #0D5FD4);
+    border-radius: 14px; padding: 24px;
+    margin-bottom: 20px; position: relative; overflow: hidden;
+  }
+  .demo-card-preview::before {
+    content: '';
+    position: absolute; top: -30px; right: -30px;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .demo-card-chip {
+    width: 32px; height: 24px; border-radius: 5px;
+    background: rgba(255,215,0,0.7); margin-bottom: 20px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr; gap: 1px; overflow: hidden;
+  }
+  .demo-card-chip > div { background: rgba(180,150,0,0.5); }
+  .demo-card-num { font-size: 14px; color: white; letter-spacing: 0.15em; margin-bottom: 16px; font-family: monospace; }
+  .demo-card-meta { display: flex; gap: 24px; }
+  .demo-card-meta-label { font-size: 10px; color: rgba(255,255,255,0.5); margin-bottom: 2px; }
+  .demo-card-meta-val { font-size: 13px; color: white; }
+
+  /* Confirmation */
+  .demo-confirm {
+    text-align: center; padding: 32px 0;
+  }
+  .demo-confirm-icon {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: rgba(34,197,94,0.15);
+    border: 2px solid rgba(34,197,94,0.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px; margin: 0 auto 20px;
+    animation: popIn 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+  .demo-confirm-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800; color: white;
+    margin-bottom: 8px;
+  }
+  .demo-confirm-sub { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 24px; }
+  .demo-ticket-preview {
+    background: rgba(255,255,255,0.02);
+    border: 1px dashed rgba(255,255,255,0.15);
+    border-radius: 12px; padding: 20px;
+    display: flex; align-items: center; gap: 16px;
+    text-align: left; max-width: 340px; margin: 0 auto;
+  }
+  .demo-ticket-qr {
+    width: 56px; height: 56px; min-width: 56px;
+    background: white; border-radius: 8px;
+    display: grid; grid-template-columns: repeat(5,1fr); gap: 2px; padding: 6px;
+  }
+  .demo-ticket-qr > div {
+    border-radius: 1px;
+    background: var(--ink);
+  }
+  .demo-ticket-info-name { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: white; }
+  .demo-ticket-info-meta { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+
+  /* nav buttons */
+  .demo-nav-btns {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 24px;
+  }
+
+  .demo-btn-back {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+    font-size: 13px; font-weight: 500;
+    padding: 10px 20px; border-radius: 50px;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .demo-btn-back:hover { background: rgba(255,255,255,0.1); color: white; }
+
+  .demo-btn-next {
+    background: var(--blue);
+    color: white; font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 600;
+    padding: 11px 24px; border-radius: 50px;
+    cursor: pointer; border: none;
+    display: flex; align-items: center; gap: 8px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .demo-btn-next:hover { background: #1463D0; transform: translateY(-1px); }
+
+
+  /* ─── COMO FUNCIONA ─── */
+  .how-section {
+    background: var(--white);
+    padding: 120px 5%;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .how-section .section-tag { background: var(--blue-light); color: var(--blue); }
+  .how-section .section-title { color: var(--ink); }
+  .how-section .section-sub { color: var(--muted); }
+
+  .how-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 72px;
+    position: relative;
+  }
+
+  /* connector line between steps */
+  .how-steps::before {
+    content: '';
+    position: absolute;
+    top: 52px; left: calc(16.66% + 20px); right: calc(16.66% + 20px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue) 0%, var(--blue) 50%, var(--blue) 100%);
+    background-size: 12px 2px;
+    background-repeat: repeat-x;
+    opacity: 0.2;
+    z-index: 0;
+  }
+
+  .how-step {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
+    padding: 0 40px;
+    position: relative;
+    z-index: 1;
+    opacity: 1;
+    transform: none;
+  }
+
+  .how-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -12px; top: 40px;
+    font-size: 20px;
+    color: var(--blue);
+    opacity: 0.3;
+  }
+
+  .how-step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+
+  .how-step-icon-wrap {
+    width: 104px; height: 104px;
+    border-radius: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 32px;
+    position: relative;
+    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s;
+  }
+
+  .how-step:hover .how-step-icon-wrap {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 48px rgba(24,116,239,0.15);
+    background: var(--blue);
+    border-color: var(--blue);
+  }
+
+  .how-step-icon-wrap svg {
+    width: 40px; height: 40px;
+    stroke: var(--blue);
+    transition: stroke 0.3s;
+  }
+  .how-step:hover .how-step-icon-wrap svg { stroke: white; }
+
+  .how-step-active-dot {
+    position: absolute;
+    top: -6px; right: -6px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: #22C55E;
+    border: 2px solid white;
+    animation: pulse-green 2s infinite;
+  }
+
+  .how-step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+  }
+
+  .how-step-desc {
+    font-size: 14px; color: var(--muted);
+    font-weight: 300; line-height: 1.75;
+    max-width: 240px;
+  }
+
+  .how-step-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .how-step-tag {
+    font-size: 11px; font-weight: 500;
+    background: var(--blue-light);
+    color: var(--blue);
+    padding: 4px 10px; border-radius: 50px;
+  }
+
+  /* ─── BILHETEIRA DEMO ─── */
+  .demo-section {
+    background: var(--ink);
+    padding: 120px 5%;
+    overflow: hidden;
+  }
+
+  .demo-section .section-tag { background: rgba(0,87,255,0.2); color: #7EB3FF; }
+  .demo-section .section-title { color: white; }
+  .demo-section .section-sub { color: rgba(255,255,255,0.45); }
+
+  .demo-inner {
+    margin-top: 64px;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 40px;
+    min-height: 580px;
+  }
+
+  /* Left: event list */
+  .demo-events {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+
+  .demo-event-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+
+  .demo-event-card:hover,
+  .demo-event-card.active {
+    background: rgba(24,116,239,0.12);
+    border-color: rgba(24,116,239,0.4);
+  }
+
+  .demo-event-img {
+    width: 56px; height: 56px; min-width: 56px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .demo-event-info { flex: 1; }
+  .demo-event-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700;
+    color: white; margin-bottom: 4px;
+  }
+  .demo-event-meta { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 300; }
+  .demo-event-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700;
+    color: var(--blue-mid); margin-top: 6px;
+  }
+
+  /* Right: ticket flow */
+  .demo-flow {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+
+  .demo-flow-topbar {
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 14px 24px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .demo-flow-dot { width: 9px; height: 9px; border-radius: 50%; }
+
+  .demo-flow-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    margin-left: 8px; flex: 1;
+  }
+
+  .demo-steps-bar {
+    display: flex; gap: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .demo-step-btn {
+    flex: 1; padding: 14px;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px; font-weight: 600;
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    cursor: pointer;
+    border: none; background: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .demo-step-btn.active {
+    color: white;
+    border-bottom-color: var(--blue);
+    background: rgba(24,116,239,0.08);
+  }
+
+  .demo-panels { flex: 1; position: relative; }
+
+  .demo-panel {
+    position: absolute; inset: 0;
+    padding: 32px;
+    opacity: 0; pointer-events: none;
+    transform: translateX(20px);
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1);
+  }
+  .demo-panel.active { opacity: 1; pointer-events: auto; transform: translateX(0); }
+
+  /* Panel 1: Evento */
+  .demo-event-hero {
+    display: flex; gap: 20px; margin-bottom: 28px;
+  }
+  .demo-event-hero-img {
+    width: 72px; height: 72px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; flex-shrink: 0;
+  }
+  .demo-event-hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800;
+    color: white; letter-spacing: -0.5px; margin-bottom: 4px;
+  }
+  .demo-event-hero-sub { font-size: 13px; color: rgba(255,255,255,0.45); }
+  .demo-event-hero-date {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 8px;
+    font-size: 12px; color: var(--blue-mid);
+    background: rgba(24,116,239,0.15);
+    padding: 4px 10px; border-radius: 50px;
+  }
+
+  .demo-tickets-label {
+    font-size: 11px; font-weight: 600;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .demo-ticket-row {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 14px 16px;
+    margin-bottom: 8px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .demo-ticket-row:hover, .demo-ticket-row.selected {
+    background: rgba(24,116,239,0.12);
+    border-color: rgba(24,116,239,0.4);
+  }
+  .demo-ticket-row.selected .demo-check { opacity: 1; }
+
+  .demo-ticket-cat { font-size: 13px; font-weight: 500; color: white; flex: 1; }
+  .demo-ticket-avail { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+  .demo-ticket-price-tag {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px; font-weight: 700; color: white;
+  }
+  .demo-check {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--blue); display: flex; align-items: center;
+    justify-content: center; font-size: 11px; color: white; opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  /* Panel 2: Pagamento */
+  .demo-summary-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; padding: 20px; margin-bottom: 24px;
+  }
+  .demo-summary-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.6);
+  }
+  .demo-summary-row:last-child { border-bottom: none; color: white; font-weight: 600; font-size: 15px; }
+  .demo-summary-val { color: white; }
+
+  .demo-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .demo-input {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 12px 14px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; color: white;
+    outline: none; width: 100%;
+    transition: border-color 0.2s;
+  }
+  .demo-input:focus { border-color: var(--blue); }
+  .demo-input::placeholder { color: rgba(255,255,255,0.2); }
+
+  /* Panel 3: Bilhete */
+  .demo-ticket-final {
+    background: linear-gradient(135deg, #1874EF 0%, #0A3BA0 100%);
+    border-radius: 20px; padding: 32px;
+    position: relative; overflow: hidden;
+  }
+  .demo-ticket-final::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 300px; height: 300px; border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    pointer-events: none;
+  }
+  .demo-ticket-dashed {
+    border-top: 2px dashed rgba(255,255,255,0.2);
+    margin: 20px 0;
+  }
+  .demo-ticket-qr {
+    width: 80px; height: 80px;
+    background: white; border-radius: 10px;
+    display: grid; grid-template-columns: repeat(5,1fr); gap: 3px;
+    padding: 10px; margin: 0 auto 16px;
+  }
+  .qr-dot { border-radius: 2px; background: var(--ink); }
+  .qr-dot.w { background: white; }
+  .demo-ticket-name-big {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px; font-weight: 800; color: white;
+    text-align: center; margin-bottom: 4px;
+  }
+  .demo-ticket-sub-info {
+    text-align: center; font-size: 12px; color: rgba(255,255,255,0.6);
+    margin-bottom: 20px;
+  }
+  .demo-ticket-meta-row {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+  }
+  .demo-ticket-meta-item { text-align: center; }
+  .demo-ticket-meta-label { font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; }
+  .demo-ticket-meta-val { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: white; margin-top: 2px; }
+
+  .demo-nav-btn {
+    background: var(--blue); color: white;
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+    padding: 13px 28px; border-radius: 50px; border: none;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 20px;
+  }
+  .demo-nav-btn:hover { background: #0d63d4; transform: translateY(-2px); }
+  .demo-nav-btn.secondary {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+  }
+  .demo-nav-btn.secondary:hover { background: rgba(255,255,255,0.12); }
+
+
+  @media (max-width: 768px) {
+    .how-steps { grid-template-columns: 1fr; gap: 48px; }
+    .how-steps::before { display: none; }
+    .how-step:not(:last-child)::after { display: none; }
+    .demo-inner { grid-template-columns: 1fr; }
+    .demo-events { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .demo-event-card { flex-direction: column; gap: 8px; padding: 12px; }
+    .demo-event-img { width: 40px; height: 40px; font-size: 18px; }
+  }
+  @media (max-width: 480px) {
+    .demo-events { grid-template-columns: 1fr; }
+    .demo-form-row { grid-template-columns: 1fr; }
+    .demo-ticket-meta-row { grid-template-columns: repeat(3,1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <svg viewBox="0 0 1497.4 310.7" xmlns="http://www.w3.org/2000/svg" style="height:32px;width:auto">
+      <polygon class="nav-logo-poly" points="28.7 5.3 2.3 31.7 2.3 97.4 49.9 97.4 49.9 52.9 124.4 52.9 124.4 97.5 2.3 219.7 2.3 305.4 172.1 305.4 172.1 257.8 49.9 257.8 49.9 239.4 172.1 117.2 172.1 31.8 145.6 5.3 28.7 5.3"/>
+      <polygon class="nav-logo-poly" points="1414.9 5.3 1414.9 5.3 1367.3 5.3 1367.3 5.3 1287 5.3 1287 52.4 1287.3 52.9 1367.3 52.9 1367.3 302 1367.3 305.4 1414.9 305.4 1414.9 52.9 1495.1 52.9 1495.1 41.3 1495.2 41.3 1495.2 5.3 1414.9 5.3"/>
+      <polygon class="nav-logo-poly" points="385.1 5.3 337.5 5.3 337.5 5.3 257.3 5.3 257.3 52.4 257.6 52.9 337.5 52.9 337.5 302 337.6 305.4 385.1 305.4 385.1 52.9 465.3 52.9 465.3 41.3 465.4 41.3 465.4 5.3 385.1 5.3 385.1 5.3"/>
+      <polygon class="nav-logo-poly" points="670.7 5.3 627.1 5.3 600.6 31.8 600.6 278.9 627.1 305.4 722.8 305.4 766.5 305.4 792.9 278.9 792.9 225.2 745.3 225.2 745.3 257.8 722.8 257.8 722.8 257.8 648.2 257.8 648.2 52.9 670.8 52.9 670.8 52.9 745.3 52.9 745.3 85.5 792.9 85.5 792.9 31.8 766.5 5.3 670.7 5.3"/>
+      <polygon class="nav-logo-poly" points="1121 5.3 1077.4 5.3 1050.9 31.8 1050.9 278.9 1077.4 305.4 1173.1 305.4 1216.7 305.4 1243.2 278.9 1243.2 225.2 1195.6 225.2 1195.6 257.8 1173.1 257.8 1173.1 257.8 1098.5 257.8 1098.5 179.2 1182.1 179.2 1182.1 167.6 1182.1 167.6 1182.1 131.6 1098.5 131.6 1098.5 52.9 1121.1 52.9 1121.1 52.9 1195.6 52.9 1195.6 85.5 1243.2 85.5 1243.2 31.8 1216.7 5.3 1121 5.3"/>
+      <polygon class="nav-logo-poly" points="506.9 136.5 507 137.1 554.5 137.1 554.5 125.5 554.6 125.5 554.6 89.5 506.9 89.5 506.9 136.5"/>
+      <polygon class="nav-logo-poly" points="506.9 52.4 507 52.9 554.5 52.9 554.5 41.3 554.6 41.3 554.6 5.3 506.9 5.3 506.9 52.4"/>
+      <polygon class="nav-logo-poly" points="506.9 220.7 507 221.3 554.5 221.3 554.5 209.6 554.6 209.6 554.6 173.6 506.9 173.6 506.9 220.7"/>
+      <polygon class="nav-logo-poly" points="506.9 304.9 507 305.4 554.5 305.4 554.5 293.8 554.6 293.8 554.6 257.8 506.9 257.8 506.9 304.9"/>
+      <polygon class="nav-logo-poly" points="1006.7 5.3 959.1 5.3 959.1 7.3 959.1 88.7 916.2 131.6 884.8 131.6 884.8 5.3 837.2 5.3 837.2 302 837.2 305.4 884.8 305.4 884.8 232.2 884.8 232.2 884.8 179.2 916.2 179.2 959.1 222.1 959.1 303.4 959.1 305.4 1006.7 305.4 1006.7 263 1006.7 263 1006.7 202.3 1006.7 202.3 1006.7 202.3 959.7 155.4 1006.7 108.4 1006.7 108.4 1006.7 108.4 1006.7 47.7 1006.7 47.7 1006.7 5.3"/>
+    </svg>
+  </a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#funcionalidades">Funcionalidades</a></li>
+    <li><a href="#como-funciona">Como Funciona</a></li>
+    <li><a href="#demo">Demo</a></li>
+    <li><a href="#clientes">Clientes</a></li>
+    <li><a href="#areas">Áreas</a></li>
+    <li><a href="#questoes">Questões</a></li>
+    <li><a href="#contactos">Contactos</a></li>
+    <li><a href="#contactos" class="btn-nav">Fale Connosco</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+  <!-- Vídeo local em loop suave -->
+  <div class="hero-video-bg">
+    <video id="hero-video" autoplay muted playsinline>
+      <source src="videosite2t.mp4" type="video/mp4">
+    </video>
+  </div>
+  <!-- Overlay de fade para suavizar o loop -->
+  <div id="hero-fade" style="position:absolute;inset:0;background:#050a1e;opacity:0;z-index:1;pointer-events:none;transition:opacity 0.8s ease;"></div>
+
+  <!-- Overlay -->
+  <div class="hero-overlay"></div>
+
+  <!-- Conteúdo -->
+  <div class="hero-content">
+    <h1>One Ticket,<br><em>too many experiences.</em></h1>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    Desliza para baixo
+  </div>
+</section>
+
+
+
+<!-- AREAS -->
+<section class="areas-section" id="areas">
+  <div class="areas-header">
+    <h2 class="section-title">As áreas onde <em>atuamos</em></h2>
+  </div>
+
+  <div class="areas-layout" id="areas-layout">
+
+    <!-- 01 Estádios -->
+    <div class="area-strip active" data-index="0">
+      <img class="area-strip-img"
+        src="cadeiras 24.jpg"
+        alt="Estádios" />
+      <div class="area-strip-grad"></div>
+      <div class="area-strip-counter">01 / 05</div>
+      <div class="area-strip-label-v">
+        <span class="area-strip-label-v-num">01</span>
+        <div class="area-strip-label-v-line"></div>
+        <span class="area-strip-label-v-name">Estádios</span>
+      </div>
+      <div class="area-strip-content">
+        <span class="area-strip-icon">⚽</span>
+        <div class="area-strip-name">Estádios</div>
+        <div class="area-strip-progress"><div class="area-strip-progress-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- 02 Pavilhões -->
+    <div class="area-strip" data-index="1">
+      <img class="area-strip-img"
+        src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1200&auto=format&fit=crop&q=80"
+        alt="Pavilhões" />
+      <div class="area-strip-grad"></div>
+      <div class="area-strip-counter">02 / 05</div>
+      <div class="area-strip-label-v">
+        <span class="area-strip-label-v-num">02</span>
+        <div class="area-strip-label-v-line"></div>
+        <span class="area-strip-label-v-name">Pavilhões</span>
+      </div>
+      <div class="area-strip-content">
+        <span class="area-strip-icon">🏟</span>
+        <div class="area-strip-name">Pavilhões</div>
+        <div class="area-strip-progress"><div class="area-strip-progress-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- 03 Feiras -->
+    <div class="area-strip" data-index="2">
+      <img class="area-strip-img"
+        src="fsm.jpeg"
+        alt="Feiras" />
+      <div class="area-strip-grad"></div>
+      <div class="area-strip-counter">03 / 05</div>
+      <div class="area-strip-label-v">
+        <span class="area-strip-label-v-num">03</span>
+        <div class="area-strip-label-v-line"></div>
+        <span class="area-strip-label-v-name">Feiras</span>
+      </div>
+      <div class="area-strip-content">
+        <span class="area-strip-icon">🎡</span>
+        <div class="area-strip-name">Feiras</div>
+        <div class="area-strip-progress"><div class="area-strip-progress-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- 04 Concertos -->
+    <div class="area-strip" data-index="3">
+      <img class="area-strip-img"
+        src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&auto=format&fit=crop&q=80"
+        alt="Concertos" />
+      <div class="area-strip-grad"></div>
+      <div class="area-strip-counter">04 / 05</div>
+      <div class="area-strip-label-v">
+        <span class="area-strip-label-v-num">04</span>
+        <div class="area-strip-label-v-line"></div>
+        <span class="area-strip-label-v-name">Concertos</span>
+      </div>
+      <div class="area-strip-content">
+        <span class="area-strip-icon">🎵</span>
+        <div class="area-strip-name">Concertos</div>
+        <div class="area-strip-progress"><div class="area-strip-progress-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- 05 Teatros -->
+    <div class="area-strip" data-index="4">
+      <img class="area-strip-img"
+        src="https://images.unsplash.com/photo-1507924538820-ede94a04019d?w=1200&auto=format&fit=crop&q=80"
+        alt="Teatros" />
+      <div class="area-strip-grad"></div>
+      <div class="area-strip-counter">05 / 05</div>
+      <div class="area-strip-label-v">
+        <span class="area-strip-label-v-num">05</span>
+        <div class="area-strip-label-v-line"></div>
+        <span class="area-strip-label-v-name">Teatros</span>
+      </div>
+      <div class="area-strip-content">
+        <span class="area-strip-icon">🎭</span>
+        <div class="area-strip-name">Teatros</div>
+        <div class="area-strip-progress"><div class="area-strip-progress-fill"></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="funcionalidades">
+  <div class="features-inner">
+
+    <!-- LEFT NAV -->
+    <div class="features-nav">
+      <div class="features-nav-header">
+        <div class="features-nav-title">Tudo numa<br>só <em>plataforma</em></div>
+      </div>
+
+      <div class="feat-tab active" data-feat="0">
+        <div class="feat-tab-line"></div>
+        <div class="feat-tab-num">01</div>
+        <div class="feat-tab-body">
+          <div class="feat-tab-name">Gestão de Eventos</div>
+          <div class="feat-tab-desc">Criação e personalização completa de eventos, categorias e bilhetes.</div>
+          <div class="feat-tab-pills">
+            <span class="feat-tab-pill">Regras de compra</span>
+            <span class="feat-tab-pill">Lugares definidos</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="feat-tab" data-feat="1">
+        <div class="feat-tab-line"></div>
+        <div class="feat-tab-num">02</div>
+        <div class="feat-tab-body">
+          <div class="feat-tab-name">Gestão de Sócios</div>
+          <div class="feat-tab-desc">Histórico completo, cartão de sócio e lugares cativos.</div>
+          <div class="feat-tab-pills">
+            <span class="feat-tab-pill">Campanhas exclusivas</span>
+            <span class="feat-tab-pill">Quotas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="feat-tab" data-feat="2">
+        <div class="feat-tab-line"></div>
+        <div class="feat-tab-num">03</div>
+        <div class="feat-tab-body">
+          <div class="feat-tab-name">Controlo de Acessos</div>
+          <div class="feat-tab-desc">Torniquetes e PDA's com visão em tempo real da ocupação.</div>
+          <div class="feat-tab-pills">
+            <span class="feat-tab-pill">Tempo real</span>
+            <span class="feat-tab-pill">PDA's</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="feat-tab" data-feat="3">
+        <div class="feat-tab-line"></div>
+        <div class="feat-tab-num">04</div>
+        <div class="feat-tab-body">
+          <div class="feat-tab-name">Análise de Dados</div>
+          <div class="feat-tab-desc">Acompanhamento de vendas, acessos e receitas em detalhe.</div>
+          <div class="feat-tab-pills">
+            <span class="feat-tab-pill">Relatórios</span>
+            <span class="feat-tab-pill">Dashboards</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANELS -->
+    <div class="features-panel">
+
+      <!-- Panel 01: Gestão de Eventos -->
+      <div class="feat-panel active" data-panel="0">
+        <div class="feat-panel-card">
+          <div class="feat-panel-topbar">
+            <div class="feat-panel-dot" style="background:#FF5F57"></div>
+            <div class="feat-panel-dot" style="background:#FFBD2E"></div>
+            <div class="feat-panel-dot" style="background:#28C840"></div>
+            <span class="feat-panel-topbar-title">Painel de Eventos</span>
+            <span class="feat-panel-topbar-badge">Live</span>
+          </div>
+          <div class="feat-panel-body">
+            <div class="fp-stat-row">
+              <div class="fp-stat">
+                <div class="fp-stat-val" id="f0-v1">0</div>
+                <div class="fp-stat-label">Bilhetes vendidos</div>
+              </div>
+              <div class="fp-stat">
+                <div class="fp-stat-val" id="f0-v2">0%</div>
+                <div class="fp-stat-label">Ocupação</div>
+              </div>
+            </div>
+            <div class="fp-bar-row">
+              <span class="fp-bar-label">Cat. A</span>
+              <div class="fp-bar-track"><div class="fp-bar-fill" data-w="82"></div></div>
+              <span class="fp-bar-pct">82%</span>
+            </div>
+            <div class="fp-bar-row">
+              <span class="fp-bar-label">Cat. B</span>
+              <div class="fp-bar-track"><div class="fp-bar-fill" data-w="65"></div></div>
+              <span class="fp-bar-pct">65%</span>
+            </div>
+            <div class="fp-bar-row">
+              <span class="fp-bar-label">VIP</span>
+              <div class="fp-bar-track"><div class="fp-bar-fill" data-w="40"></div></div>
+              <span class="fp-bar-pct">40%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 02: Gestão de Sócios -->
+      <div class="feat-panel" data-panel="1">
+        <div class="feat-panel-card">
+          <div class="feat-panel-topbar">
+            <div class="feat-panel-dot" style="background:#FF5F57"></div>
+            <div class="feat-panel-dot" style="background:#FFBD2E"></div>
+            <div class="feat-panel-dot" style="background:#28C840"></div>
+            <span class="feat-panel-topbar-title">Perfil do Sócio</span>
+          </div>
+          <div class="feat-panel-body">
+            <div class="fp-row">
+              <div class="fp-row-dot"></div>
+              <div style="flex:1">
+                <div class="fp-row-name">FC Porto × Sporting</div>
+                <span class="fp-row-sub">22 Mar · Bancada Sul A3</span>
+              </div>
+              <span class="fp-row-val">€18</span>
+            </div>
+            <div class="fp-row">
+              <div class="fp-row-dot"></div>
+              <div style="flex:1">
+                <div class="fp-row-name">CS Marítimo × Penafiel</div>
+                <span class="fp-row-sub">15 Mar · Bancada Norte</span>
+              </div>
+              <span class="fp-row-val">€12</span>
+            </div>
+            <div class="fp-row">
+              <div class="fp-row-dot" style="background:#22C55E"></div>
+              <div style="flex:1">
+                <div class="fp-row-name">Quota Anual 2025</div>
+                <span class="fp-row-sub">Regularizado · Jan 2025</span>
+              </div>
+              <span class="fp-row-val" style="color:#22C55E">€80</span>
+            </div>
+            <div class="fp-row" style="opacity:0.45">
+              <div class="fp-row-dot" style="background:#6B7280"></div>
+              <div style="flex:1">
+                <div class="fp-row-name">Feira de São Mateus</div>
+                <span class="fp-row-sub">Ago 2024 · Entrada Geral</span>
+              </div>
+              <span class="fp-row-val" style="color:#6B7280">€5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 03: Controlo de Acessos -->
+      <div class="feat-panel" data-panel="2">
+        <div class="feat-panel-card">
+          <div class="feat-panel-topbar">
+            <div class="feat-panel-dot" style="background:#FF5F57"></div>
+            <div class="feat-panel-dot" style="background:#FFBD2E"></div>
+            <div class="feat-panel-dot" style="background:#28C840"></div>
+            <span class="feat-panel-topbar-title">Controlo de Acessos</span>
+            <span class="feat-panel-topbar-badge" id="f2-total">0 entradas</span>
+          </div>
+          <div class="feat-panel-body">
+            <div class="fp-gate">
+              <div class="fp-gate-icon">🚪</div>
+              <div style="flex:1">
+                <div class="fp-gate-name">Porta Norte — Torniquete 1</div>
+                <div class="fp-gate-ok">● Operacional</div>
+              </div>
+              <div class="fp-gate-count" id="f2-g1">0</div>
+            </div>
+            <div class="fp-gate">
+              <div class="fp-gate-icon">🚪</div>
+              <div style="flex:1">
+                <div class="fp-gate-name">Porta Sul — Torniquete 2</div>
+                <div class="fp-gate-ok">● Operacional</div>
+              </div>
+              <div class="fp-gate-count" id="f2-g2">0</div>
+            </div>
+            <div class="fp-gate">
+              <div class="fp-gate-icon">📱</div>
+              <div style="flex:1">
+                <div class="fp-gate-name">PDA — Setor VIP</div>
+                <div class="fp-gate-warn">● A verificar...</div>
+              </div>
+              <div class="fp-gate-count" id="f2-g3">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 04: Análise de Dados -->
+      <div class="feat-panel" data-panel="3">
+        <div class="feat-panel-card">
+          <div class="feat-panel-topbar">
+            <div class="feat-panel-dot" style="background:#FF5F57"></div>
+            <div class="feat-panel-dot" style="background:#FFBD2E"></div>
+            <div class="feat-panel-dot" style="background:#28C840"></div>
+            <span class="feat-panel-topbar-title">Análise — Época 24/25</span>
+          </div>
+          <div class="feat-panel-body">
+            <div class="fp-stat-row" style="grid-template-columns:1fr 1fr 1fr">
+              <div class="fp-stat">
+                <div class="fp-stat-val">2,850</div>
+                <div class="fp-stat-label">Méd. espetadores</div>
+              </div>
+              <div class="fp-stat">
+                <div class="fp-stat-val" style="color:#22C55E">+12%</div>
+                <div class="fp-stat-label">vs. época anterior</div>
+              </div>
+              <div class="fp-stat">
+                <div class="fp-stat-val">3,483</div>
+                <div class="fp-stat-label">Máximo</div>
+              </div>
+            </div>
+            <div class="fp-chart" id="f3-chart">
+              <div class="fp-bar-col" style="background:var(--blue-light);height:0%"></div>
+              <div class="fp-bar-col" style="background:var(--blue-light);height:0%"></div>
+              <div class="fp-bar-col" style="background:var(--blue-light);height:0%"></div>
+              <div class="fp-bar-col" style="background:var(--blue);height:0%"></div>
+              <div class="fp-bar-col" style="background:var(--blue-light);height:0%"></div>
+              <div class="fp-bar-col" style="background:var(--blue-light);height:0%"></div>
+              <div class="fp-bar-col" style="background:var(--blue-light);height:0%"></div>
+              <div class="fp-bar-col" style="background:var(--blue-light);height:0%"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:6px">
+              <span style="font-size:10px;color:var(--muted)">J8</span>
+              <span style="font-size:10px;color:var(--muted)">J9</span>
+              <span style="font-size:10px;color:var(--muted)">J10</span>
+              <span style="font-size:10px;color:var(--blue);font-weight:700">J11</span>
+              <span style="font-size:10px;color:var(--muted)">J12</span>
+              <span style="font-size:10px;color:var(--muted)">J13</span>
+              <span style="font-size:10px;color:var(--muted)">J14</span>
+              <span style="font-size:10px;color:var(--muted)">J15</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="como-funciona">
+  <div class="how-header">
+    <h2 class="section-title">Simples. Rápido. <em>Poderoso.</em></h2>
+    <p class="section-sub">Três passos para transformar a gestão dos seus eventos.</p>
+  </div>
+
+  <div class="how-steps">
+
+    <div class="how-step">
+      <div class="how-step-icon">
+        <div class="how-step-icon-inner">🗓️</div>
+        <span class="how-step-num">01</span>
+      </div>
+      <div class="how-step-title">Cria o teu evento</div>
+      <div class="how-step-desc">Defina o nome, data, localização, categorias de bilhetes, limites de lotação e regras de compra personalizadas.</div>
+      <div class="how-step-tags">
+        <span class="how-step-tag">Categorias</span>
+        <span class="how-step-tag">Lotação</span>
+        <span class="how-step-tag">Datas</span>
+      </div>
+    </div>
+
+    <div class="how-step">
+      <div class="how-step-icon">
+        <div class="how-step-icon-inner">🎟️</div>
+        <span class="how-step-num">02</span>
+      </div>
+      <div class="how-step-title">Vende bilhetes</div>
+      <div class="how-step-desc">Bilheteira física e online em simultâneo. Os espetadores compram onde for mais cómodo , o cliente gerencia tudo num só lugar.</div>
+      <div class="how-step-tags">
+        <span class="how-step-tag">Online</span>
+        <span class="how-step-tag">Presencial</span>
+        <span class="how-step-tag">Omnichannel</span>
+      </div>
+    </div>
+
+    <div class="how-step">
+      <div class="how-step-icon">
+        <div class="how-step-icon-inner">📊</div>
+        <span class="how-step-num">03</span>
+      </div>
+      <div class="how-step-title">Controla em tempo real</div>
+      <div class="how-step-desc">Valida bilhetes nos PDA's, monitoriza acessos por setor e acompanha as vendas e entradas ao minuto.</div>
+      <div class="how-step-tags">
+        <span class="how-step-tag">PDA's</span>
+        <span class="how-step-tag">Analytics</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="how-cta">
+    <div class="how-cta-text">
+      <div class="how-cta-title">Pronto para experimentar?</div>
+      <div class="how-cta-sub">Fale connosco e veja a 2TICKET em ação.</div>
+    </div>
+    <div class="how-cta-action">
+      <a href="#contactos" class="btn-primary">Agendar demonstração <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section class="clients-section" id="clientes">
+  <div class="clients-header">
+    <h2 class="section-title">Quem <em>confia</em> em nós</h2>
+    <p class="section-sub">Utilizado pelos maiores clubes e eventos de Portugal.</p>
+  </div>
+
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">Sporting CP</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">FC Porto</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">CS Marítimo</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">CD Tondela</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">Liga Portugal</div>
+          <div class="client-card-type">Organização</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">AC Viseu</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">Sporting CP</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">FC Porto</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">CS Marítimo</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">CD Tondela</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">Liga Portugal</div>
+          <div class="client-card-type">Organização</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">AC Viseu</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+    </div>
+    <div class="marquee-track reverse">
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">Feira S. Mateus</div>
+          <div class="client-card-type">Feira Popular</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">FICTON</div>
+          <div class="client-card-type">Evento</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">CM Mangualde</div>
+          <div class="client-card-type">Município</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">SC Braga</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">GD Estoril</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">Académica</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">Feira S. Mateus</div>
+          <div class="client-card-type">Feira Popular</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">FICTON</div>
+          <div class="client-card-type">Evento</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">CM Mangualde</div>
+          <div class="client-card-type">Município</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">SC Braga</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">GD Estoril</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+      <div class="client-card">
+        <div class="client-card-dot"></div>
+        <div>
+          <div class="client-card-name">Académica</div>
+          <div class="client-card-type">Futebol</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="demo-section" id="demo">
+  <h2 class="section-title">Veja o fluxo de <em>compra</em></h2>
+  <p class="section-sub">Explore como um espetador compra o seu bilhete — do evento ao QR Code.</p>
+
+  <div class="demo-inner">
+
+    <!-- Event list -->
+    <div class="demo-events">
+      <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px">Eventos disponíveis</div>
+
+      <div class="demo-event-card active" onclick="selectEvent(this,'FC Porto × Sporting CP','Futebol · Estádio do Dragão','29 Mar 2025','⚽','#1A3A7A','Cat. Ouro — €25')">
+        <div class="demo-event-img" style="background:#1A3A7A">⚽</div>
+        <div class="demo-event-info">
+          <div class="demo-event-name">FC Porto × Sporting CP</div>
+          <div class="demo-event-meta">29 Mar · Estádio do Dragão</div>
+          <div class="demo-event-price">A partir de €18</div>
+        </div>
+      </div>
+
+      <div class="demo-event-card" onclick="selectEvent(this,'Feira de São Mateus','Feira Popular · Viseu','12 Ago 2025','🎡','#3A1A00','Entrada Geral — €5')">
+        <div class="demo-event-img" style="background:#3A1A00">🎡</div>
+        <div class="demo-event-info">
+          <div class="demo-event-name">Feira de São Mateus</div>
+          <div class="demo-event-meta">12 Ago · Viseu</div>
+          <div class="demo-event-price">A partir de €5</div>
+        </div>
+      </div>
+
+      <div class="demo-event-card" onclick="selectEvent(this,'NOS Alive 2025','Festival · Passeio Marítimo','10 Jul 2025','🎵','#2D0050','Passe Geral — €89')">
+        <div class="demo-event-img" style="background:#2D0050">🎵</div>
+        <div class="demo-event-info">
+          <div class="demo-event-name">NOS Alive 2025</div>
+          <div class="demo-event-meta">10 Jul · Lisboa</div>
+          <div class="demo-event-price">A partir de €89</div>
+        </div>
+      </div>
+
+      <div class="demo-event-card" onclick="selectEvent(this,'CS Marítimo × Benfica','Futebol · Estádio dos Barreiros','5 Abr 2025','⚽','#8B0000','Bancada Norte — €15')">
+        <div class="demo-event-img" style="background:#8B0000">⚽</div>
+        <div class="demo-event-info">
+          <div class="demo-event-name">CS Marítimo × Benfica</div>
+          <div class="demo-event-meta">5 Abr · Funchal</div>
+          <div class="demo-event-price">A partir de €15</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flow -->
+    <div class="demo-flow">
+      <div class="demo-flow-topbar">
+        <div class="demo-flow-dot" style="background:#FF5F57"></div>
+        <div class="demo-flow-dot" style="background:#FFBD2E"></div>
+        <div class="demo-flow-dot" style="background:#28C840"></div>
+        <span class="demo-flow-title" id="demo-flow-title">bilheteira.2ticket.pt</span>
+      </div>
+
+      <div class="demo-steps-bar">
+        <button class="demo-step-btn active" onclick="goStep(0)">① Evento</button>
+        <button class="demo-step-btn" onclick="goStep(1)">② Pagamento</button>
+        <button class="demo-step-btn" onclick="goStep(2)">③ Bilhete</button>
+      </div>
+
+      <div class="demo-panels">
+
+        <!-- Step 0: Evento -->
+        <div class="demo-panel active" id="dp-0">
+          <div class="demo-event-hero">
+            <div class="demo-event-hero-img" id="d-img" style="background:#1A3A7A">⚽</div>
+            <div class="demo-event-hero-info">
+              <div class="demo-event-hero-name" id="d-name">FC Porto × Sporting CP</div>
+              <div class="demo-event-hero-sub" id="d-sub">Futebol · Estádio do Dragão</div>
+              <div class="demo-event-hero-date" id="d-date">📅 29 Mar 2025</div>
+            </div>
+          </div>
+
+          <div class="demo-tickets-label">Escolha a sua categoria</div>
+
+          <div class="demo-ticket-row" onclick="selectTicket(this,'Cat. Ouro','€25')">
+            <div style="flex:1">
+              <div class="demo-ticket-cat">Categoria Ouro</div>
+              <div class="demo-ticket-avail">287 disponíveis</div>
+            </div>
+            <div class="demo-ticket-price-tag">€25</div>
+            <div class="demo-check">✓</div>
+          </div>
+          <div class="demo-ticket-row selected" onclick="selectTicket(this,'Cat. Prata','€18')">
+            <div style="flex:1">
+              <div class="demo-ticket-cat">Categoria Prata</div>
+              <div class="demo-ticket-avail">512 disponíveis</div>
+            </div>
+            <div class="demo-ticket-price-tag">€18</div>
+            <div class="demo-check">✓</div>
+          </div>
+          <div class="demo-ticket-row" onclick="selectTicket(this,'VIP','€65')">
+            <div style="flex:1">
+              <div class="demo-ticket-cat">VIP Lounge</div>
+              <div class="demo-ticket-avail">12 disponíveis</div>
+            </div>
+            <div class="demo-ticket-price-tag">€65</div>
+            <div class="demo-check">✓</div>
+          </div>
+
+          <button class="demo-nav-btn" onclick="goStep(1)">Continuar → Pagamento</button>
+        </div>
+
+        <!-- Step 1: Pagamento -->
+        <div class="demo-panel" id="dp-1">
+          <div class="demo-summary-box">
+            <div class="demo-summary-row">
+              <span id="d-sum-event">FC Porto × Sporting CP</span>
+              <span class="demo-summary-val" id="d-sum-cat">Cat. Prata</span>
+            </div>
+            <div class="demo-summary-row">
+              <span>Data</span>
+              <span class="demo-summary-val" id="d-sum-date">29 Mar 2025</span>
+            </div>
+            <div class="demo-summary-row">
+              <span>Quantidade</span>
+              <span class="demo-summary-val">1 bilhete</span>
+            </div>
+            <div class="demo-summary-row">
+              <span>Taxa de serviço</span>
+              <span class="demo-summary-val">€1.50</span>
+            </div>
+            <div class="demo-summary-row">
+              <span>Total</span>
+              <span class="demo-summary-val" id="d-sum-total">€19.50</span>
+            </div>
+          </div>
+
+          <div class="demo-form-row">
+            <input class="demo-input" placeholder="Nome completo" value="João Silva" />
+            <input class="demo-input" placeholder="Email" value="joao@email.pt" />
+          </div>
+          <input class="demo-input" placeholder="Número de cartão" value="•••• •••• •••• 4242" style="margin-bottom:12px" />
+          <div class="demo-form-row">
+            <input class="demo-input" placeholder="MM/AA" value="08/27" />
+            <input class="demo-input" placeholder="CVV" value="•••" />
+          </div>
+
+          <div style="display:flex;gap:12px">
+            <button class="demo-nav-btn secondary" onclick="goStep(0)">← Voltar</button>
+            <button class="demo-nav-btn" onclick="goStep(2)">Pagar e obter bilhete →</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Bilhete -->
+        <div class="demo-panel" id="dp-2">
+          <div style="text-align:center;margin-bottom:20px">
+            <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:8px">✅ Pagamento confirmado!</div>
+            <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:white">O seu bilhete está pronto</div>
+          </div>
+
+          <div class="demo-ticket-final">
+            <div class="demo-ticket-name-big" id="d-tkt-name">FC Porto × Sporting CP</div>
+            <div class="demo-ticket-sub-info" id="d-tkt-sub">Futebol · Estádio do Dragão</div>
+
+            <div class="demo-ticket-dashed"></div>
+
+            <!-- QR Code simulado -->
+            <div class="demo-ticket-qr">
+              <div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot w"></div><div class="qr-dot"></div><div class="qr-dot"></div>
+              <div class="qr-dot"></div><div class="qr-dot w"></div><div class="qr-dot"></div><div class="qr-dot w"></div><div class="qr-dot"></div>
+              <div class="qr-dot w"></div><div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot w"></div>
+              <div class="qr-dot"></div><div class="qr-dot w"></div><div class="qr-dot w"></div><div class="qr-dot"></div><div class="qr-dot"></div>
+              <div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot w"></div><div class="qr-dot"></div><div class="qr-dot"></div>
+            </div>
+
+            <div class="demo-ticket-dashed"></div>
+
+            <div class="demo-ticket-meta-row">
+              <div class="demo-ticket-meta-item">
+                <div class="demo-ticket-meta-label">Data</div>
+                <div class="demo-ticket-meta-val" id="d-tkt-date">29 Mar</div>
+              </div>
+              <div class="demo-ticket-meta-item">
+                <div class="demo-ticket-meta-label">Categoria</div>
+                <div class="demo-ticket-meta-val" id="d-tkt-cat">Prata</div>
+              </div>
+              <div class="demo-ticket-meta-item">
+                <div class="demo-ticket-meta-label">Preço</div>
+                <div class="demo-ticket-meta-val" id="d-tkt-price">€18</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="demo-nav-btn secondary" onclick="goStep(0);resetDemo()" style="margin-top:16px">← Recomeçar demo</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="questoes">
+  <h2 class="section-title">Perguntas <em>frequentes</em></h2>
+
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <div class="faq-header">
+        <div class="faq-q">A que tipo de eventos se adequa o software da 2Ticket?</div>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-body">
+        <div class="faq-a">O nosso produto pode ser adaptado a qualquer tipo de evento, por exemplo: eventos desportivos, feiras, conferências, teatros, entre outros.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-header">
+        <div class="faq-q">É possível integrar a 2Ticket no nosso próprio site?</div>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-body">
+        <div class="faq-a">Sim. A bilheteira online pode ser integrada diretamente no site do cliente, mantendo a identidade visual.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-header">
+        <div class="faq-q">O sistema funciona em modo presencial e online?</div>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-body">
+        <div class="faq-a">Sim,funciona tanto em bilheteira física como em formato digital, em simultâneo.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-header">
+        <div class="faq-q">O processo de compra é simples para o utilizador final?</div>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-body">
+        <div class="faq-a">Todo o processo foi desenhado para ser rápido, simples e seguro, proporcionando uma experiência personalizada ao utilizador final.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-header">
+        <div class="faq-q">A 2Ticket tem suporte técnico dedicado?</div>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-body">
+        <div class="faq-a">Sim. A equipa da 2Ticket acompanha a implementação e oferece suporte técnico contínuo para garantir o funcionamento fluido em todos os eventos.</div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-header">
+        <div class="faq-q">É possível gerir vários eventos em simultâneo?</div>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-body">
+        <div class="faq-a">Sim. A plataforma foi desenhada para gerir múltiplos eventos em paralelo, com painéis independentes por evento e visão consolidada para o cliente.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contactos">
+  <div class="contact-inner">
+
+    <!-- Left: info -->
+    <div class="contact-left">
+      <span class="section-tag">Contactos</span>
+      <div class="contact-left-title">Pronto para transformar a sua bilhética?</div>
+      <div class="contact-left-sub">Fale connosco e descubra como a 2Ticket pode modernizar a experiência dos seus eventos.</div>
+
+      <div class="contact-info-item">
+        <div class="contact-info-icon">✉️</div>
+        <div>
+          <div class="contact-info-label">Email</div>
+          <div class="contact-info-text">geral@2ticket.pt</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-icon">📍</div>
+        <div>
+          <div class="contact-info-label">Localização</div>
+          <div class="contact-info-text">Portugal 🇵🇹</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: form -->
+    <div class="contact-right">
+      <div class="contact-right-title">Envie-nos uma mensagem</div>
+
+      <div id="contact-form-wrap">
+        <div class="contact-form" id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nome</label>
+              <input type="text" placeholder="O seu nome" id="f-name" />
+            </div>
+            <div class="form-group">
+              <label>Organização</label>
+              <input type="text" placeholder="Clube / entidade" id="f-org" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="email@exemplo.pt" id="f-email" />
+          </div>
+          <div class="form-group">
+            <label>Tipo de evento</label>
+            <select id="f-type">
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option>Futebol / Desporto</option>
+              <option>Concertos / Festivais</option>
+              <option>Feiras Populares</option>
+              <option>Teatro / Espetáculos</option>
+              <option>Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mensagem</label>
+            <textarea placeholder="Conte-nos mais sobre o seu projeto..." id="f-msg"></textarea>
+          </div>
+          <button class="btn-submit" onclick="submitForm()">
+            Enviar mensagem
+            <span>→</span>
+          </button>
+        </div>
+
+        <div class="form-success" id="form-success">
+          <div class="form-success-icon">✅</div>
+          <h3>Mensagem enviada!</h3>
+          <p>Obrigado pelo contacto. A equipa 2Ticket responderá em breve.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+
+
+  <div class="footer-main">
+
+    <!-- Top: brand + nav cols -->
+    <div class="footer-top">
+
+      <div class="footer-brand">
+        <svg viewBox="0 0 1497.4 310.7" xmlns="http://www.w3.org/2000/svg" style="height:34px;width:auto;display:block">
+          <polygon fill="white" points="28.7 5.3 2.3 31.7 2.3 97.4 49.9 97.4 49.9 52.9 124.4 52.9 124.4 97.5 2.3 219.7 2.3 305.4 172.1 305.4 172.1 257.8 49.9 257.8 49.9 239.4 172.1 117.2 172.1 31.8 145.6 5.3 28.7 5.3"/>
+        <polygon fill="white" points="1414.9 5.3 1414.9 5.3 1367.3 5.3 1367.3 5.3 1287 5.3 1287 52.4 1287.3 52.9 1367.3 52.9 1367.3 302 1367.3 305.4 1414.9 305.4 1414.9 52.9 1495.1 52.9 1495.1 41.3 1495.2 41.3 1495.2 5.3 1414.9 5.3"/>
+        <polygon fill="white" points="385.1 5.3 337.5 5.3 337.5 5.3 257.3 5.3 257.3 52.4 257.6 52.9 337.5 52.9 337.5 302 337.6 305.4 385.1 305.4 385.1 52.9 465.3 52.9 465.3 41.3 465.4 41.3 465.4 5.3 385.1 5.3 385.1 5.3"/>
+        <polygon fill="white" points="670.7 5.3 627.1 5.3 600.6 31.8 600.6 278.9 627.1 305.4 722.8 305.4 766.5 305.4 792.9 278.9 792.9 225.2 745.3 225.2 745.3 257.8 722.8 257.8 722.8 257.8 648.2 257.8 648.2 52.9 670.8 52.9 670.8 52.9 745.3 52.9 745.3 85.5 792.9 85.5 792.9 31.8 766.5 5.3 670.7 5.3"/>
+        <polygon fill="white" points="1121 5.3 1077.4 5.3 1050.9 31.8 1050.9 278.9 1077.4 305.4 1173.1 305.4 1216.7 305.4 1243.2 278.9 1243.2 225.2 1195.6 225.2 1195.6 257.8 1173.1 257.8 1173.1 257.8 1098.5 257.8 1098.5 179.2 1182.1 179.2 1182.1 167.6 1182.1 167.6 1182.1 131.6 1098.5 131.6 1098.5 52.9 1121.1 52.9 1121.1 52.9 1195.6 52.9 1195.6 85.5 1243.2 85.5 1243.2 31.8 1216.7 5.3 1121 5.3"/>
+        <polygon fill="white" points="506.9 136.5 507 137.1 554.5 137.1 554.5 125.5 554.6 125.5 554.6 89.5 506.9 89.5 506.9 136.5"/>
+        <polygon fill="white" points="506.9 52.4 507 52.9 554.5 52.9 554.5 41.3 554.6 41.3 554.6 5.3 506.9 5.3 506.9 52.4"/>
+        <polygon fill="white" points="506.9 220.7 507 221.3 554.5 221.3 554.5 209.6 554.6 209.6 554.6 173.6 506.9 173.6 506.9 220.7"/>
+        <polygon fill="white" points="506.9 304.9 507 305.4 554.5 305.4 554.5 293.8 554.6 293.8 554.6 257.8 506.9 257.8 506.9 304.9"/>
+        <polygon fill="white" points="1006.7 5.3 959.1 5.3 959.1 7.3 959.1 88.7 916.2 131.6 884.8 131.6 884.8 5.3 837.2 5.3 837.2 302 837.2 305.4 884.8 305.4 884.8 232.2 884.8 232.2 884.8 179.2 916.2 179.2 959.1 222.1 959.1 303.4 959.1 305.4 1006.7 305.4 1006.7 263 1006.7 263 1006.7 202.3 1006.7 202.3 1006.7 202.3 959.7 155.4 1006.7 108.4 1006.7 108.4 1006.7 108.4 1006.7 47.7 1006.7 47.7 1006.7 5.3"/>
+        </svg>
+        <br>
+        <div class="footer-brand-tagline">One Ticket,<br><em>too many experiences.</em></div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Produto</h4>
+        <a href="#funcionalidades">Funcionalidades</a>
+        <a href="#areas">Áreas</a>
+        <a href="#clientes">Clientes</a>
+        <a href="#questoes">FAQ</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Soluções</h4>
+        <a href="#">Estádios</a>
+        <a href="#">Pavilhões</a>
+        <a href="#">Feiras</a>
+        <a href="#">Concertos</a>
+        <a href="#">Teatros</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <a href="#">Sobre nós</a>
+        <a href="#contactos">Contactos</a>
+        <a href="mailto:geral@2ticket.pt">geral@2ticket.pt</a>
+      </div>
+
+    </div>
+
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom-wrap">
+      <span>© 2026 2TICKET. Todos os direitos reservados.</span>
+      <div class="footer-bottom-right">
+        <a href="#">Política de Privacidade</a>
+        <a href="#">Termos de Uso</a>
+        <span>Portugal 🇵🇹</span>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<script>
+  // ── Hamburger menu ──
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('nav-links');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+
+  // Close on link click
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+
+  // ── Navbar transparente → sólida no scroll ──
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ── Fade suave no loop do vídeo ──
+  const video = document.getElementById('hero-video');
+  const fade  = document.getElementById('hero-fade');
+  const FADE_BEFORE = 1.2; // segundos antes do fim para começar o fade
+
+  video.addEventListener('timeupdate', () => {
+    const remaining = video.duration - video.currentTime;
+    if (remaining <= FADE_BEFORE && fade.style.opacity === '0') {
+      // Fade para escuro
+      fade.style.opacity = '1';
+      setTimeout(() => {
+        // Reinicia o vídeo silenciosamente
+        video.currentTime = 0;
+        video.play();
+        // Fade de volta para transparente
+        fade.style.opacity = '0';
+      }, 820); // ligeiramente maior que a transição CSS (800ms)
+    }
+  });
+
+  // ── Areas accordion strips with auto-advance ──
+  const strips = document.querySelectorAll('.area-strip');
+  const DURATION = 4000; // ms per strip
+  let current = 0;
+  let autoTimer = null;
+  let progressTimer = null;
+  let progressStart = null;
+
+  function activateStrip(idx, startAuto = true) {
+    strips.forEach(s => {
+      s.classList.remove('active');
+      const fill = s.querySelector('.area-strip-progress-fill');
+      if (fill) fill.style.width = '0%';
+    });
+    current = idx;
+    strips[idx].classList.add('active');
+
+    if (startAuto) {
+      clearInterval(progressTimer);
+      clearTimeout(autoTimer);
+      progressStart = performance.now();
+
+      progressTimer = setInterval(() => {
+        const elapsed = performance.now() - progressStart;
+        const pct = Math.min((elapsed / DURATION) * 100, 100);
+        const fill = strips[idx].querySelector('.area-strip-progress-fill');
+        if (fill) fill.style.width = pct + '%';
+      }, 40);
+
+      autoTimer = setTimeout(() => {
+        clearInterval(progressTimer);
+        activateStrip((current + 1) % strips.length, true);
+      }, DURATION);
+    }
+  }
+
+  // Hover: pause auto, show that strip
+  strips.forEach((strip, i) => {
+    strip.addEventListener('mouseenter', () => {
+      clearTimeout(autoTimer);
+      clearInterval(progressTimer);
+      strips.forEach(s => s.classList.remove('active'));
+      strips.forEach(s => {
+        const fill = s.querySelector('.area-strip-progress-fill');
+        if (fill) fill.style.width = '0%';
+      });
+      strip.classList.add('active');
+      current = i;
+    });
+    strip.addEventListener('mouseleave', () => {
+      activateStrip(current, true);
+    });
+  });
+
+  // Start
+  activateStrip(0, true);
+
+  // ── Features tabs ──
+  const featTabs   = document.querySelectorAll('.feat-tab');
+  const featPanels = document.querySelectorAll('.feat-panel');
+
+  function animatePanel(idx) {
+    // bars panel 0
+    if (idx === 0) {
+      // count up
+      let v = 0; const target = 1932;
+      const t = setInterval(() => {
+        v = Math.min(v + 48, target);
+        const el = document.getElementById('f0-v1');
+        if (el) el.textContent = v.toLocaleString('pt-PT');
+        if (v >= target) clearInterval(t);
+      }, 16);
+      let p = 0;
+      const t2 = setInterval(() => {
+        p = Math.min(p + 1, 52);
+        const el = document.getElementById('f0-v2');
+        if (el) el.textContent = p + '%';
+        if (p >= 52) clearInterval(t2);
+      }, 20);
+      // bars
+      setTimeout(() => {
+        document.querySelectorAll('#funcionalidades .fp-bar-fill').forEach(fill => {
+          fill.style.width = fill.dataset.w + '%';
+        });
+      }, 100);
+    }
+
+    // panel 2: gates count up
+    if (idx === 2) {
+      [['f2-g1',847],['f2-g2',612],['f2-g3',203]].forEach(([id, target]) => {
+        let v = 0;
+        const t = setInterval(() => {
+          v = Math.min(v + Math.ceil(target/40), target);
+          const el = document.getElementById(id);
+          if (el) el.textContent = v.toLocaleString('pt-PT');
+          if (v >= target) {
+            clearInterval(t);
+            const tot = document.getElementById('f2-total');
+            if (tot) tot.textContent = '1,662 entradas';
+          }
+        }, 20);
+      });
+    }
+
+    // panel 3: chart bars animate
+    if (idx === 3) {
+      const heights = [45,60,50,100,75,65,80,55];
+      const bars = document.querySelectorAll('#f3-chart .fp-bar-col');
+      setTimeout(() => {
+        bars.forEach((b, i) => { b.style.height = heights[i] + '%'; });
+      }, 80);
+    }
+  }
+
+  function activateFeat(idx) {
+    featTabs.forEach(t => t.classList.remove('active'));
+    featPanels.forEach(p => p.classList.remove('active'));
+    featTabs[idx].classList.add('active');
+    featPanels[idx].classList.add('active');
+    // reset bars for panel 0 before animating
+    if (idx === 0) {
+      document.querySelectorAll('#funcionalidades .fp-bar-fill').forEach(f => f.style.width = '0%');
+      const e1 = document.getElementById('f0-v1'); if(e1) e1.textContent='0';
+      const e2 = document.getElementById('f0-v2'); if(e2) e2.textContent='0%';
+    }
+    if (idx === 2) {
+      ['f2-g1','f2-g2','f2-g3'].forEach(id => { const e=document.getElementById(id); if(e) e.textContent='0'; });
+      const tot = document.getElementById('f2-total'); if(tot) tot.textContent='0 entradas';
+    }
+    if (idx === 3) {
+      document.querySelectorAll('#f3-chart .fp-bar-col').forEach(b => b.style.height='0%');
+    }
+    setTimeout(() => animatePanel(idx), 100);
+  }
+
+  featTabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => activateFeat(i));
+  });
+
+  // init panel 0
+  setTimeout(() => animatePanel(0), 600);
+
+  // ── FAQ accordion ──
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-header').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+  // Open first by default
+  document.querySelector('.faq-item')?.classList.add('open');
+
+  // ── Contact form ──
+  function submitForm() {
+    const name  = document.getElementById('f-name')?.value.trim();
+    const email = document.getElementById('f-email')?.value.trim();
+    const msg   = document.getElementById('f-msg')?.value.trim();
+    if (!name || !email || !msg) {
+      // Shake empty fields
+      ['f-name','f-email','f-msg'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && !el.value.trim()) {
+          el.style.borderColor = '#EF4444';
+          el.style.animation = 'shake 0.4s ease';
+          setTimeout(() => { el.style.animation = ''; el.style.borderColor = ''; }, 600);
+        }
+      });
+      return;
+    }
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+
+  // ── Fade-up no scroll ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ── Demo Bilheteira ──
+  let demoStep = 0;
+  let demoSelected = { event: 'FC Porto × Sporting CP', sub: 'Futebol · Estádio do Dragão', date: '29 Mar 2025', cat: 'Cat. Prata', price: '€18', total: '€19.50', emoji: '⚽', bg: '#1A3A7A' };
+
+  function goStep(n) {
+    demoStep = n;
+    document.querySelectorAll('.demo-panel').forEach((p,i) => p.classList.toggle('active', i === n));
+    document.querySelectorAll('.demo-step-btn').forEach((b,i) => b.classList.toggle('active', i === n));
+    if (n === 2) {
+      document.getElementById('d-tkt-name').textContent  = demoSelected.event;
+      document.getElementById('d-tkt-sub').textContent   = demoSelected.sub;
+      document.getElementById('d-tkt-date').textContent  = demoSelected.date.split(' ').slice(0,2).join(' ');
+      document.getElementById('d-tkt-cat').textContent   = demoSelected.cat.replace('Cat. ','');
+      document.getElementById('d-tkt-price').textContent = demoSelected.price;
+    }
+  }
+
+  function selectEvent(el, name, sub, date, emoji, bg, catHint) {
+    document.querySelectorAll('.demo-event-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    demoSelected.event = name; demoSelected.sub = sub;
+    demoSelected.date  = date; demoSelected.emoji = emoji; demoSelected.bg = bg;
+    document.getElementById('d-img').textContent   = emoji;
+    document.getElementById('d-img').style.background = bg;
+    document.getElementById('d-name').textContent  = name;
+    document.getElementById('d-sub').textContent   = sub;
+    document.getElementById('d-date').textContent  = '📅 ' + date;
+    document.getElementById('d-sum-event').textContent = name;
+    document.getElementById('d-sum-date').textContent  = date;
+    goStep(0);
+  }
+
+  function selectTicket(el, cat, price) {
+    document.querySelectorAll('.demo-ticket-row').forEach(r => r.classList.remove('selected'));
+    el.classList.add('selected');
+    demoSelected.cat   = cat;
+    demoSelected.price = price;
+    const base = parseFloat(price.replace('€',''));
+    demoSelected.total = '€' + (base + 1.5).toFixed(2).replace('.',',');
+    document.getElementById('d-sum-cat').textContent   = cat;
+    document.getElementById('d-sum-total').textContent = demoSelected.total;
+  }
+
+
+
+  function resetDemo() {
+    document.querySelectorAll('.demo-event-card').forEach((c,i) => c.classList.toggle('active', i===0));
+    document.querySelectorAll('.demo-ticket-row').forEach((r,i) => r.classList.toggle('selected', i===1));
+    demoSelected = { event: 'FC Porto × Sporting CP', sub: 'Futebol · Estádio do Dragão', date: '29 Mar 2025', cat: 'Cat. Prata', price: '€18', total: '€19.50', emoji: '⚽', bg: '#1A3A7A' };
+    document.getElementById('d-img').textContent = '⚽';
+    document.getElementById('d-img').style.background = '#1A3A7A';
+    document.getElementById('d-name').textContent = 'FC Porto × Sporting CP';
+    document.getElementById('d-sub').textContent  = 'Futebol · Estádio do Dragão';
+    document.getElementById('d-date').textContent = '📅 29 Mar 2025';
+  }
+
+</script>
+</body>
+</html>
