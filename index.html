@@ -1382,15 +1382,25 @@
     .area-strip-desc { font-size: 13px; }
     .area-strip-counter { top: 16px; right: 16px; }
 
-    /* Features: stack vertically */
+    /* Features: accordion */
     .features-inner { grid-template-columns: 1fr; }
     .features-nav { padding: 48px 6%; }
     .feat-tab-line { left: -6%; width: 3px; }
-    .features-panel { min-height: 420px; position: relative; }
-    .feat-panel { position: relative; inset: auto; padding: 32px 6%; opacity: 0; transform: translateX(20px); }
-    .feat-panel.active { opacity: 1; transform: translateX(0); }
-    /* Show only active panel in flow */
-    .feat-panel:not(.active) { display: none; }
+    .feat-tab:not(.active) { opacity: 0.6; }
+    /* Mobile accordion content */
+    .feat-mobile-content { display: none; margin-top: 16px; margin-bottom: 4px; }
+    .feat-tab.active .feat-mobile-content { display: block; }
+    .feat-mobile-content .feat-panel {
+      position: static !important;
+      opacity: 1 !important;
+      transform: none !important;
+      pointer-events: auto !important;
+      padding: 12px 0 4px !important;
+      transition: none !important;
+      display: block !important;
+    }
+    .feat-panel-card { border-radius: 12px; }
+    .features-panel { display: none; }
 
     /* Clients */
     .clients-header { padding: 0 6%; }
@@ -2311,10 +2321,16 @@
     .how-steps { grid-template-columns: 1fr; gap: 48px; }
     .how-steps::before { display: none; }
     .how-step:not(:last-child)::after { display: none; }
+    /* CTA box */
+    .how-cta { flex-direction: column; gap: 24px; padding: 32px 24px; }
+    .how-cta-action { width: 100%; }
+    .how-cta-action .btn-primary { width: 100%; justify-content: center; }
+    /* Demo */
     .demo-inner { grid-template-columns: 1fr; }
     .demo-events { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .demo-event-card { flex-direction: column; gap: 8px; padding: 12px; }
     .demo-event-img { width: 40px; height: 40px; font-size: 18px; }
+    .demo-panels { min-height: 460px; }
   }
   @media (max-width: 480px) {
     .demo-events { grid-template-columns: 1fr; }
@@ -2362,7 +2378,7 @@
 
   <!-- Vídeo local em loop suave -->
   <div class="hero-video-bg">
-    <video id="hero-video" autoplay muted playsinline>
+    <video id="hero-video" autoplay muted playsinline loop webkit-playsinline>
       <source src="videosite2t.mp4" type="video/mp4">
     </video>
   </div>
@@ -3432,7 +3448,7 @@
     }
   }
 
-  // Hover: pause auto, show that strip
+  // Hover / click: pause auto, show that strip
   strips.forEach((strip, i) => {
     strip.addEventListener('mouseenter', () => {
       clearTimeout(autoTimer);
@@ -3447,6 +3463,9 @@
     });
     strip.addEventListener('mouseleave', () => {
       activateStrip(current, true);
+    });
+    strip.addEventListener('click', () => {
+      activateStrip(i, true);
     });
   });
 
@@ -3532,11 +3551,37 @@
   }
 
   featTabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => activateFeat(i));
+    tab.addEventListener('click', () => {
+      activateFeat(i);
+      if (window.innerWidth <= 768) {
+        setTimeout(() => tab.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+      }
+    });
   });
 
   // init panel 0
   setTimeout(() => animatePanel(0), 600);
+
+  // ── Mobile: features accordion — mover panels para dentro das tabs ──
+  if (window.innerWidth <= 768) {
+    const featPanelWrapper = document.querySelector('.features-panel');
+    featPanels.forEach((panel, i) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'feat-mobile-content';
+      wrapper.appendChild(panel);
+      featTabs[i].appendChild(wrapper);
+    });
+    if (featPanelWrapper) featPanelWrapper.style.display = 'none';
+  }
+
+  // ── Vídeo hero: forçar play em mobile (iOS Safari) ──
+  const heroVid = document.getElementById('hero-video');
+  if (heroVid) {
+    heroVid.play().catch(() => {});
+    document.addEventListener('touchstart', () => {
+      if (heroVid.paused) heroVid.play().catch(() => {});
+    }, { once: true });
+  }
 
   // ── FAQ accordion ──
   document.querySelectorAll('.faq-item').forEach(item => {
