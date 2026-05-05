@@ -439,7 +439,7 @@
 
   .area-strip-progress-fill {
     height: 100%;
-    background: #000000;
+    background: #1874EF;
     border-radius: 2px;
     width: 0%;
     transition: width 0.05s linear;
@@ -1178,7 +1178,7 @@
     color: white; letter-spacing: -1.5px;
     line-height: 1;
   }
-  .footer-stat-val span { color: var(--blue-mid); }
+  .footer-stat-val span { color: white; }
 
   .footer-stat-label {
     font-size: 13px; color: rgba(255,255,255,0.35);
@@ -1236,6 +1236,8 @@
   /* Hamburger: hidden on desktop */
   .hamburger { display: none; transition: opacity 0.3s ease; }
   nav.scrolled .hamburger:not(.open) { opacity: 0 !important; pointer-events: none !important; }
+  .nav-logo { transition: opacity 0.3s ease, transform 0.3s ease; }
+  nav.scrolled .nav-logo { opacity: 0; pointer-events: none; transform: translateY(-4px); }
 
   /* ══════════════════════════════════════════
      RESPONSIVE — TABLET LANDSCAPE (≤1024px)
@@ -1283,45 +1285,46 @@
     .nav-links.open {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      align-items: stretch;
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.97);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      padding: 100px 8% 48px;
+      top: 64px; left: 0; right: 0;
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 8px 5% 16px;
       gap: 0;
       z-index: 98;
-      animation: slideDown 0.35s ease;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      animation: slideDown 0.25s ease;
     }
     @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-16px); }
+      from { opacity: 0; transform: translateY(-8px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     .nav-links.open li { width: 100%; }
+    /* hide less important links on mobile */
+    .nav-links.open li.mobile-hide { display: none; }
     .nav-links.open a {
       display: block;
-      color: rgba(255,255,255,0.8) !important;
-      font-family: 'Manrope', sans-serif;
-      font-size: 22px; font-weight: 600;
-      padding: 16px 0;
-      text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      letter-spacing: -0.3px;
+      color: rgba(255,255,255,0.75) !important;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px; font-weight: 500;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       transition: color 0.2s;
     }
     .nav-links.open a:hover { color: white !important; }
     .nav-links.open li:last-child a { border-bottom: none; }
     .nav-links.open .btn-nav {
-      margin-top: 24px;
+      margin-top: 8px;
       text-align: center;
-      padding: 16px 32px;
+      padding: 12px 24px;
       border-radius: 50px;
-      font-size: 16px;
-      width: 100%;
+      font-size: 14px;
       background: #1874EF !important;
       display: block;
+      border-bottom: none !important;
+      color: white !important;
     }
 
     .hamburger {
@@ -1442,7 +1445,7 @@
     /* Nav */
     nav { padding: 0 4%; height: 64px; }
     .logo svg { height: 26px; }
-    .nav-links.open { top: 64px; padding: 20px 4% 28px; }
+    .nav-links.open { top: 64px; padding: 8px 4% 14px; }
 
     /* Hero */
     .hero { padding: 88px 4% 48px; }
@@ -2382,7 +2385,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="logo">
+  <a href="#" class="logo nav-logo">
     <svg viewBox="0 0 1497.4 310.7" xmlns="http://www.w3.org/2000/svg" style="height:32px;width:auto">
       <polygon class="nav-logo-poly" points="28.7 5.3 2.3 31.7 2.3 97.4 49.9 97.4 49.9 52.9 124.4 52.9 124.4 97.5 2.3 219.7 2.3 305.4 172.1 305.4 172.1 257.8 49.9 257.8 49.9 239.4 172.1 117.2 172.1 31.8 145.6 5.3 28.7 5.3"/>
       <polygon class="nav-logo-poly" points="1414.9 5.3 1414.9 5.3 1367.3 5.3 1367.3 5.3 1287 5.3 1287 52.4 1287.3 52.9 1367.3 52.9 1367.3 302 1367.3 305.4 1414.9 305.4 1414.9 52.9 1495.1 52.9 1495.1 41.3 1495.2 41.3 1495.2 5.3 1414.9 5.3"/>
@@ -2402,11 +2405,11 @@
   <ul class="nav-links" id="nav-links">
     <li><a href="#home">Home</a></li>
     <li><a href="#funcionalidades">Funcionalidades</a></li>
-    <li><a href="#como-funciona">Como Funciona</a></li>
+    <li class="mobile-hide"><a href="#como-funciona">Como Funciona</a></li>
     <li><a href="#demo">Demo</a></li>
-    <li><a href="#clientes">Clientes</a></li>
-    <li><a href="#areas">Áreas</a></li>
-    <li><a href="#questoes">Questões</a></li>
+    <li class="mobile-hide"><a href="#clientes">Clientes</a></li>
+    <li class="mobile-hide"><a href="#areas">Áreas</a></li>
+    <li class="mobile-hide"><a href="#questoes">Questões</a></li>
     <li><a href="#contactos">Contactos</a></li>
     <li><a href="#contactos" class="btn-nav">Fale Connosco</a></li>
   </ul>
@@ -2429,7 +2432,7 @@
 
   <!-- Conteúdo -->
   <div class="hero-content">
-    <h1>One Ticket,<br><em>too many experiences.</em></h1>
+    <h1>1 Ticket,<br><em>2 Many Opportunities 🚀</em></h1>
   </div>
 
   <div class="scroll-indicator">
@@ -2450,62 +2453,92 @@
 
     <!-- 01 Estádios -->
     <div class="area-strip active" data-index="0">
-      <img class="area-strip-img"
-        src="cadeiras 24.jpg"
-        alt="Estádios" />
+      <img class="area-strip-img" src="cadeiras 24.jpg" alt="Estádios" />
       <div class="area-strip-grad"></div>
+      <div class="area-strip-label-v">
+        <span class="area-strip-label-v-num">01</span>
+        <span class="area-strip-label-v-line"></span>
+        <span class="area-strip-label-v-name">Estádios</span>
+      </div>
       <div class="area-strip-content">
+        <span class="area-strip-icon">🏟️</span>
         <div class="area-strip-name">Estádios</div>
+        <div class="area-strip-desc">Gestão completa de bilheteira para futebol e desporto.</div>
         <div class="area-strip-progress"><div class="area-strip-progress-fill"></div></div>
       </div>
+      <div class="area-strip-counter">01 / 05</div>
     </div>
 
     <!-- 02 Pavilhões -->
     <div class="area-strip" data-index="1">
-      <img class="area-strip-img"
-        src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1200&auto=format&fit=crop&q=80"
-        alt="Pavilhões" />
+      <img class="area-strip-img" src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1200&auto=format&fit=crop&q=80" alt="Pavilhões" />
       <div class="area-strip-grad"></div>
+      <div class="area-strip-label-v">
+        <span class="area-strip-label-v-num">02</span>
+        <span class="area-strip-label-v-line"></span>
+        <span class="area-strip-label-v-name">Pavilhões</span>
+      </div>
       <div class="area-strip-content">
+        <span class="area-strip-icon">🏀</span>
         <div class="area-strip-name">Pavilhões</div>
+        <div class="area-strip-desc">Controlo de acessos e lotação em tempo real.</div>
         <div class="area-strip-progress"><div class="area-strip-progress-fill"></div></div>
       </div>
+      <div class="area-strip-counter">02 / 05</div>
     </div>
 
     <!-- 03 Feiras -->
     <div class="area-strip" data-index="2">
-      <img class="area-strip-img"
-        src="fsm.jpeg"
-        alt="Feiras" />
+      <img class="area-strip-img" src="fsm.jpeg" alt="Feiras" />
       <div class="area-strip-grad"></div>
+      <div class="area-strip-label-v">
+        <span class="area-strip-label-v-num">03</span>
+        <span class="area-strip-label-v-line"></span>
+        <span class="area-strip-label-v-name">Feiras</span>
+      </div>
       <div class="area-strip-content">
+        <span class="area-strip-icon">🎡</span>
         <div class="area-strip-name">Feiras</div>
+        <div class="area-strip-desc">Venda de passes e ingressos diários para grandes eventos.</div>
         <div class="area-strip-progress"><div class="area-strip-progress-fill"></div></div>
       </div>
+      <div class="area-strip-counter">03 / 05</div>
     </div>
 
     <!-- 04 Concertos -->
     <div class="area-strip" data-index="3">
-      <img class="area-strip-img"
-        src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&auto=format&fit=crop&q=80"
-        alt="Concertos" />
+      <img class="area-strip-img" src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&auto=format&fit=crop&q=80" alt="Concertos" />
       <div class="area-strip-grad"></div>
+      <div class="area-strip-label-v">
+        <span class="area-strip-label-v-num">04</span>
+        <span class="area-strip-label-v-line"></span>
+        <span class="area-strip-label-v-name">Concertos</span>
+      </div>
       <div class="area-strip-content">
+        <span class="area-strip-icon">🎵</span>
         <div class="area-strip-name">Concertos</div>
+        <div class="area-strip-desc">Venda de bilhetes com mapa de lugares interativo.</div>
         <div class="area-strip-progress"><div class="area-strip-progress-fill"></div></div>
       </div>
+      <div class="area-strip-counter">04 / 05</div>
     </div>
 
     <!-- 05 Teatros -->
     <div class="area-strip" data-index="4">
-      <img class="area-strip-img"
-        src="https://images.unsplash.com/photo-1507924538820-ede94a04019d?w=1200&auto=format&fit=crop&q=80"
-        alt="Teatros" />
+      <img class="area-strip-img" src="https://images.unsplash.com/photo-1507924538820-ede94a04019d?w=1200&auto=format&fit=crop&q=80" alt="Teatros" />
       <div class="area-strip-grad"></div>
+      <div class="area-strip-label-v">
+        <span class="area-strip-label-v-num">05</span>
+        <span class="area-strip-label-v-line"></span>
+        <span class="area-strip-label-v-name">Teatros</span>
+      </div>
       <div class="area-strip-content">
+        <span class="area-strip-icon">🎭</span>
         <div class="area-strip-name">Teatros</div>
+        <div class="area-strip-desc">Reservas de lugares e gestão de temporadas.</div>
         <div class="area-strip-progress"><div class="area-strip-progress-fill"></div></div>
       </div>
+      <div class="area-strip-counter">05 / 05</div>
     </div>
 
   </div>
@@ -3363,7 +3396,7 @@
         <polygon fill="white" points="1006.7 5.3 959.1 5.3 959.1 7.3 959.1 88.7 916.2 131.6 884.8 131.6 884.8 5.3 837.2 5.3 837.2 302 837.2 305.4 884.8 305.4 884.8 232.2 884.8 232.2 884.8 179.2 916.2 179.2 959.1 222.1 959.1 303.4 959.1 305.4 1006.7 305.4 1006.7 263 1006.7 263 1006.7 202.3 1006.7 202.3 1006.7 202.3 959.7 155.4 1006.7 108.4 1006.7 108.4 1006.7 108.4 1006.7 47.7 1006.7 47.7 1006.7 5.3"/>
         </svg>
         <br>
-        <div class="footer-brand-tagline">One Ticket,<br><em>too many experiences.</em></div>
+        <div class="footer-brand-tagline">1 Ticket,<br><em>2 Many Opportunities 🚀</em></div>
       </div>
 
       <div class="footer-col">
@@ -3392,6 +3425,22 @@
 
     </div>
 
+
+    <!-- Stats strip -->
+    <div class="footer-stats" id="footer-stats">
+      <div class="footer-stat">
+        <div class="footer-stat-val"><span class="fs-num" data-target="1500" data-suffix="+">0</span></div>
+        <div class="footer-stat-label">Bilhetes emitidos por dia</div>
+      </div>
+      <div class="footer-stat">
+        <div class="footer-stat-val"><span class="fs-num" data-target="50" data-suffix="+">0</span></div>
+        <div class="footer-stat-label">Clientes ativos</div>
+      </div>
+      <div class="footer-stat">
+        <div class="footer-stat-val"><span class="fs-num" data-target="98" data-suffix="%">0</span></div>
+        <div class="footer-stat-label">Taxa de satisfação</div>
+      </div>
+    </div>
 
     <!-- Bottom bar -->
     <div class="footer-bottom-wrap">
@@ -3664,6 +3713,29 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.15 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ── Footer stats count-up ──
+  function countUp(el, target, suffix, duration) {
+    const start = performance.now();
+    function frame(now) {
+      const pct = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - pct, 3);
+      el.textContent = Math.round(ease * target) + suffix;
+      if (pct < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  const statsObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      statsObs.unobserve(e.target);
+      e.target.querySelectorAll('.fs-num').forEach(el => {
+        countUp(el, +el.dataset.target, el.dataset.suffix, 1800);
+      });
+    });
+  }, { threshold: 0.4 });
+  const statsEl = document.getElementById('footer-stats');
+  if (statsEl) statsObs.observe(statsEl);
 
   // ── Demo Bilheteira ──
   let demoStep = 0;
