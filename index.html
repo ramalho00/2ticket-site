@@ -1460,9 +1460,8 @@
 
   /* Hamburger: hidden on desktop */
   .hamburger { display: none; transition: opacity 0.3s ease; }
-  nav.scrolled .hamburger:not(.open) { opacity: 0 !important; pointer-events: none !important; }
   .nav-logo { transition: opacity 0.3s ease, transform 0.3s ease; }
-  nav.scrolled .nav-logo { opacity: 0; pointer-events: none; transform: translateY(-4px); }
+  /* Logo always visible — never hide it */
 
   /* ══════════════════════════════════════════
      RESPONSIVE — TABLET LANDSCAPE (≤1024px)
@@ -1720,6 +1719,52 @@
     .footer-main { padding: 48px 4% 0; }
     .footer-stats { margin: 0 -4%; padding: 0 4%; }
   }
+
+  /* ─── PAYMENT PANEL ─── */
+  .fp-pay-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .fp-pay-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 14px 10px 10px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    transition: border-color 0.2s;
+  }
+  .fp-pay-card:hover { border-color: rgba(24,116,239,0.3); }
+  .fp-pay-logo {
+    height: 36px; width: 100%;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px;
+  }
+  .fp-pay-mb { background: #fff; }
+  .fp-pay-mb-text { font-size: 16px; font-weight: 900; color: #00529b; letter-spacing: 1px; }
+  .fp-pay-mb-sub { font-size: 7px; font-weight: 700; color: #00529b; letter-spacing: 1px; position: absolute; top: 24px; }
+  .fp-pay-mb { position: relative; flex-direction: column; gap: 0; }
+  .fp-pay-mbway { background: #fff; }
+  .fp-pay-visa { background: #fff; }
+  .fp-pay-mc { background: #fff; }
+  .fp-pay-mc-circles { position: relative; width: 44px; height: 28px; }
+  .fp-pay-mc-c1, .fp-pay-mc-c2 {
+    position: absolute; top: 0;
+    width: 28px; height: 28px; border-radius: 50%;
+  }
+  .fp-pay-mc-c1 { left: 0; background: #eb001b; }
+  .fp-pay-mc-c2 { left: 16px; background: #f79e1b; }
+  .fp-pay-pp { background: #fff; }
+  .fp-pay-name { font-size: 10px; color: rgba(255,255,255,0.45); font-weight: 500; }
+  .fp-pay-info-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    background: rgba(24,116,239,0.07);
+    border: 1px solid rgba(24,116,239,0.15);
+    border-radius: 10px; padding: 14px 16px; gap: 8px; text-align: center;
+  }
+  .fp-pay-info-val { font-family: 'Manrope', sans-serif; font-size: 20px; font-weight: 800; color: white; }
+  .fp-pay-info-lbl { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 2px; }
 
   /* ─── HOW IT WORKS ─── */
   .how-section {
@@ -2778,9 +2823,10 @@
 
 
   @media (max-width: 768px) {
-    /* How accordion: stack visual above accordion */
+    /* How accordion: single column, visual moves via JS between steps */
     .how-inner { grid-template-columns: 1fr; gap: 40px; }
-    .how-vc { order: -1; }
+    /* Visual card inside accordion on mobile: give breathing room */
+    .how-acc .how-vc { margin: 12px 0; border-radius: 16px; }
     /* Showcase grid: single column */
     .showcase-grid { grid-template-columns: 1fr; }
   }
@@ -3029,6 +3075,20 @@
           </div>
         </div>
       </div>
+
+      <div class="feat-tab" data-feat="4">
+        <div class="feat-tab-line"></div>
+        <div class="feat-tab-num">05</div>
+        <div class="feat-tab-body">
+          <div class="feat-tab-name">Pagamentos</div>
+          <div class="feat-tab-desc">Métodos de pagamento instantâneos e seguros para o cliente final.</div>
+          <div class="feat-tab-pills">
+            <span class="feat-tab-pill">MBWay</span>
+            <span class="feat-tab-pill">Multibanco</span>
+            <span class="feat-tab-pill">Visa / MC</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- RIGHT PANELS -->
@@ -3202,6 +3262,72 @@
               <span style="font-size:10px;color:var(--muted)">J13</span>
               <span style="font-size:10px;color:var(--muted)">J14</span>
               <span style="font-size:10px;color:var(--muted)">J15</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 05: Pagamentos -->
+      <div class="feat-panel" data-panel="4">
+        <div class="feat-panel-card">
+          <div class="feat-panel-topbar">
+            <div class="feat-panel-dot" style="background:#1874EF"></div>
+            <div class="feat-panel-dot" style="background:#1874EF"></div>
+            <div class="feat-panel-dot" style="background:#1874EF"></div>
+            <span class="feat-panel-topbar-title">Pagamentos instantâneos</span>
+            <span class="feat-panel-topbar-badge">Seguro</span>
+          </div>
+          <div class="feat-panel-body">
+            <div class="fp-pay-grid">
+              <div class="fp-pay-card">
+                <div class="fp-pay-logo fp-pay-mb">
+                  <span class="fp-pay-mb-text">MB</span>
+                  <span class="fp-pay-mb-sub">MULTIBANCO</span>
+                </div>
+                <div class="fp-pay-name">Multibanco</div>
+              </div>
+              <div class="fp-pay-card">
+                <div class="fp-pay-logo fp-pay-mbway">
+                  <span class="fp-pay-mb-text" style="font-size:13px">MB</span>
+                  <span style="font-size:11px;font-weight:800;color:#e2231a;letter-spacing:0">WAY</span>
+                </div>
+                <div class="fp-pay-name">MB WAY</div>
+              </div>
+              <div class="fp-pay-card">
+                <div class="fp-pay-logo fp-pay-visa">
+                  <span style="font-size:18px;font-weight:900;font-style:italic;color:#1434CB;letter-spacing:-1px">VISA</span>
+                </div>
+                <div class="fp-pay-name">Visa</div>
+              </div>
+              <div class="fp-pay-card">
+                <div class="fp-pay-logo fp-pay-mc">
+                  <div class="fp-pay-mc-circles">
+                    <div class="fp-pay-mc-c1"></div>
+                    <div class="fp-pay-mc-c2"></div>
+                  </div>
+                </div>
+                <div class="fp-pay-name">Mastercard</div>
+              </div>
+              <div class="fp-pay-card">
+                <div class="fp-pay-logo fp-pay-pp">
+                  <span style="font-size:17px;font-weight:800;color:#003087;letter-spacing:-0.5px">Pay<span style="color:#009cde">Pal</span></span>
+                </div>
+                <div class="fp-pay-name">PayPal</div>
+              </div>
+            </div>
+            <div class="fp-pay-info-row">
+              <div class="fp-pay-info-item">
+                <div class="fp-pay-info-val">100%</div>
+                <div class="fp-pay-info-lbl">Seguro SSL</div>
+              </div>
+              <div class="fp-pay-info-item">
+                <div class="fp-pay-info-val" style="color:#1874EF">&lt; 2s</div>
+                <div class="fp-pay-info-lbl">Confirmação</div>
+              </div>
+              <div class="fp-pay-info-item">
+                <div class="fp-pay-info-val">5+</div>
+                <div class="fp-pay-info-lbl">Métodos</div>
+              </div>
             </div>
           </div>
         </div>
@@ -4151,6 +4277,18 @@
       body.appendChild(wrapper);
     });
     if (featPanelWrapper) featPanelWrapper.style.display = 'none';
+  }
+
+  // ── Mobile: mover visual card do how-section para entre passo 1 e 2 ──
+  if (window.innerWidth <= 768) {
+    const howVc   = document.querySelector('.how-vc');
+    const howAcc  = document.getElementById('how-acc');
+    const step1   = howAcc ? howAcc.querySelector('.how-acc-item[data-step="1"]') : null;
+    if (howVc && step1) {
+      howVc.style.margin = '0 0 0 0';
+      howVc.style.order  = '';
+      howAcc.insertBefore(howVc, step1);
+    }
   }
 
   // ── Vídeo hero: autoplay sem interação (iOS Safari) ──
