@@ -1208,30 +1208,6 @@
      MEGA ANIMATION LAYER
      ════════════════════════════════════════════ */
 
-  /* Custom cursor */
-  #cursor-dot, #cursor-ring {
-    position: fixed; pointer-events: none; z-index: 9999; border-radius: 50%;
-    transform: translate(-50%, -50%); will-change: left, top;
-  }
-  #cursor-dot {
-    width: 5px; height: 5px; background: #1874EF;
-    top: 0; left: 0;
-    box-shadow: 0 0 6px rgba(24,116,239,0.8);
-    transition: opacity 0.3s;
-  }
-  #cursor-ring {
-    width: 30px; height: 30px;
-    border: 1.5px solid rgba(24,116,239,0.6);
-    top: 0; left: 0;
-    transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background 0.25s ease, opacity 0.3s;
-  }
-  body.cur-hover #cursor-ring {
-    width: 48px; height: 48px;
-    border-color: rgba(24,116,239,0.9);
-    background: rgba(24,116,239,0.07);
-  }
-  @media (hover: none) { #cursor-dot, #cursor-ring { display: none; } }
-
   /* Scroll progress bar */
   #scroll-bar {
     position: fixed; top: 0; left: 0; height: 2px; width: 0%;
@@ -2203,67 +2179,156 @@
   .demo-btn-next:hover { background: #1874EF; transform: translateY(-1px); }
 
 
-  /* ─── COMO FUNCIONA ─── */
+  /* ─── COMO FUNCIONA (ACCORDION) ─── */
   .how-section {
     background: #000000;
     padding: 120px 5%;
     overflow: hidden;
     position: relative;
   }
-
-  .how-section .section-tag { background: var(--blue-light); color: var(--blue); }
-  .how-section .section-title { color: #ffffff; }
-  .how-section .section-sub { color: rgba(255,255,255,0.5); }
-
-  .how-steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    margin-top: 72px;
-    position: relative;
-  }
-
-  /* connector line between steps */
-  .how-steps::before {
+  .how-section::before {
     content: '';
     position: absolute;
-    top: 52px; left: calc(16.66% + 20px); right: calc(16.66% + 20px);
-    height: 2px;
-    background: linear-gradient(90deg, var(--blue) 0%, var(--blue) 50%, var(--blue) 100%);
-    background-size: 12px 2px;
-    background-repeat: repeat-x;
-    opacity: 0.2;
-    z-index: 0;
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(24,116,239,0.05) 0%, transparent 70%);
+    top: -150px; right: -150px; pointer-events: none;
   }
 
-  .how-step {
-    display: flex; flex-direction: column; align-items: center;
-    text-align: center;
-    padding: 0 40px;
-    position: relative;
-    z-index: 1;
-    opacity: 1;
-    transform: none;
+  /* 2-col layout */
+  .how-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
-  .how-step:not(:last-child)::after {
-    content: '→';
-    position: absolute;
-    right: -12px; top: 40px;
-    font-size: 20px;
-    color: var(--blue);
-    opacity: 0.3;
+  /* Left: visual card */
+  .how-vc {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 60px rgba(24,116,239,0.05);
+    min-height: 360px;
   }
+  .how-vc-bar {
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 13px 18px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .how-vc-dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+  .how-vc-title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.35); margin-left: 8px; flex: 1; }
+  .how-vc-badge {
+    font-size: 10px; font-weight: 700; background: #1874EF; color: white;
+    padding: 2px 9px; border-radius: 50px;
+    box-shadow: 0 0 10px rgba(24,116,239,0.5);
+    animation: badge-pulse 2.5s ease-in-out infinite alternate;
+  }
+  .how-vc-body { padding: 22px 20px; }
+  .how-vc-screen { display: none; }
+  .how-vc-screen.active {
+    display: block;
+    animation: vc-in 0.45s cubic-bezier(0.22,1,0.36,1);
+  }
+  @keyframes vc-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .how-vc-label { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .how-vc-val {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; padding: 10px 13px;
+    font-size: 13px; color: white; font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .how-vc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .how-vc-row .how-vc-val { margin-bottom: 0; }
+  .how-vc-cats { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 4px; }
+  .how-vc-cat {
+    font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 50px;
+    border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.45);
+    background: rgba(255,255,255,0.03);
+  }
+  .how-vc-cat.active { background: rgba(24,116,239,0.18); border-color: rgba(24,116,239,0.45); color: white; }
+  .how-vc-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .how-vc-stat {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 14px;
+  }
+  .how-vc-stat-val { font-family: 'Manrope', sans-serif; font-size: 22px; font-weight: 800; color: white; line-height: 1; }
+  .how-vc-stat-lbl { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 3px; }
+  .how-vc-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .how-vc-bar-lbl { font-size: 11px; color: rgba(255,255,255,0.4); min-width: 38px; }
+  .how-vc-bar-track { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+  .how-vc-bar-fill { height: 100%; background: #1874EF; border-radius: 3px; }
+  .how-vc-bar-pct { font-size: 11px; color: #1874EF; font-weight: 600; min-width: 28px; text-align: right; }
+  .how-vc-gate-row {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;
+  }
+  .how-vc-gate-icon {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: rgba(24,116,239,0.15);
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+  }
+  .how-vc-gate-name { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.8); flex: 1; }
+  .how-vc-gate-ok { font-size: 10px; color: #1874EF; margin-top: 1px; }
+  .how-vc-gate-cnt { font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700; color: white; }
 
-  .how-step-num {
-    font-family: 'Manrope', sans-serif;
-    font-size: 11px; font-weight: 700;
-    color: var(--blue);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    opacity: 0.7;
+  /* Right: accordion */
+  .how-acc-wrap { display: flex; flex-direction: column; }
+  .how-acc-wrap .section-tag { margin-bottom: 16px; color: white; }
+  .how-acc-wrap .section-title { margin-bottom: 40px; }
+  .how-acc { border-top: 1px solid rgba(255,255,255,0.08); }
+  .how-acc-item { border-bottom: 1px solid rgba(255,255,255,0.08); overflow: hidden; }
+  .how-acc-header {
+    display: flex; align-items: center; gap: 16px;
+    padding: 22px 0; cursor: pointer;
   }
+  .how-acc-num {
+    width: 36px; height: 36px; min-width: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700;
+    color: rgba(255,255,255,0.4);
+    transition: background 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.3s;
+  }
+  .how-acc-item.active .how-acc-num {
+    background: #1874EF; border-color: #1874EF; color: white;
+    box-shadow: 0 0 16px rgba(24,116,239,0.5);
+  }
+  .how-acc-title {
+    flex: 1; font-family: 'Manrope', sans-serif;
+    font-size: 17px; font-weight: 700; color: rgba(255,255,255,0.45);
+    transition: color 0.2s;
+  }
+  .how-acc-item.active .how-acc-title { color: white; }
+  .how-acc-item:not(.active) .how-acc-header:hover .how-acc-title { color: rgba(255,255,255,0.75); }
+  .how-acc-arrow {
+    font-size: 20px; color: rgba(255,255,255,0.25); line-height: 1;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), color 0.2s;
+  }
+  .how-acc-item.active .how-acc-arrow { transform: rotate(45deg); color: #1874EF; }
+  .how-acc-body { max-height: 0; overflow: hidden; transition: max-height 0.45s cubic-bezier(0.22,1,0.36,1); }
+  .how-acc-item.active .how-acc-body { max-height: 200px; }
+  .how-acc-body p { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.75; font-weight: 300; padding: 0 0 12px 52px; }
+  .how-acc-tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 0 22px 52px; }
+  .how-acc-tag {
+    font-size: 11px; font-weight: 500;
+    background: rgba(24,116,239,0.14); color: white;
+    border: 1px solid rgba(24,116,239,0.25); padding: 3px 10px; border-radius: 50px;
+  }
+  .how-acc-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin: 4px 0 22px 52px;
+    font-size: 13px; font-weight: 600; color: #1874EF;
+    text-decoration: none; transition: opacity 0.2s;
+  }
+  .how-acc-cta:hover { opacity: 0.75; }
 
   .how-step-icon-wrap {
     width: 104px; height: 104px;
@@ -2327,24 +2392,146 @@
     padding: 4px 10px; border-radius: 50px;
   }
 
-  /* ─── BILHETEIRA DEMO ─── */
+  /* ─── PLATFORM SHOWCASE ─── */
   .demo-section {
-    background: var(--ink);
+    background: #000000;
     padding: 120px 5%;
     overflow: hidden;
+    position: relative;
   }
-
+  .demo-section::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(24,116,239,0.06) 0%, transparent 70%);
+    bottom: -80px; left: -80px; pointer-events: none;
+  }
+  .demo-header { margin-bottom: 64px; }
   .demo-section .section-tag { background: rgba(24,116,239,0.2); color: #FFFFFF; }
   .demo-section .section-title { color: white; }
   .demo-section .section-sub { color: rgba(255,255,255,0.45); }
 
-  .demo-inner {
-    margin-top: 64px;
+  /* 3-col showcase grid */
+  .showcase-grid {
     display: grid;
-    grid-template-columns: 340px 1fr;
-    gap: 40px;
-    min-height: 580px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
   }
+
+  .sc-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: border-color 0.35s, box-shadow 0.35s, transform 0.35s;
+  }
+  .sc-card:hover {
+    border-color: rgba(24,116,239,0.3);
+    box-shadow: 0 20px 60px rgba(24,116,239,0.1), 0 8px 32px rgba(0,0,0,0.4);
+    transform: translateY(-5px);
+  }
+  .sc-card-header {
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 13px 16px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .sc-dots { display: flex; gap: 5px; }
+  .sc-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .sc-card-title { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.35); margin-left: 6px; flex: 1; }
+  .sc-badge {
+    font-size: 10px; font-weight: 700; background: #1874EF; color: white;
+    padding: 2px 8px; border-radius: 50px;
+    animation: badge-pulse 2.5s ease-in-out infinite alternate;
+  }
+  .sc-card-body { padding: 18px 16px; flex: 1; }
+  .sc-card-footer {
+    padding: 14px 16px 18px; border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .sc-card-icon { font-size: 20px; margin-top: 2px; flex-shrink: 0; }
+  .sc-card-name { font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 700; color: white; margin-bottom: 3px; }
+  .sc-card-desc { font-size: 11px; color: rgba(255,255,255,0.4); line-height: 1.55; }
+
+  /* Stats row */
+  .sc-stats-row { display: flex; gap: 0; margin-bottom: 16px; }
+  .sc-stat { flex: 1; padding: 0 8px; border-right: 1px solid rgba(255,255,255,0.06); }
+  .sc-stat:first-child { padding-left: 0; }
+  .sc-stat:last-child { border-right: none; }
+  .sc-stat-val { font-family: 'Manrope', sans-serif; font-size: 16px; font-weight: 800; color: white; line-height: 1; }
+  .sc-stat-blue { color: #1874EF; }
+  .sc-stat-lbl { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 3px; }
+
+  /* Bar chart */
+  .sc-chart { display: flex; gap: 4px; align-items: flex-end; height: 52px; margin-top: 4px; }
+  .sc-chart-bar { flex: 1; border-radius: 3px 3px 0 0; background: rgba(24,116,239,0.22); transition: background 0.25s; }
+  .sc-chart-bar-hi { background: #1874EF; }
+  .sc-card:hover .sc-chart-bar { background: rgba(24,116,239,0.35); }
+  .sc-card:hover .sc-chart-bar-hi { background: #1874EF; filter: brightness(1.2); }
+
+  /* Event card inside */
+  .sc-event-card {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(24,116,239,0.08); border: 1px solid rgba(24,116,239,0.2);
+    border-radius: 10px; padding: 10px; margin-bottom: 14px;
+  }
+  .sc-event-img { width: 34px; height: 34px; border-radius: 8px; background: #000; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .sc-event-name { font-size: 12px; font-weight: 600; color: white; }
+  .sc-event-meta { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+  .sc-tickets-label { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 7px; }
+  .sc-ticket-row {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(24,116,239,0.1); border: 1px solid rgba(24,116,239,0.25);
+    border-radius: 8px; padding: 9px 10px; margin-bottom: 5px;
+  }
+  .sc-ticket-row-dim { background: rgba(255,255,255,0.02); border-color: rgba(255,255,255,0.07); }
+  .sc-ticket-cat { font-size: 11px; font-weight: 600; color: white; }
+  .sc-ticket-avail { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 1px; }
+  .sc-ticket-price { font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 700; color: white; margin-left: auto; }
+  .sc-ticket-check {
+    width: 18px; height: 18px; border-radius: 50%; background: #1874EF; color: white;
+    display: flex; align-items: center; justify-content: center; font-size: 9px; flex-shrink: 0;
+  }
+  .sc-nav-btn {
+    display: block; text-align: center; background: #1874EF; color: white;
+    font-size: 11px; font-weight: 600; padding: 9px; border-radius: 50px; margin-top: 8px;
+    cursor: pointer; box-shadow: 0 0 14px rgba(24,116,239,0.35);
+  }
+
+  /* Gate rows */
+  .sc-gate-row {
+    display: flex; align-items: center; gap: 9px;
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 8px; padding: 9px 10px; margin-bottom: 7px;
+  }
+  .sc-gate-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    background: rgba(24,116,239,0.15);
+    display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0;
+  }
+  .sc-gate-name { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.8); }
+  .sc-gate-ok { font-size: 10px; color: #1874EF; margin-top: 1px; }
+  .sc-gate-cnt { font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 700; color: white; margin-left: auto; }
+
+  /* QR scan preview */
+  .sc-qr-preview {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(24,116,239,0.2);
+    border-radius: 8px; padding: 9px 10px; margin-top: 4px; position: relative; overflow: hidden;
+  }
+  .sc-qr-icon { font-size: 16px; }
+  .sc-qr-line {
+    position: absolute; left: 0; right: 0; height: 1.5px;
+    background: linear-gradient(90deg, transparent, rgba(24,116,239,0.8), transparent);
+    animation: qr-scan 2s ease-in-out infinite;
+  }
+  @keyframes qr-scan { 0%,100% { top: 20%; } 50% { top: 80%; } }
+  .sc-qr-text { font-size: 11px; font-weight: 700; color: #1874EF; }
+
+  /* unused demo classes kept for compat */
+  .demo-inner { display: none; }
 
   /* Left: event list */
   .demo-events {
@@ -2591,36 +2778,14 @@
 
 
   @media (max-width: 768px) {
-    .how-steps { grid-template-columns: 1fr; gap: 48px; }
-    .how-steps::before { display: none; }
-    .how-step:not(:last-child)::after { display: none; }
-    /* CTA box */
-    .how-cta { flex-direction: column; gap: 24px; padding: 32px 24px; }
-    .how-cta-action { width: 100%; }
-    .how-cta-action .btn-primary { width: 100%; justify-content: center; }
-    /* Demo */
-    .demo-inner { grid-template-columns: 1fr; }
-    .demo-events { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .demo-event-card { flex-direction: column; gap: 8px; padding: 12px; }
-    .demo-event-img { width: 40px; height: 40px; font-size: 18px; }
-    /* Demo panels: static flow no mobile para botões não ficarem cortados */
-    .demo-flow { overflow: visible; }
-    .demo-panels { position: static; }
-    .demo-panel {
-      position: static !important;
-      opacity: 1 !important;
-      transform: none !important;
-      pointer-events: auto !important;
-      transition: none !important;
-      display: none;
-      padding: 20px 16px 24px;
-    }
-    .demo-panel.active { display: block; }
+    /* How accordion: stack visual above accordion */
+    .how-inner { grid-template-columns: 1fr; gap: 40px; }
+    .how-vc { order: -1; }
+    /* Showcase grid: single column */
+    .showcase-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 480px) {
-    .demo-events { grid-template-columns: 1fr; }
-    .demo-form-row { grid-template-columns: 1fr; }
-    .demo-ticket-meta-row { grid-template-columns: repeat(3,1fr); }
+    .sc-stats-row { grid-template-columns: 1fr 1fr; }
     /* Feature panel chart fix */
     .feat-mobile-content .fp-stat-row { flex-direction: column; gap: 8px; }
     .feat-mobile-content .fp-stat { width: 100%; }
@@ -2632,10 +2797,8 @@
 </head>
 <body>
 
-<!-- UI layer: scroll progress + custom cursor -->
+<!-- UI layer: scroll progress -->
 <div id="scroll-bar"></div>
-<div id="cursor-dot"></div>
-<div id="cursor-ring"></div>
 
 <!-- NAV -->
 <nav>
@@ -3050,63 +3213,157 @@
 
 <!-- HOW IT WORKS -->
 <section class="how-section" id="como-funciona">
-  <div class="how-header">
-    <h2 class="section-title">Simples. Rápido. <em>Poderoso.</em></h2>
-  </div>
- 
-  <div class="how-steps">
+  <div class="how-inner">
 
-    <div class="how-step">
-      <div class="how-step-icon">
-        <div class="how-step-icon-inner">🗓️</div>
-        <span class="how-step-num">01</span>
+    <!-- LEFT: visual card -->
+    <div class="how-vc">
+      <div class="how-vc-bar">
+        <div class="how-vc-dot"></div><div class="how-vc-dot"></div><div class="how-vc-dot"></div>
+        <span class="how-vc-title" id="how-vc-title">Criação de Evento</span>
+        <span class="how-vc-badge" id="how-vc-badge">Passo 1</span>
       </div>
-      <div class="how-step-title">Cria o teu evento</div>
-      <div class="how-step-desc">Defina o nome, data, localização, categorias de bilhetes, limites de lotação e regras de compra personalizadas.</div>
-      <div class="how-step-tags">
-        <span class="how-step-tag">Categorias</span>
-        <span class="how-step-tag">Lotação</span>
-        <span class="how-step-tag">Datas</span>
+      <div class="how-vc-body">
+
+        <!-- Screen 1: Criação de Evento -->
+        <div class="how-vc-screen active" id="hv-0">
+          <div class="how-vc-label">Detalhes do Evento</div>
+          <div class="how-vc-val" style="margin-bottom:14px">FC Porto × Sporting CP</div>
+          <div class="how-vc-row">
+            <div>
+              <div class="how-vc-label">Data</div>
+              <div class="how-vc-val">29 Mar 2025</div>
+            </div>
+            <div>
+              <div class="how-vc-label">Lotação</div>
+              <div class="how-vc-val">3 500</div>
+            </div>
+          </div>
+          <div class="how-vc-label">Categorias</div>
+          <div class="how-vc-cats">
+            <span class="how-vc-cat active">Cat. A — €22</span>
+            <span class="how-vc-cat active">Cat. B — €15</span>
+            <span class="how-vc-cat">VIP — €65</span>
+            <span class="how-vc-cat">Sócio — €10</span>
+          </div>
+        </div>
+
+        <!-- Screen 2: Venda de Bilhetes -->
+        <div class="how-vc-screen" id="hv-1">
+          <div class="how-vc-stat-row">
+            <div class="how-vc-stat">
+              <div class="how-vc-stat-val" id="hvc-sold">1 932</div>
+              <div class="how-vc-stat-lbl">Bilhetes vendidos</div>
+            </div>
+            <div class="how-vc-stat">
+              <div class="how-vc-stat-val" id="hvc-pct">55%</div>
+              <div class="how-vc-stat-lbl">Ocupação</div>
+            </div>
+          </div>
+          <div class="how-vc-bar-row">
+            <span class="how-vc-bar-lbl">Cat. A</span>
+            <div class="how-vc-bar-track"><div class="how-vc-bar-fill" style="width:82%"></div></div>
+            <span class="how-vc-bar-pct">82%</span>
+          </div>
+          <div class="how-vc-bar-row">
+            <span class="how-vc-bar-lbl">Cat. B</span>
+            <div class="how-vc-bar-track"><div class="how-vc-bar-fill" style="width:65%"></div></div>
+            <span class="how-vc-bar-pct">65%</span>
+          </div>
+          <div class="how-vc-bar-row">
+            <span class="how-vc-bar-lbl">VIP</span>
+            <div class="how-vc-bar-track"><div class="how-vc-bar-fill" style="width:40%"></div></div>
+            <span class="how-vc-bar-pct">40%</span>
+          </div>
+        </div>
+
+        <!-- Screen 3: Controlo em Tempo Real -->
+        <div class="how-vc-screen" id="hv-2">
+          <div class="how-vc-gate-row">
+            <div class="how-vc-gate-icon">🚪</div>
+            <div style="flex:1">
+              <div class="how-vc-gate-name">Porta Norte — T1</div>
+              <div class="how-vc-gate-ok">● Operacional</div>
+            </div>
+            <div class="how-vc-gate-cnt" id="hvc-g1">847</div>
+          </div>
+          <div class="how-vc-gate-row">
+            <div class="how-vc-gate-icon">🚪</div>
+            <div style="flex:1">
+              <div class="how-vc-gate-name">Porta Sul — T2</div>
+              <div class="how-vc-gate-ok">● Operacional</div>
+            </div>
+            <div class="how-vc-gate-cnt" id="hvc-g2">612</div>
+          </div>
+          <div class="how-vc-gate-row">
+            <div class="how-vc-gate-icon">📱</div>
+            <div style="flex:1">
+              <div class="how-vc-gate-name">PDA — Setor VIP</div>
+              <div class="how-vc-gate-ok" style="color:rgba(255,255,255,0.35)">● A verificar…</div>
+            </div>
+            <div class="how-vc-gate-cnt" id="hvc-g3">203</div>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div class="how-step">
-      <div class="how-step-icon">
-        <div class="how-step-icon-inner">🎟️</div>
-        <span class="how-step-num">02</span>
-      </div>
-      <div class="how-step-title">Vende bilhetes</div>
-      <div class="how-step-desc">Bilheteira física e online em simultâneo. Os espetadores compram onde for mais cómodo , o cliente gerencia tudo num só lugar.</div>
-      <div class="how-step-tags">
-        <span class="how-step-tag">Online</span>
-        <span class="how-step-tag">Presencial</span>
-        <span class="how-step-tag">Omnichannel</span>
+    <!-- RIGHT: accordion -->
+    <div class="how-acc-wrap">
+      <span class="section-tag">Como Funciona</span>
+      <h2 class="section-title">Simples. Rápido. <em>Poderoso.</em></h2>
+      <div class="how-acc" id="how-acc">
+
+        <div class="how-acc-item active" data-step="0">
+          <div class="how-acc-header">
+            <div class="how-acc-num">01</div>
+            <div class="how-acc-title">Cria o teu evento</div>
+            <div class="how-acc-arrow">+</div>
+          </div>
+          <div class="how-acc-body">
+            <p>Defina o nome, data, localização, categorias de bilhetes, limites de lotação e regras de compra personalizadas — em minutos.</p>
+            <div class="how-acc-tags">
+              <span class="how-acc-tag">Categorias</span>
+              <span class="how-acc-tag">Lotação</span>
+              <span class="how-acc-tag">Datas</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-acc-item" data-step="1">
+          <div class="how-acc-header">
+            <div class="how-acc-num">02</div>
+            <div class="how-acc-title">Vende bilhetes</div>
+            <div class="how-acc-arrow">+</div>
+          </div>
+          <div class="how-acc-body">
+            <p>Bilheteira física e online em simultâneo. Os espetadores compram onde for mais cómodo; o cliente gere tudo num só lugar.</p>
+            <div class="how-acc-tags">
+              <span class="how-acc-tag">Online</span>
+              <span class="how-acc-tag">Presencial</span>
+              <span class="how-acc-tag">Omnichannel</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-acc-item" data-step="2">
+          <div class="how-acc-header">
+            <div class="how-acc-num">03</div>
+            <div class="how-acc-title">Controla em tempo real</div>
+            <div class="how-acc-arrow">+</div>
+          </div>
+          <div class="how-acc-body">
+            <p>Valida bilhetes nos PDA's, monitoriza acessos por setor e acompanha as vendas e entradas ao minuto.</p>
+            <div class="how-acc-tags">
+              <span class="how-acc-tag">PDA's</span>
+              <span class="how-acc-tag">Analytics</span>
+            </div>
+            <a href="#contactos" class="how-acc-cta">Agendar demonstração →</a>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div class="how-step">
-      <div class="how-step-icon">
-        <div class="how-step-icon-inner">📊</div>
-        <span class="how-step-num">03</span>
-      </div>
-      <div class="how-step-title">Controla em tempo real</div>
-      <div class="how-step-desc">Valida bilhetes nos PDA's, monitoriza acessos por setor e acompanha as vendas e entradas ao minuto.</div>
-      <div class="how-step-tags">
-        <span class="how-step-tag">PDA's</span>
-        <span class="how-step-tag">Analytics</span>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="how-cta">
-    <div class="how-cta-text">
-      <div class="how-cta-title">Pronto para experimentar?</div>
-      <div class="how-cta-sub">Fale connosco e veja a 2TICKET em ação.</div>
-    </div>
-    <div class="how-cta-action">
-      <a href="#contactos" class="btn-primary">Agendar demonstração <span>→</span></a>
-    </div>
   </div>
 </section>
 
@@ -3293,198 +3550,170 @@
   </div>
 </section>
 
-<!-- DEMO -->
+<!-- DEMO / SHOWCASE -->
 <section class="demo-section" id="demo">
-  <h2 class="section-title">Veja o fluxo de <em>compra</em></h2>
-  <p class="section-sub">Explore como um utilizador compra o seu bilhete — do evento ao bilhete.</p>
+  <div style="text-align:center;margin-bottom:56px">
+    <span class="section-tag">Plataforma</span>
+    <h2 class="section-title" style="margin-top:12px">Tudo num só <em>ecrã</em></h2>
+    <p class="section-sub">Três perspetivas do ecossistema 2TICKET em ação.</p>
+  </div>
 
-  <div class="demo-inner">
+  <div class="showcase-grid">
 
-    <!-- Event list -->
-    <div class="demo-events">
-      <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px">Eventos disponíveis</div>
-
-      <div class="demo-event-card active" onclick="selectEvent(this,'FC Porto × Sporting CP','Futebol · Estádio do Dragão','29 Mar 2025','⚽','#000000','Cat. Ouro — €25')">
-        <div class="demo-event-img" style="background:#000000">⚽</div>
-        <div class="demo-event-info">
-          <div class="demo-event-name">FC Porto × Sporting </div>
-          <div class="demo-event-meta">29 Mar · Estádio do Dragão</div>
-          <div class="demo-event-price">A partir de €18</div>
+    <!-- Card 1: Admin Panel -->
+    <div class="sc-card fade-up">
+      <div class="sc-card-header">
+        <div class="sc-dots">
+          <div class="sc-dot"></div><div class="sc-dot"></div><div class="sc-dot"></div>
+        </div>
+        <div class="sc-card-title">Painel de Administração</div>
+        <div class="sc-badge sc-badge-live">● Live</div>
+      </div>
+      <div class="sc-card-body">
+        <div class="sc-stats-row">
+          <div class="sc-stat">
+            <div class="sc-stat-val sc-stat-blue" id="sc-sold">1 932</div>
+            <div class="sc-stat-lbl">Bilhetes vendidos</div>
+          </div>
+          <div class="sc-stat">
+            <div class="sc-stat-val">€34 776</div>
+            <div class="sc-stat-lbl">Receita total</div>
+          </div>
+          <div class="sc-stat">
+            <div class="sc-stat-val sc-stat-blue">55%</div>
+            <div class="sc-stat-lbl">Ocupação</div>
+          </div>
+        </div>
+        <div class="sc-chart" id="sc-chart">
+          <div class="sc-chart-bar" style="height:45%"></div>
+          <div class="sc-chart-bar" style="height:60%"></div>
+          <div class="sc-chart-bar" style="height:50%"></div>
+          <div class="sc-chart-bar sc-chart-bar-hi" style="height:100%"></div>
+          <div class="sc-chart-bar" style="height:75%"></div>
+          <div class="sc-chart-bar" style="height:65%"></div>
+          <div class="sc-chart-bar" style="height:80%"></div>
+          <div class="sc-chart-bar" style="height:55%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:4px">
+          <span style="font-size:9px;color:rgba(255,255,255,0.25)">J8</span>
+          <span style="font-size:9px;color:rgba(255,255,255,0.25)">J9</span>
+          <span style="font-size:9px;color:rgba(255,255,255,0.25)">J10</span>
+          <span style="font-size:9px;color:#1874EF;font-weight:700">J11</span>
+          <span style="font-size:9px;color:rgba(255,255,255,0.25)">J12</span>
+          <span style="font-size:9px;color:rgba(255,255,255,0.25)">J13</span>
+          <span style="font-size:9px;color:rgba(255,255,255,0.25)">J14</span>
+          <span style="font-size:9px;color:rgba(255,255,255,0.25)">J15</span>
         </div>
       </div>
-
-      <div class="demo-event-card" onclick="selectEvent(this,'Feira de São Mateus','Feira Popular · Viseu','12 Ago 2025','🎡','#000000','Entrada Geral — €5')">
-        <div class="demo-event-img" style="background:#000000">🎡</div>
-        <div class="demo-event-info">
-          <div class="demo-event-name">Feira de São Mateus</div>
-          <div class="demo-event-meta">12 Ago · Viseu</div>
-          <div class="demo-event-price">A partir de €5</div>
-        </div>
-      </div>
-
-      <div class="demo-event-card" onclick="selectEvent(this,'NOS Alive 2025','Festival · Passeio Marítimo','10 Jul 2025','🎵','#000000','Passe Geral — €89')">
-        <div class="demo-event-img" style="background:#000000">🎵</div>
-        <div class="demo-event-info">
-          <div class="demo-event-name">NOS Alive 2025</div>
-          <div class="demo-event-meta">10 Jul · Lisboa</div>
-          <div class="demo-event-price">A partir de €89</div>
-        </div>
-      </div>
-
-      <div class="demo-event-card" onclick="selectEvent(this,'CS Marítimo × Benfica','Futebol · Estádio dos Barreiros','5 Abr 2025','⚽','#000000','Bancada Norte — €15')">
-        <div class="demo-event-img" style="background:#000000">⚽</div>
-        <div class="demo-event-info">
-          <div class="demo-event-name">CS Marítimo × Benfica</div>
-          <div class="demo-event-meta">5 Abr · Funchal</div>
-          <div class="demo-event-price">A partir de €15</div>
+      <div class="sc-card-footer">
+        <div class="sc-card-icon">📊</div>
+        <div>
+          <div class="sc-card-name">Análise em Tempo Real</div>
+          <div class="sc-card-desc">Vendas, receita e ocupação ao minuto</div>
         </div>
       </div>
     </div>
 
-    <!-- Flow -->
-    <div class="demo-flow">
-      <div class="demo-flow-topbar">
-        <div class="demo-flow-dot" style="background:#1874EF"></div>
-        <div class="demo-flow-dot" style="background:#1874EF"></div>
-        <div class="demo-flow-dot" style="background:#1874EF"></div>
-        <span class="demo-flow-title" id="demo-flow-title">bilheteira.2ticket.pt</span>
+    <!-- Card 2: Bilheteira Online -->
+    <div class="sc-card fade-up" style="--delay:0.1s">
+      <div class="sc-card-header">
+        <div class="sc-dots">
+          <div class="sc-dot"></div><div class="sc-dot"></div><div class="sc-dot"></div>
+        </div>
+        <div class="sc-card-title">bilheteira.2ticket.pt</div>
+        <div class="sc-badge">Online</div>
       </div>
-
-      <div class="demo-steps-bar">
-        <button class="demo-step-btn active" onclick="goStep(0)">① Evento</button>
-        <button class="demo-step-btn" onclick="goStep(1)">② Pagamento</button>
-        <button class="demo-step-btn" onclick="goStep(2)">③ Bilhete</button>
+      <div class="sc-card-body">
+        <div class="sc-event-card">
+          <div class="sc-event-img">⚽</div>
+          <div>
+            <div class="sc-event-name">FC Porto × Sporting CP</div>
+            <div class="sc-event-meta">29 Mar · Estádio do Dragão</div>
+          </div>
+        </div>
+        <div class="sc-tickets-label">Escolha a sua categoria</div>
+        <div class="sc-ticket-row">
+          <div class="sc-ticket-cat">Categoria A</div>
+          <div class="sc-ticket-avail">287 disp.</div>
+          <div class="sc-ticket-price">€22</div>
+          <div class="sc-ticket-check"></div>
+        </div>
+        <div class="sc-ticket-row" style="background:rgba(24,116,239,0.12);border-color:rgba(24,116,239,0.3)">
+          <div class="sc-ticket-cat">Categoria B</div>
+          <div class="sc-ticket-avail">512 disp.</div>
+          <div class="sc-ticket-price" style="color:#1874EF">€15</div>
+          <div class="sc-ticket-check" style="background:#1874EF;border-color:#1874EF">✓</div>
+        </div>
+        <div class="sc-ticket-row sc-ticket-row-dim">
+          <div class="sc-ticket-cat">VIP Lounge</div>
+          <div class="sc-ticket-avail">12 disp.</div>
+          <div class="sc-ticket-price">€65</div>
+          <div class="sc-ticket-check"></div>
+        </div>
+        <button class="sc-nav-btn">Continuar → Pagamento</button>
       </div>
-
-      <div class="demo-panels">
-
-        <!-- Step 0: Evento -->
-        <div class="demo-panel active" id="dp-0">
-          <div class="demo-event-hero">
-            <div class="demo-event-hero-img" id="d-img" style="background:#000000">⚽</div>
-            <div class="demo-event-hero-info">
-              <div class="demo-event-hero-name" id="d-name">FC Porto × Sporting CP</div>
-              <div class="demo-event-hero-sub" id="d-sub">Futebol · Estádio do Dragão</div>
-              <div class="demo-event-hero-date" id="d-date">📅 29 Mar 2025</div>
-            </div>
-          </div>
-
-          <div class="demo-tickets-label">Escolha a sua categoria</div>
-
-          <div class="demo-ticket-row" onclick="selectTicket(this,'Cat. Ouro','€25')">
-            <div style="flex:1">
-              <div class="demo-ticket-cat">Categoria Ouro</div>
-              <div class="demo-ticket-avail">287 disponíveis</div>
-            </div>
-            <div class="demo-ticket-price-tag">€25</div>
-            <div class="demo-check">✓</div>
-          </div>
-          <div class="demo-ticket-row selected" onclick="selectTicket(this,'Cat. Prata','€18')">
-            <div style="flex:1">
-              <div class="demo-ticket-cat">Categoria Prata</div>
-              <div class="demo-ticket-avail">512 disponíveis</div>
-            </div>
-            <div class="demo-ticket-price-tag">€18</div>
-            <div class="demo-check">✓</div>
-          </div>
-          <div class="demo-ticket-row" onclick="selectTicket(this,'VIP','€65')">
-            <div style="flex:1">
-              <div class="demo-ticket-cat">VIP Lounge</div>
-              <div class="demo-ticket-avail">12 disponíveis</div>
-            </div>
-            <div class="demo-ticket-price-tag">€65</div>
-            <div class="demo-check">✓</div>
-          </div>
-
-          <button class="demo-nav-btn" onclick="goStep(1)">Continuar → Pagamento</button>
+      <div class="sc-card-footer">
+        <div class="sc-card-icon">🎟️</div>
+        <div>
+          <div class="sc-card-name">Bilheteira Online</div>
+          <div class="sc-card-desc">Experiência de compra fluida para o público</div>
         </div>
-
-        <!-- Step 1: Pagamento -->
-        <div class="demo-panel" id="dp-1">
-          <div class="demo-summary-box">
-            <div class="demo-summary-row">
-              <span id="d-sum-event">FC Porto × Sporting CP</span>
-              <span class="demo-summary-val" id="d-sum-cat">Cat. Prata</span>
-            </div>
-            <div class="demo-summary-row">
-              <span>Data</span>
-              <span class="demo-summary-val" id="d-sum-date">29 Mar 2025</span>
-            </div>
-            <div class="demo-summary-row">
-              <span>Quantidade</span>
-              <span class="demo-summary-val">1 bilhete</span>
-            </div>
-            <div class="demo-summary-row">
-              <span>Taxa de serviço</span>
-              <span class="demo-summary-val">€1.50</span>
-            </div>
-            <div class="demo-summary-row">
-              <span>Total</span>
-              <span class="demo-summary-val" id="d-sum-total">€19.50</span>
-            </div>
-          </div>
-
-          <div class="demo-form-row">
-            <input class="demo-input" placeholder="Nome completo" value="João Silva" />
-            <input class="demo-input" placeholder="Email" value="joao@email.pt" />
-          </div>
-          <input class="demo-input" placeholder="Número de cartão" value="•••• •••• •••• 4242" style="margin-bottom:12px" />
-          <div class="demo-form-row">
-            <input class="demo-input" placeholder="MM/AA" value="08/27" />
-            <input class="demo-input" placeholder="CVV" value="•••" />
-          </div>
-
-          <div style="display:flex;gap:12px">
-            <button class="demo-nav-btn secondary" onclick="goStep(0)">← Voltar</button>
-            <button class="demo-nav-btn" onclick="goStep(2)">Pagar e obter bilhete →</button>
-          </div>
-        </div>
-
-        <!-- Step 2: Bilhete -->
-        <div class="demo-panel" id="dp-2">
-          <div style="text-align:center;margin-bottom:20px">
-            <div style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:8px">✅ Pagamento confirmado!</div>
-            <div style="font-family:'Manrope',sans-serif;font-size:18px;font-weight:700;color:white">O seu bilhete está pronto</div>
-          </div>
-
-          <div class="demo-ticket-final">
-            <div class="demo-ticket-name-big" id="d-tkt-name">FC Porto × Sporting CP</div>
-            <div class="demo-ticket-sub-info" id="d-tkt-sub">Futebol · Estádio do Dragão</div>
-
-            <div class="demo-ticket-dashed"></div>
-
-            <!-- QR Code simulado -->
-            <div class="demo-ticket-qr">
-              <div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot w"></div><div class="qr-dot"></div><div class="qr-dot"></div>
-              <div class="qr-dot"></div><div class="qr-dot w"></div><div class="qr-dot"></div><div class="qr-dot w"></div><div class="qr-dot"></div>
-              <div class="qr-dot w"></div><div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot w"></div>
-              <div class="qr-dot"></div><div class="qr-dot w"></div><div class="qr-dot w"></div><div class="qr-dot"></div><div class="qr-dot"></div>
-              <div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot w"></div><div class="qr-dot"></div><div class="qr-dot"></div>
-            </div>
-
-            <div class="demo-ticket-dashed"></div>
-
-            <div class="demo-ticket-meta-row">
-              <div class="demo-ticket-meta-item">
-                <div class="demo-ticket-meta-label">Data</div>
-                <div class="demo-ticket-meta-val" id="d-tkt-date">29 Mar</div>
-              </div>
-              <div class="demo-ticket-meta-item">
-                <div class="demo-ticket-meta-label">Categoria</div>
-                <div class="demo-ticket-meta-val" id="d-tkt-cat">Prata</div>
-              </div>
-              <div class="demo-ticket-meta-item">
-                <div class="demo-ticket-meta-label">Preço</div>
-                <div class="demo-ticket-meta-val" id="d-tkt-price">€18</div>
-              </div>
-            </div>
-          </div>
-
-          <button class="demo-nav-btn secondary" onclick="goStep(0);resetDemo()" style="margin-top:16px">← Recomeçar demo</button>
-        </div>
-
       </div>
     </div>
+
+    <!-- Card 3: Controlo de Acessos -->
+    <div class="sc-card fade-up" style="--delay:0.2s">
+      <div class="sc-card-header">
+        <div class="sc-dots">
+          <div class="sc-dot"></div><div class="sc-dot"></div><div class="sc-dot"></div>
+        </div>
+        <div class="sc-card-title">Controlo de Acessos</div>
+        <div class="sc-badge sc-badge-live">● Live</div>
+      </div>
+      <div class="sc-card-body">
+        <div class="sc-gate-row">
+          <div class="sc-gate-icon">🚪</div>
+          <div style="flex:1">
+            <div class="sc-gate-name">Porta Norte — T1</div>
+            <div class="sc-gate-ok">● Operacional</div>
+          </div>
+          <div class="sc-gate-cnt" id="sc-g1">847</div>
+        </div>
+        <div class="sc-gate-row">
+          <div class="sc-gate-icon">🚪</div>
+          <div style="flex:1">
+            <div class="sc-gate-name">Porta Sul — T2</div>
+            <div class="sc-gate-ok">● Operacional</div>
+          </div>
+          <div class="sc-gate-cnt" id="sc-g2">612</div>
+        </div>
+        <div class="sc-gate-row">
+          <div class="sc-gate-icon">📱</div>
+          <div style="flex:1">
+            <div class="sc-gate-name">PDA — Setor VIP</div>
+            <div class="sc-gate-ok" style="color:rgba(255,255,255,0.35)">● A verificar…</div>
+          </div>
+          <div class="sc-gate-cnt" id="sc-g3">203</div>
+        </div>
+        <div class="sc-qr-preview">
+          <div class="sc-qr-icon">
+            <div class="qr-dot"></div><div class="qr-dot"></div><div class="qr-dot w"></div>
+            <div class="qr-dot"></div><div class="qr-dot w"></div><div class="qr-dot"></div>
+            <div class="qr-dot w"></div><div class="qr-dot"></div><div class="qr-dot"></div>
+          </div>
+          <div class="sc-qr-line"></div>
+          <div class="sc-qr-text">A validar bilhete…</div>
+        </div>
+      </div>
+      <div class="sc-card-footer">
+        <div class="sc-card-icon">🔒</div>
+        <div>
+          <div class="sc-card-name">Validação por QR Code</div>
+          <div class="sc-card-desc">PDA's e torniquetes em tempo real</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -3998,83 +4227,12 @@
   const statsEl = document.getElementById('footer-stats');
   if (statsEl) statsObs.observe(statsEl);
 
-  // ── Demo Bilheteira ──
-  let demoStep = 0;
-  let demoSelected = { event: 'FC Porto × Sporting CP', sub: 'Futebol · Estádio do Dragão', date: '29 Mar 2025', cat: 'Cat. Prata', price: '€18', total: '€19.50', emoji: '⚽', bg: '#000000' };
-
-  function goStep(n) {
-    demoStep = n;
-    document.querySelectorAll('.demo-panel').forEach((p,i) => p.classList.toggle('active', i === n));
-    document.querySelectorAll('.demo-step-btn').forEach((b,i) => b.classList.toggle('active', i === n));
-    if (n === 2) {
-      document.getElementById('d-tkt-name').textContent  = demoSelected.event;
-      document.getElementById('d-tkt-sub').textContent   = demoSelected.sub;
-      document.getElementById('d-tkt-date').textContent  = demoSelected.date.split(' ').slice(0,2).join(' ');
-      document.getElementById('d-tkt-cat').textContent   = demoSelected.cat.replace('Cat. ','');
-      document.getElementById('d-tkt-price').textContent = demoSelected.price;
-    }
-  }
-
-  function selectEvent(el, name, sub, date, emoji, bg, catHint) {
-    document.querySelectorAll('.demo-event-card').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-    demoSelected.event = name; demoSelected.sub = sub;
-    demoSelected.date  = date; demoSelected.emoji = emoji; demoSelected.bg = bg;
-    document.getElementById('d-img').textContent   = emoji;
-    document.getElementById('d-img').style.background = bg;
-    document.getElementById('d-name').textContent  = name;
-    document.getElementById('d-sub').textContent   = sub;
-    document.getElementById('d-date').textContent  = '📅 ' + date;
-    document.getElementById('d-sum-event').textContent = name;
-    document.getElementById('d-sum-date').textContent  = date;
-    goStep(0);
-  }
-
-  function selectTicket(el, cat, price) {
-    document.querySelectorAll('.demo-ticket-row').forEach(r => r.classList.remove('selected'));
-    el.classList.add('selected');
-    demoSelected.cat   = cat;
-    demoSelected.price = price;
-    const base = parseFloat(price.replace('€',''));
-    demoSelected.total = '€' + (base + 1.5).toFixed(2).replace('.',',');
-    document.getElementById('d-sum-cat').textContent   = cat;
-    document.getElementById('d-sum-total').textContent = demoSelected.total;
-  }
 
 
 
   // ══════════════════════════════════════════
   //  MEGA ANIMATION LAYER
   // ══════════════════════════════════════════
-
-  // ── Custom cursor (desktop only) ──
-  (function() {
-    const dot  = document.getElementById('cursor-dot');
-    const ring = document.getElementById('cursor-ring');
-    if (!dot || !ring || window.matchMedia('(hover: none)').matches) return;
-
-    let mx = 0, my = 0, rx = 0, ry = 0, raf;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
-    document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; ring.style.opacity = '1'; });
-
-    // Cursor hover state
-    document.querySelectorAll('a, button, [role="button"], .feat-tab, .area-strip, .faq-header, .client-card, .feature-pill').forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cur-hover'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
-    });
-
-    function tick() {
-      dot.style.left = mx + 'px';
-      dot.style.top  = my + 'px';
-      rx += (mx - rx) * 0.1;
-      ry += (my - ry) * 0.1;
-      ring.style.left = rx + 'px';
-      ring.style.top  = ry + 'px';
-      raf = requestAnimationFrame(tick);
-    }
-    tick();
-  })();
 
   // ── Scroll progress bar ──
   (function() {
@@ -4104,38 +4262,68 @@
     });
   });
 
-  // ── Hero mouse parallax ──
+  // ── How accordion + visual card ──
   (function() {
-    const hero = document.querySelector('.hero');
-    const content = document.querySelector('.hero-content');
-    const orb1 = document.querySelector('.hero-orb-1');
-    const orb2 = document.querySelector('.hero-orb-2');
-    if (!hero || !content) return;
-    hero.addEventListener('mousemove', e => {
-      const r = hero.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width  - 0.5;
-      const y = (e.clientY - r.top)  / r.height - 0.5;
-      content.style.transform = `translate(${x * 18}px, ${y * 12}px)`;
-      if (orb1) orb1.style.transform = `translate(${x * -40}px, ${y * -25}px) scale(1)`;
-      if (orb2) orb2.style.transform = `translate(${x * 50}px, ${y * 35}px) scale(1.1)`;
-    });
-    hero.addEventListener('mouseleave', () => {
-      content.style.transform = '';
-      if (orb1) orb1.style.transform = '';
-      if (orb2) orb2.style.transform = '';
-    });
-  })();
+    const items  = document.querySelectorAll('.how-acc-item');
+    const screens = document.querySelectorAll('.how-vc-screen');
+    const vcTitle = document.getElementById('how-vc-title');
+    const vcBadge = document.getElementById('how-vc-badge');
 
-  // ── How steps staggered entrance ──
-  (function() {
-    const steps = document.querySelectorAll('.how-step');
-    if (!steps.length) return;
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('in-view'); obs.unobserve(e.target); }
+    const titles = ['Criação de Evento', 'Venda de Bilhetes', 'Controlo de Acessos'];
+    const badges = ['Passo 1', 'Passo 2', 'Passo 3'];
+
+    function activateStep(idx) {
+      items.forEach((item, i) => {
+        const body  = item.querySelector('.how-acc-body');
+        const arrow = item.querySelector('.how-acc-arrow');
+        if (i === idx) {
+          item.classList.add('active');
+          body.style.maxHeight = body.scrollHeight + 'px';
+          arrow.textContent = '×';
+        } else {
+          item.classList.remove('active');
+          body.style.maxHeight = '0';
+          arrow.textContent = '+';
+        }
       });
-    }, { threshold: 0.15 });
-    steps.forEach(s => obs.observe(s));
+      screens.forEach((s, i) => s.classList.toggle('active', i === idx));
+      if (vcTitle) vcTitle.textContent = titles[idx];
+      if (vcBadge) vcBadge.textContent = badges[idx];
+    }
+
+    items.forEach((item, i) => {
+      item.querySelector('.how-acc-header').addEventListener('click', () => {
+        activateStep(item.classList.contains('active') ? -1 : i);
+      });
+    });
+
+    // open first on init
+    activateStep(0);
+
+    // auto-advance when section scrolls into view
+    let autoIdx = 0;
+    let autoTimer = null;
+    const section = document.querySelector('.how-section');
+    if (section) {
+      const secObs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          autoTimer = setInterval(() => {
+            autoIdx = (autoIdx + 1) % items.length;
+            activateStep(autoIdx);
+          }, 3500);
+        } else {
+          clearInterval(autoTimer);
+        }
+      }, { threshold: 0.3 });
+      secObs.observe(section);
+    }
+
+    // clicking any item cancels auto-advance
+    items.forEach(item => {
+      item.querySelector('.how-acc-header').addEventListener('click', () => {
+        clearInterval(autoTimer);
+      });
+    });
   })();
 
   // ── Magnetic effect on primary CTA buttons ──
@@ -4149,16 +4337,6 @@
     btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
   });
 
-  function resetDemo() {
-    document.querySelectorAll('.demo-event-card').forEach((c,i) => c.classList.toggle('active', i===0));
-    document.querySelectorAll('.demo-ticket-row').forEach((r,i) => r.classList.toggle('selected', i===1));
-    demoSelected = { event: 'FC Porto × Sporting CP', sub: 'Futebol · Estádio do Dragão', date: '29 Mar 2025', cat: 'Cat. Prata', price: '€18', total: '€19.50', emoji: '⚽', bg: '#000000' };
-    document.getElementById('d-img').textContent = '⚽';
-    document.getElementById('d-img').style.background = '#000000';
-    document.getElementById('d-name').textContent = 'FC Porto × Sporting CP';
-    document.getElementById('d-sub').textContent  = 'Futebol · Estádio do Dragão';
-    document.getElementById('d-date').textContent = '📅 29 Mar 2025';
-  }
 
 </script>
 </body>
