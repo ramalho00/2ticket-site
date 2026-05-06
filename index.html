@@ -43,7 +43,7 @@
     height: 72px;
     background: none;
     border-bottom: none;
-    transition: background 0.45s ease, box-shadow 0.45s ease;
+    transition: background 0.45s ease, box-shadow 0.45s ease, transform 0.3s ease;
   }
 
   nav.scrolled {
@@ -2900,8 +2900,8 @@
   <!-- Conteúdo -->
   <div class="hero-content">
     <h1>
-      <span class="hw" style="--i:0">1 Ticket,</span><br>
-      <em><span class="hw" style="--i:1">2 Many Opportunities 🚀</span></em>
+      <span class="hw" style="--i:0">1 TICKET,</span><br>
+      <em><span class="hw" style="--i:1">2 MANY OPPORTUNITIES 🚀</span></em>
     </h1>
   </div>
 
@@ -4082,19 +4082,33 @@
     navLinks.classList.toggle('open');
   });
 
-  // Close on link click
+  // Close on link click + restore nav visibility
   navLinks.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => {
       hamburger.classList.remove('open');
       navLinks.classList.remove('open');
+      nav.style.transform = '';
     });
   });
 
   // ── Navbar transparente → sólida no scroll ──
   const nav = document.querySelector('nav');
+  let navLastY = 0;
   window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 40);
-  });
+    const y = window.scrollY;
+    nav.classList.toggle('scrolled', y > 40);
+    // Mobile: hide nav on scroll down, show on scroll up
+    if (window.innerWidth <= 768) {
+      if (y > 80 && y > navLastY) {
+        nav.style.transform = 'translateY(-100%)';
+      } else {
+        nav.style.transform = '';
+      }
+    } else {
+      nav.style.transform = '';
+    }
+    navLastY = y;
+  }, { passive: true });
 
   // ── Fade suave no loop do vídeo ──
   const video = document.getElementById('hero-video');
@@ -4279,17 +4293,6 @@
     if (featPanelWrapper) featPanelWrapper.style.display = 'none';
   }
 
-  // ── Mobile: mover visual card do how-section para entre passo 1 e 2 ──
-  if (window.innerWidth <= 768) {
-    const howVc   = document.querySelector('.how-vc');
-    const howAcc  = document.getElementById('how-acc');
-    const step1   = howAcc ? howAcc.querySelector('.how-acc-item[data-step="1"]') : null;
-    if (howVc && step1) {
-      howVc.style.margin = '0 0 0 0';
-      howVc.style.order  = '';
-      howAcc.insertBefore(howVc, step1);
-    }
-  }
 
   // ── Vídeo hero: autoplay sem interação (iOS Safari) ──
   const heroVid = document.getElementById('hero-video');
@@ -4402,13 +4405,26 @@
 
   // ── How accordion + visual card ──
   (function() {
-    const items  = document.querySelectorAll('.how-acc-item');
+    const items   = document.querySelectorAll('.how-acc-item');
     const screens = document.querySelectorAll('.how-vc-screen');
     const vcTitle = document.getElementById('how-vc-title');
     const vcBadge = document.getElementById('how-vc-badge');
+    const howVc   = document.querySelector('.how-vc');
+    const howAcc  = document.getElementById('how-acc');
+    const isMobile = () => window.innerWidth <= 768;
 
     const titles = ['Criação de Evento', 'Venda de Bilhetes', 'Controlo de Acessos'];
     const badges = ['Passo 1', 'Passo 2', 'Passo 3'];
+
+    // On mobile: move .how-vc to appear right after the active item
+    function placeVcAfterStep(idx) {
+      if (!isMobile() || !howAcc || !howVc) return;
+      const activeItem = items[idx];
+      if (!activeItem) return;
+      const nextEl = activeItem.nextElementSibling;
+      if (nextEl === howVc) return; // already correct
+      howAcc.insertBefore(howVc, nextEl || null);
+    }
 
     function activateStep(idx) {
       items.forEach((item, i) => {
@@ -4425,8 +4441,14 @@
         }
       });
       screens.forEach((s, i) => s.classList.toggle('active', i === idx));
-      if (vcTitle) vcTitle.textContent = titles[idx];
-      if (vcBadge) vcBadge.textContent = badges[idx];
+      if (vcTitle) vcTitle.textContent = titles[idx] || titles[0];
+      if (vcBadge) vcBadge.textContent = badges[idx] || badges[0];
+      placeVcAfterStep(idx);
+    }
+
+    // On mobile: initially move .how-vc into the accordion before items
+    if (isMobile() && howAcc && howVc) {
+      howAcc.insertBefore(howVc, items[0] || null);
     }
 
     items.forEach((item, i) => {
@@ -4438,30 +4460,30 @@
     // open first on init
     activateStep(0);
 
-    // auto-advance when section scrolls into view
-    let autoIdx = 0;
-    let autoTimer = null;
-    const section = document.querySelector('.how-section');
-    if (section) {
-      const secObs = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) {
-          autoTimer = setInterval(() => {
-            autoIdx = (autoIdx + 1) % items.length;
-            activateStep(autoIdx);
-          }, 3500);
-        } else {
+    // auto-advance when section scrolls into view (desktop only)
+    if (!isMobile()) {
+      let autoIdx = 0;
+      let autoTimer = null;
+      const section = document.querySelector('.how-section');
+      if (section) {
+        const secObs = new IntersectionObserver(entries => {
+          if (entries[0].isIntersecting) {
+            autoTimer = setInterval(() => {
+              autoIdx = (autoIdx + 1) % items.length;
+              activateStep(autoIdx);
+            }, 3500);
+          } else {
+            clearInterval(autoTimer);
+          }
+        }, { threshold: 0.3 });
+        secObs.observe(section);
+      }
+      items.forEach(item => {
+        item.querySelector('.how-acc-header').addEventListener('click', () => {
           clearInterval(autoTimer);
-        }
-      }, { threshold: 0.3 });
-      secObs.observe(section);
-    }
-
-    // clicking any item cancels auto-advance
-    items.forEach(item => {
-      item.querySelector('.how-acc-header').addEventListener('click', () => {
-        clearInterval(autoTimer);
+        });
       });
-    });
+    }
   })();
 
   // ── Magnetic effect on primary CTA buttons ──
