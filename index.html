@@ -801,13 +801,18 @@
     border-color: rgba(24,116,239,0.4);
   }
 
-  .client-card-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: #1874EF;
-    opacity: 0.9;
+  .client-card-logo {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(24,116,239,0.15);
+    border: 1px solid rgba(24,116,239,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px; font-weight: 800;
+    color: #1874EF;
     flex-shrink: 0;
-    box-shadow: 0 0 8px rgba(24,116,239,0.6);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
   }
 
   .client-card-name {
@@ -2897,6 +2902,11 @@
   .demo-nav-btn.secondary:hover { background: rgba(255,255,255,0.12); }
 
 
+  @media (max-width: 1024px) {
+    /* Showcase grid: 2 columns at tablet widths */
+    .showcase-grid { grid-template-columns: 1fr 1fr; }
+  }
+
   @media (max-width: 768px) {
     /* How accordion: single column, visual moves via JS between steps */
     .how-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -2904,6 +2914,8 @@
     .how-acc .how-vc { margin: 12px 0; border-radius: 16px; }
     /* Showcase grid: single column */
     .showcase-grid { grid-template-columns: 1fr; }
+    /* Features tab line: hide on mobile */
+    .feat-tab-line { display: none; }
   }
   @media (max-width: 480px) {
     .sc-stats-row { grid-template-columns: 1fr 1fr; }
@@ -3586,84 +3598,84 @@
   <div class="marquee-wrapper">
     <div class="marquee-track">
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">SCP</div>
         <div>
           <div class="client-card-name">Sporting CP</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">FCP</div>
         <div>
           <div class="client-card-name">FC Porto</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">CSM</div>
         <div>
           <div class="client-card-name">CS Marítimo</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">CDT</div>
         <div>
           <div class="client-card-name">CD Tondela</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">LP</div>
         <div>
           <div class="client-card-name">Liga Portugal</div>
           <div class="client-card-type">Organização</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">ACV</div>
         <div>
           <div class="client-card-name">AC Viseu</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">SCP</div>
         <div>
           <div class="client-card-name">Sporting CP</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">FCP</div>
         <div>
           <div class="client-card-name">FC Porto</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">CSM</div>
         <div>
           <div class="client-card-name">CS Marítimo</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">CDT</div>
         <div>
           <div class="client-card-name">CD Tondela</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">LP</div>
         <div>
           <div class="client-card-name">Liga Portugal</div>
           <div class="client-card-type">Organização</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">ACV</div>
         <div>
           <div class="client-card-name">AC Viseu</div>
           <div class="client-card-type">Futebol</div>
@@ -3672,84 +3684,84 @@
     </div>
     <div class="marquee-track reverse">
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">FSM</div>
         <div>
           <div class="client-card-name">Feira S. Mateus</div>
           <div class="client-card-type">Feira Popular</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">FIC</div>
         <div>
           <div class="client-card-name">FICTON</div>
           <div class="client-card-type">Evento</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">CMM</div>
         <div>
           <div class="client-card-name">CM Mangualde</div>
           <div class="client-card-type">Município</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">SCB</div>
         <div>
           <div class="client-card-name">SC Braga</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">GDE</div>
         <div>
           <div class="client-card-name">GD Estoril</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">ACA</div>
         <div>
           <div class="client-card-name">Académica</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">FSM</div>
         <div>
           <div class="client-card-name">Feira S. Mateus</div>
           <div class="client-card-type">Feira Popular</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">FIC</div>
         <div>
           <div class="client-card-name">FICTON</div>
           <div class="client-card-type">Evento</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">CMM</div>
         <div>
           <div class="client-card-name">CM Mangualde</div>
           <div class="client-card-type">Município</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">SCB</div>
         <div>
           <div class="client-card-name">SC Braga</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">GDE</div>
         <div>
           <div class="client-card-name">GD Estoril</div>
           <div class="client-card-type">Futebol</div>
         </div>
       </div>
       <div class="client-card">
-        <div class="client-card-dot"></div>
+        <div class="client-card-logo">ACA</div>
         <div>
           <div class="client-card-name">Académica</div>
           <div class="client-card-type">Futebol</div>
