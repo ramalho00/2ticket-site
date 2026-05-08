@@ -24,6 +24,21 @@
     --border: rgba(24,116,239,0.18);
     --radius: 16px;
     --radius-sm: 10px;
+    /* Single source of truth for horizontal alignment */
+    --container: 1280px;
+    --gutter-x: clamp(20px, 4vw, 40px);
+  }
+
+  /* Universal container — every primary content block uses this so
+     left/right edges line up perfectly across all sections */
+  .wrap {
+    width: 100%;
+    max-width: var(--container);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
+    box-sizing: border-box;
   }
 
   html { scroll-behavior: smooth; }
@@ -38,12 +53,14 @@
   /* ─── NAV ─── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 5%;
     height: 72px;
     background: none;
     border-bottom: none;
     transition: background 0.45s ease, box-shadow 0.45s ease, transform 0.3s ease;
+  }
+  .nav-inner {
+    height: 100%;
+    display: flex; align-items: center; justify-content: space-between;
   }
 
   nav.scrolled {
@@ -101,7 +118,7 @@
   .hero {
     min-height: 100vh;
     display: flex; align-items: center; justify-content: center;
-    padding: 120px 5% 80px;
+    padding: 120px 0 80px;
     position: relative;
     overflow: hidden;
     background: #000000;
@@ -144,6 +161,8 @@
     max-width: 900px;
     margin: 0 auto;
     text-align: center;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
   }
 
   .hero h1 {
@@ -220,9 +239,14 @@
   .features-bar {
     background: #000000;
     border-bottom: 1px solid var(--border);
-    padding: 0 5%;
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
     display: flex; align-items: center; justify-content: center;
     gap: 0;
+    box-sizing: border-box;
   }
 
   .feature-pill {
@@ -261,7 +285,7 @@
 
   /* ─── SECTION ─── */
   section {
-    padding: 100px 5%;
+    padding: 100px 0;
   }
 
   .section-tag {
@@ -305,9 +329,13 @@
   }
 
   .areas-header {
-    padding: 0 5%;
-    margin-bottom: 56px;
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto 56px;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
     text-align: center;
+    box-sizing: border-box;
   }
 
   .areas-section .section-tag {
@@ -464,25 +492,36 @@
   /* ─── FEATURES ─── */
   .features-section {
     background: var(--surface);
-    padding: 100px 5% 0;
+    padding: 100px 0 0;
     overflow: hidden;
   }
 
   .features-section-header {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto 56px;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
     text-align: center;
-    margin-bottom: 56px;
+    box-sizing: border-box;
   }
 
   .features-inner {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
     display: grid;
     grid-template-columns: 380px 1fr;
     min-height: 620px;
+    box-sizing: border-box;
   }
 
   /* ── Left panel: feature list ── */
   .features-nav {
     background: #000000;
-    padding: 56px 48px 56px 0;
+    padding: 56px 32px 56px 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -704,9 +743,13 @@
   .clients-section .section-sub { color: rgba(255,255,255,0.45); }
 
   .clients-header {
-    padding: 0 5%;
-    margin-bottom: 64px;
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto 64px;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
     text-align: center;
+    box-sizing: border-box;
   }
 
   /* marquee track */
@@ -784,11 +827,13 @@
   /* ─── FAQ ─── */
   .faq-section {
     background: var(--ink);
-    padding: 72px 5%;
+    padding: 72px 0;
   }
 
   .faq-list {
     margin-top: 36px;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -856,14 +901,20 @@
   }
 
   .contact-inner {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
     display: grid;
     grid-template-columns: 1fr 1fr;
     min-height: 640px;
+    box-sizing: border-box;
   }
 
   .contact-left {
     background: #000000;
-    padding: 80px 64px;
+    padding: 80px 48px 80px 0;
     display: flex; flex-direction: column; justify-content: center;
     position: relative;
     overflow: hidden;
@@ -932,7 +983,7 @@
 
   .contact-right {
     background: var(--ink-3);
-    padding: 80px 64px;
+    padding: 80px 0 80px 48px;
     display: flex; flex-direction: column; justify-content: center;
   }
 
@@ -1083,17 +1134,23 @@
 
   /* Main grid */
   .footer-main {
-    padding: 72px 5% 0;
+    padding: 72px 0 0;
     position: relative; z-index: 1;
   }
 
   .footer-top {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 56px;
     padding-bottom: 56px;
     border-bottom: 1px solid rgba(255,255,255,0.12);
     margin-bottom: 0;
+    box-sizing: border-box;
   }
 
   /* Brand col */
@@ -1145,10 +1202,16 @@
 
   /* Bottom strip */
   .footer-bottom-wrap {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
     display: flex; justify-content: space-between; align-items: center;
     flex-wrap: wrap; gap: 16px;
-    padding: 24px 0 48px;
+    padding-top: 24px; padding-bottom: 48px;
     font-size: 12px; color: rgba(255,255,255,0.25);
+    box-sizing: border-box;
   }
 
   .footer-bottom-right {
@@ -1163,12 +1226,16 @@
 
   /* Stats strip between top and bottom */
   .footer-stats {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 0;
     border-top: 1px solid rgba(255,255,255,0.06);
     border-bottom: 1px solid rgba(255,255,255,0.06);
-    margin: 0 -5%;
-    padding: 0 5%;
+    box-sizing: border-box;
   }
 
   .footer-stat {
@@ -1515,7 +1582,7 @@
       background: rgba(0,0,0,0.88);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      padding: 8px 5% 16px;
+      padding: 8px var(--gutter-x) 16px;
       gap: 0;
       z-index: 98;
       border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -1575,7 +1642,7 @@
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* Hero */
-    .hero { padding: 100px 5% 60px; }
+    .hero { padding: 100px 0 60px; }
     .hero h1 { font-size: clamp(24px, 7vw, 42px); letter-spacing: -1.5px; }
     .scroll-indicator { display: none; }
 
@@ -1645,8 +1712,7 @@
     .feat-panel-card { border-radius: 12px; }
     .features-panel { display: none; }
 
-    /* Clients */
-    .clients-header { padding: 0 5%; }
+    /* Clients - padding handled via gutter-x */
 
     /* FAQ: single column */
     .faq-grid { grid-template-columns: 1fr; }
@@ -1667,12 +1733,12 @@
   @media (max-width: 480px) {
 
     /* Nav */
-    nav { padding: 0 4%; height: 64px; }
+    nav { height: 64px; }
     .logo svg { height: 26px; }
-    .nav-links.open { top: 64px; padding: 8px 4% 14px; }
+    .nav-links.open { top: 64px; }
 
     /* Hero */
-    .hero { padding: 88px 4% 48px; }
+    .hero { padding: 88px 0 48px; }
     .hero h1 { font-size: clamp(22px, 8vw, 36px); letter-spacing: -1px; }
 
     /* Features bar: single column */
@@ -1680,10 +1746,8 @@
     .feature-pill { width: 100%; border-right: none !important; }
     .feature-pill:last-child { border-bottom: none; }
 
-    /* Sections */
-    section { padding: 72px 4%; }
-    .areas-header { padding: 0 4%; }
-    .clients-header { padding: 0 4%; }
+    /* Sections — gutter handled by --gutter-x */
+    section { padding: 72px 0; }
 
     /* Areas mobile */
     .area-strip { height: 72px; }
@@ -1697,19 +1761,15 @@
 
     /* Features */
     .features-nav { padding: 28px 0; }
-    .features-section { padding-left: 4%; padding-right: 4%; }
-    .feat-panel { padding: 28px 4%; }
+    .feat-panel { padding: 28px 0; }
     .feat-panel-body { padding: 16px; }
     .fp-stat-val { font-size: 20px; }
-
-    /* Clients */
-    .clients-header { padding: 0 4%; }
 
     /* FAQ + Contact */
     .faq-header { padding: 18px 16px; }
     .faq-a { padding: 0 16px 18px; }
-    .contact-left { padding: 40px 4%; }
-    .contact-right { padding: 40px 4%; }
+    .contact-left { padding: 40px 0; }
+    .contact-right { padding: 40px 0; }
     .form-row { grid-template-columns: 1fr; }
 
     /* CTA */
@@ -1717,8 +1777,8 @@
 
     /* Footer */
     footer { padding: 0; }
-    .footer-main { padding: 48px 4% 0; }
-    .footer-stats { margin: 0 -4%; padding: 0 4%; }
+    .footer-main { padding: 48px 0 0; }
+    .footer-stats { margin: 0 auto; }
   }
 
   /* ─── PAYMENT PANEL ─── */
@@ -1770,7 +1830,7 @@
   /* ─── HOW IT WORKS ─── */
   .how-section {
     background: #000000;
-    padding: 120px 5%;
+    padding: 120px 0;
     overflow: hidden;
     position: relative;
   }
@@ -1915,7 +1975,7 @@
   /* ─── BILHETEIRA DEMO ─── */
   .demo-section {
     background: var(--ink);
-    padding: 120px 5%;
+    padding: 120px 0;
     overflow: hidden;
     position: relative;
   }
@@ -2228,7 +2288,7 @@
   /* ─── COMO FUNCIONA (ACCORDION) ─── */
   .how-section {
     background: #000000;
-    padding: 120px 5%;
+    padding: 120px 0;
     overflow: hidden;
     position: relative;
   }
@@ -2242,12 +2302,16 @@
 
   /* 2-col layout */
   .how-inner {
+    width: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 72px;
     align-items: center;
-    max-width: 1100px;
-    margin: 0 auto;
+    box-sizing: border-box;
   }
 
   /* Accordion left (first), visual card right (second) */
@@ -2447,7 +2511,7 @@
   /* ─── PLATFORM SHOWCASE ─── */
   .demo-section {
     background: #000000;
-    padding: 120px 5%;
+    padding: 120px 0;
     overflow: hidden;
     position: relative;
   }
@@ -2468,8 +2532,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
-    max-width: 1100px;
+    width: 100%;
+    max-width: var(--container);
     margin: 0 auto;
+    padding-left: var(--gutter-x);
+    padding-right: var(--gutter-x);
+    box-sizing: border-box;
   }
 
   .sc-card {
@@ -2855,6 +2923,7 @@
 
 <!-- NAV -->
 <nav>
+ <div class="nav-inner wrap">
   <a href="#" class="logo nav-logo">
     <svg viewBox="0 0 1497.4 310.7" xmlns="http://www.w3.org/2000/svg" style="height:32px;width:auto">
       <polygon class="nav-logo-poly" points="28.7 5.3 2.3 31.7 2.3 97.4 49.9 97.4 49.9 52.9 124.4 52.9 124.4 97.5 2.3 219.7 2.3 305.4 172.1 305.4 172.1 257.8 49.9 257.8 49.9 239.4 172.1 117.2 172.1 31.8 145.6 5.3 28.7 5.3"/>
@@ -2883,6 +2952,7 @@
     <li><a href="#contactos">Contactos</a></li>
     <li><a href="#contactos" class="btn-nav">Fale Connosco</a></li>
   </ul>
+ </div>
 </nav>
 
 <!-- HERO -->
@@ -3691,7 +3761,7 @@
 
 <!-- DEMO / SHOWCASE -->
 <section class="demo-section" id="demo">
-  <div style="text-align:center;margin-bottom:56px">
+  <div class="wrap" style="text-align:center;margin-bottom:56px">
     <span class="section-tag">Plataforma</span>
     <h2 class="section-title" style="margin-top:12px">Tudo num só <em>ecrã</em></h2>
     <p class="section-sub">Três perspetivas do ecossistema 2TICKET em ação.</p>
@@ -3858,11 +3928,12 @@
 
 <!-- FAQ -->
 <section class="faq-section" id="questoes">
-  <div style="text-align:center;margin-bottom:0">
+  <div class="wrap" style="text-align:center;margin-bottom:0">
     <span class="section-tag" style="background:rgba(24,116,239,0.18);color:#fff">FAQ</span>
     <h2 class="section-title" style="margin-top:12px">Perguntas <em>frequentes</em></h2>
   </div>
 
+  <div class="wrap">
   <div class="faq-list">
 
     <div class="faq-item">
@@ -3926,6 +3997,7 @@
       </div>
     </div>
 
+  </div>
   </div>
 </section>
 
