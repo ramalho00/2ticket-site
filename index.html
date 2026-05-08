@@ -664,90 +664,114 @@
   .clients-header {
     width: 100%;
     max-width: var(--container);
-    margin: 0 auto 64px;
+    margin: 0 auto 56px;
     padding-left: var(--gutter-x);
     padding-right: var(--gutter-x);
     text-align: center;
     box-sizing: border-box;
   }
 
-  /* marquee track */
-  .marquee-wrapper {
+  /* stats bar */
+  .clients-stats {
+    display: flex;
+    justify-content: center;
+    gap: 56px;
+    margin-bottom: 64px;
+  }
+
+  .clients-stat {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    align-items: center;
+    gap: 4px;
   }
 
-  .marquee-track {
+  .clients-stat-num {
+    font-family: 'Manrope', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+
+  .clients-stat-num em {
+    color: #1874EF;
+    font-style: normal;
+  }
+
+  .clients-stat-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+  }
+
+  .clients-stat-divider {
+    width: 1px;
+    height: 48px;
+    background: rgba(255,255,255,0.1);
+    align-self: center;
+  }
+
+  /* client tiles grid */
+  .clients-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .client-tile {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 32px 20px 28px;
     display: flex;
-    gap: 16px;
-    width: max-content;
-    animation: marquee-left 28s linear infinite;
-  }
-
-  .marquee-track.reverse {
-    animation: marquee-right 32s linear infinite;
-  }
-
-  @keyframes marquee-left {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  @keyframes marquee-right {
-    0%   { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
-  }
-
-  .marquee-wrapper:hover .marquee-track { animation-play-state: paused; }
-
-  .client-card {
-    display: flex; align-items: center; gap: 14px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 14px;
-    padding: 18px 28px;
-    white-space: nowrap;
-    transition: background 0.25s, border-color 0.25s;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
     cursor: default;
+    transition: border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s;
   }
 
-  .client-card:hover {
-    background: rgba(24,116,239,0.12);
-    border-color: rgba(24,116,239,0.4);
+  .client-tile:hover {
+    border-color: rgba(24,116,239,0.45);
+    background: rgba(24,116,239,0.07);
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(24,116,239,0.12);
   }
 
-  .client-card-logo {
-    width: 36px; height: 36px;
-    border-radius: 10px;
+  .client-tile-logo {
+    width: 72px; height: 72px;
+    border-radius: 18px;
     background: rgba(24,116,239,0.15);
-    border: 1px solid rgba(24,116,239,0.25);
+    border: 1px solid rgba(24,116,239,0.3);
     display: flex; align-items: center; justify-content: center;
     font-family: 'Manrope', sans-serif;
-    font-size: 10px; font-weight: 800;
+    font-size: 16px; font-weight: 800;
     color: #1874EF;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     flex-shrink: 0;
-    letter-spacing: 0.03em;
+  }
+
+  .client-tile-name {
+    font-family: 'Manrope', sans-serif;
+    font-size: 15px; font-weight: 700;
+    color: white;
+    line-height: 1.2;
+  }
+
+  .client-tile-type {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    font-weight: 400;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
   }
-
-  .client-card-name {
-    font-family: 'Manrope', sans-serif;
-    font-size: 14px; font-weight: 700;
-    color: var(--blue-mid);
-    letter-spacing: 0.03em;
-  }
-
-  .client-card-type {
-    font-size: 11px;
-    color: rgba(255,255,255,0.3);
-    font-weight: 300;
-    margin-top: 2px;
-  }
-
+    border: 1px solid rgba(24,116,239,0.25);
+    display: flex; align-items: center; justify-content: center;
   /* ─── FAQ ─── */
   .faq-section {
     background: var(--ink);
@@ -1308,17 +1332,8 @@
   }
   .feature-pill:hover .feature-pill-icon { transform: scale(1.18) rotate(-8deg); }
 
-  /* Client card lift */
-  .client-card {
-    transition: transform 0.3s ease, background 0.25s, border-color 0.25s, box-shadow 0.3s !important;
-  }
-  .client-card:hover {
-    transform: translateY(-6px) !important;
-    box-shadow: 0 12px 32px rgba(24,116,239,0.15) !important;
-  }
-
-  /* Client card name white */
-  .client-card-name { color: white !important; }
+  /* Client tile name white */
+  .client-tile-name { color: white !important; }
 
   /* Feature pill text white */
   .feature-pill span { color: white !important; }
@@ -1438,6 +1453,11 @@
     nav ul { gap: 20px; }
     nav ul a { font-size: 13px; }
 
+    /* Clients grid */
+    .clients-grid { grid-template-columns: repeat(3, 1fr); }
+    .clients-stats { gap: 36px; }
+    .clients-stat-num { font-size: 32px; }
+
     /* Features bar */
     .feature-pill { padding: 20px 20px; }
     .feature-pill span { font-size: 13px; }
@@ -1468,6 +1488,11 @@
      RESPONSIVE — TABLET (≤768px)
   ══════════════════════════════════════════ */
   @media (max-width: 768px) {
+
+    /* Clients grid */
+    .clients-grid { grid-template-columns: repeat(2, 1fr); }
+    .clients-stats { gap: 24px; flex-wrap: wrap; }
+    .clients-stat-divider { display: none; }
 
     /* ── Nav: hide links, show hamburger ── */
     .nav-links { display: none; }
@@ -1607,6 +1632,11 @@
     nav { height: 64px; }
     .logo svg { height: 26px; }
     .nav-links.open { top: 64px; }
+
+    /* Clients */
+    .clients-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .client-tile { padding: 24px 14px 20px; }
+    .client-tile-logo { width: 56px; height: 56px; font-size: 13px; }
 
     /* Hero */
     .hero { padding: 88px 0 48px; }
@@ -3422,182 +3452,102 @@
 <section class="clients-section" id="clientes">
   <div class="clients-header">
     <h2 class="section-title">Quem <em>confia</em> em nós</h2>
-    <p class="section-sub">Utilizado pelos maiores clubes e eventos de Portugal.</p>
+    <p class="section-sub">Os maiores clubes e eventos de Portugal escolheram a 2Ticket.</p>
   </div>
 
-  <div class="marquee-wrapper">
-    <div class="marquee-track">
-      <div class="client-card">
-        <div class="client-card-logo">SCP</div>
-        <div>
-          <div class="client-card-name">Sporting CP</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">FCP</div>
-        <div>
-          <div class="client-card-name">FC Porto</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">CSM</div>
-        <div>
-          <div class="client-card-name">CS Marítimo</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">CDT</div>
-        <div>
-          <div class="client-card-name">CD Tondela</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">LP</div>
-        <div>
-          <div class="client-card-name">Liga Portugal</div>
-          <div class="client-card-type">Organização</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">ACV</div>
-        <div>
-          <div class="client-card-name">AC Viseu</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">SCP</div>
-        <div>
-          <div class="client-card-name">Sporting CP</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">FCP</div>
-        <div>
-          <div class="client-card-name">FC Porto</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">CSM</div>
-        <div>
-          <div class="client-card-name">CS Marítimo</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">CDT</div>
-        <div>
-          <div class="client-card-name">CD Tondela</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">LP</div>
-        <div>
-          <div class="client-card-name">Liga Portugal</div>
-          <div class="client-card-type">Organização</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">ACV</div>
-        <div>
-          <div class="client-card-name">AC Viseu</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
+  <!-- Stats bar -->
+  <div class="clients-stats wrap">
+    <div class="clients-stat">
+      <span class="clients-stat-num"><em>12</em>+</span>
+      <span class="clients-stat-label">Clientes activos</span>
     </div>
-    <div class="marquee-track reverse">
-      <div class="client-card">
-        <div class="client-card-logo">FSM</div>
-        <div>
-          <div class="client-card-name">Feira S. Mateus</div>
-          <div class="client-card-type">Feira Popular</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">FIC</div>
-        <div>
-          <div class="client-card-name">FICTON</div>
-          <div class="client-card-type">Evento</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">CMM</div>
-        <div>
-          <div class="client-card-name">CM Mangualde</div>
-          <div class="client-card-type">Município</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">SCB</div>
-        <div>
-          <div class="client-card-name">SC Braga</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">GDE</div>
-        <div>
-          <div class="client-card-name">GD Estoril</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">ACA</div>
-        <div>
-          <div class="client-card-name">Académica</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">FSM</div>
-        <div>
-          <div class="client-card-name">Feira S. Mateus</div>
-          <div class="client-card-type">Feira Popular</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">FIC</div>
-        <div>
-          <div class="client-card-name">FICTON</div>
-          <div class="client-card-type">Evento</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">CMM</div>
-        <div>
-          <div class="client-card-name">CM Mangualde</div>
-          <div class="client-card-type">Município</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">SCB</div>
-        <div>
-          <div class="client-card-name">SC Braga</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">GDE</div>
-        <div>
-          <div class="client-card-name">GD Estoril</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
-      <div class="client-card">
-        <div class="client-card-logo">ACA</div>
-        <div>
-          <div class="client-card-name">Académica</div>
-          <div class="client-card-type">Futebol</div>
-        </div>
-      </div>
+    <div class="clients-stat-divider"></div>
+    <div class="clients-stat">
+      <span class="clients-stat-num"><em>5</em>M+</span>
+      <span class="clients-stat-label">Bilhetes emitidos</span>
     </div>
+    <div class="clients-stat-divider"></div>
+    <div class="clients-stat">
+      <span class="clients-stat-num"><em>8</em></span>
+      <span class="clients-stat-label">Anos de experiência</span>
+    </div>
+  </div>
+
+  <!-- Client tiles grid -->
+  <div class="clients-grid wrap">
+
+    <div class="client-tile">
+      <div class="client-tile-logo">SCP</div>
+      <div class="client-tile-name">Sporting CP</div>
+      <div class="client-tile-type">Futebol</div>
+    </div>
+
+    <div class="client-tile">
+      <div class="client-tile-logo">FCP</div>
+      <div class="client-tile-name">FC Porto</div>
+      <div class="client-tile-type">Futebol</div>
+    </div>
+
+    <div class="client-tile">
+      <div class="client-tile-logo">SCB</div>
+      <div class="client-tile-name">SC Braga</div>
+      <div class="client-tile-type">Futebol</div>
+    </div>
+
+    <div class="client-tile">
+      <div class="client-tile-logo">LP</div>
+      <div class="client-tile-name">Liga Portugal</div>
+      <div class="client-tile-type">Organização</div>
+    </div>
+
+    <div class="client-tile">
+      <div class="client-tile-logo">CSM</div>
+      <div class="client-tile-name">CS Marítimo</div>
+      <div class="client-tile-type">Futebol</div>
+    </div>
+
+    <div class="client-tile">
+      <div class="client-tile-logo">GDE</div>
+      <div class="client-tile-name">GD Estoril</div>
+      <div class="client-tile-type">Futebol</div>
+    </div>
+
+    <div class="client-tile">
+      <div class="client-tile-logo">ACA</div>
+      <div class="client-tile-name">Académica</div>
+      <div class="client-tile-type">Futebol</div>
+    </div>
+
+    <div class="client-tile">
+      <div class="client-tile-logo">CDT</div>
+      <div class="client-tile-name">CD Tondela</div>
+      <div class="client-tile-type">Futebol</div>
+    </div>
+
+    <div class="client-tile">
+      <div class="client-tile-logo">ACV</div>
+      <div class="client-tile-name">AC Viseu</div>
+      <div class="client-tile-type">Futebol</div>
+    </div>
+
+    <div class="client-tile">
+      <div class="client-tile-logo">FSM</div>
+      <div class="client-tile-name">Feira S. Mateus</div>
+      <div class="client-tile-type">Feira Popular</div>
+    </div>
+
+    <div class="client-tile">
+      <div class="client-tile-logo">FIC</div>
+      <div class="client-tile-name">FICTON</div>
+      <div class="client-tile-type">Evento</div>
+    </div>
+
+    <div class="client-tile">
+      <div class="client-tile-logo">CMM</div>
+      <div class="client-tile-name">CM Mangualde</div>
+      <div class="client-tile-type">Município</div>
+    </div>
+
   </div>
 </section>
 
