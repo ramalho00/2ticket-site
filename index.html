@@ -20,7 +20,7 @@
   --border-hi: rgba(24,116,239,0.35);
   --blue:      #1874EF;
   --blue-dim:  rgba(24,116,239,0.15);
-  --purple:    #7C3AED;
+  --purple:    #0a4fc4;
   --text:      #FFFFFF;
   --muted:     rgba(255,255,255,0.5);
   --muted2:    rgba(255,255,255,0.25);
@@ -48,7 +48,7 @@ h1,h2,h3,.display{font-family:'Syne',sans-serif;font-weight:800;line-height:1.05
 h1{font-size:clamp(40px,6vw,88px)}
 h2{font-size:clamp(30px,4vw,56px)}
 h3{font-size:clamp(20px,2vw,28px)}
-em{font-style:normal;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+em{font-style:normal;background:linear-gradient(135deg,#5aabff,#1874EF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .section-tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);background:var(--blue-dim);border:1px solid var(--border-hi);padding:5px 14px;border-radius:50px}
 .section-sub{font-size:clamp(15px,1.5vw,18px);color:var(--muted);line-height:1.65;max-width:540px}
 .wrap{max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
@@ -56,7 +56,7 @@ em{font-style:normal;background:linear-gradient(135deg,var(--blue),var(--purple)
 /* ═══════════════════════════════════════
    SCROLL PROGRESS
 ═══════════════════════════════════════ */
-#scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--purple));width:0%;z-index:9999;transition:width .1s}
+#scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#5aabff,var(--blue));width:0%;z-index:9999;transition:width .1s}
 
 /* ═══════════════════════════════════════
    NAV
@@ -85,19 +85,12 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 .hero-video-bg video{width:100%;height:100%;object-fit:cover}
 .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(5,8,16,.7) 0%,rgba(5,8,16,.45) 50%,rgba(5,8,16,.9) 100%)}
 .hero-orb{position:absolute;border-radius:50%;filter:blur(80px);z-index:0;animation:float 8s ease-in-out infinite}
-.hero-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(24,116,239,.25),transparent 70%);top:-10%;left:-10%;animation-delay:-2s}
-.hero-orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(124,58,237,.2),transparent 70%);bottom:-5%;right:-5%;animation-delay:-5s}
+.hero-orb-1{width:500px;height:500px;background:radial-gradient(circle,rgba(24,116,239,.22),transparent 70%);top:-10%;left:-10%;animation-delay:-2s}
+.hero-orb-2{width:400px;height:400px;background:radial-gradient(circle,rgba(10,79,196,.18),transparent 70%);bottom:-5%;right:-5%;animation-delay:-5s}
 @keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(1.05)}}
-.hero-content{position:relative;z-index:2;text-align:center;max-width:860px}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(10px);padding:6px 16px;border-radius:50px;font-size:12px;font-weight:500;color:var(--muted);margin-bottom:32px;letter-spacing:.04em}
-.hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue);animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-.hero h1{margin-bottom:24px}
-.hero-sub{font-size:clamp(16px,2vw,22px);color:var(--muted);margin-bottom:44px;line-height:1.55;max-width:520px;margin-left:auto;margin-right:auto}
-.hero-cta{display:inline-flex;align-items:center;gap:10px;background:var(--blue);color:white;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:16px 36px;border-radius:50px;position:relative;overflow:hidden;transition:box-shadow .3s,transform .25s}
-.hero-cta:hover{box-shadow:0 0 40px rgba(24,116,239,.6);transform:translateY(-2px)}
-.hero-cta svg{width:18px;height:18px;transition:transform .25s}
-.hero-cta:hover svg{transform:translateX(4px)}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:760px}
+.hero-eyebrow{font-family:'Inter',sans-serif;font-size:clamp(13px,1.4vw,17px);font-weight:400;color:rgba(255,255,255,.55);letter-spacing:.04em;margin-bottom:18px;display:block}
+.hero h1{font-size:clamp(32px,4.5vw,64px);margin-bottom:0;letter-spacing:-.03em}
 .scroll-indicator{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:11px;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase}
 .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,transparent,var(--muted2));animation:scrollLine 2s ease-in-out infinite}
 @keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
@@ -161,7 +154,7 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 .fp-bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 .fp-bar-label{font-size:12px;color:var(--muted);min-width:36px}
 .fp-bar-track{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
-.fp-bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:3px;width:0%;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.fp-bar-fill{height:100%;background:linear-gradient(90deg,#5aabff,var(--blue));border-radius:3px;width:0%;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
 .fp-bar-pct{font-size:12px;color:var(--muted);min-width:30px;text-align:right}
 .fp-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
 .fp-row:last-child{border:none}
@@ -222,7 +215,7 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 .how-vc-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .how-vc-bar-lbl{font-size:11px;color:var(--muted);min-width:36px}
 .how-vc-bar-track{flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
-.how-vc-bar-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:3px}
+.how-vc-bar-fill{height:100%;background:linear-gradient(90deg,#5aabff,var(--blue));border-radius:3px}
 .how-vc-bar-pct{font-size:11px;color:var(--muted)}
 .how-vc-gate-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
 .how-vc-gate-row:last-child{border:none}
@@ -434,9 +427,8 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
 
   /* Hero */
   .hero{padding:90px 16px 56px}
-  .hero h1{font-size:clamp(32px,10vw,44px);letter-spacing:-.02em}
-  .hero-badge{font-size:10px}
-  .hero-cta{font-size:14px;padding:13px 24px;width:100%;justify-content:center}
+  .hero h1{font-size:clamp(28px,9vw,42px);letter-spacing:-.02em}
+  .hero-eyebrow{font-size:12px}
 
   /* Areas: single column */
   .areas-bento{grid-template-columns:1fr;grid-template-rows:auto;gap:10px}
@@ -511,19 +503,8 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
   <div class="hero-orb hero-orb-2"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">
-      <span class="hero-badge-dot"></span>
-      Software de Gestão de Bilhética · Portugal
-    </div>
-    <h1>
-      Bilheteira Digital<br>
-      <em>Sem Complicações</em>
-    </h1>
-    <p class="hero-sub">Venda, validação e gestão de acessos num só sistema.</p>
-    <a href="#contactos" class="hero-cta">
-      Agendar demonstração
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-    </a>
+    <p class="hero-eyebrow">Da venda do bilhete à entrada do público</p>
+    <h1>Bilheteira &amp;<br><em>Controlo de Acessos</em></h1>
   </div>
   <div class="scroll-indicator">
     <div class="scroll-line"></div>
