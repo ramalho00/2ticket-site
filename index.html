@@ -387,18 +387,15 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
   .area-card-content{padding:16px}
   .area-card-tag{opacity:1;transform:translateY(0)}
 
-  /* Features: single column, panel hidden, accordion style */
-  .features-inner{grid-template-columns:1fr;gap:0}
+  /* Features: single column, panel shows below tabs */
+  .features-inner{grid-template-columns:1fr;gap:16px}
   .features-nav{position:static;gap:8px}
-  .feat-tab{padding:16px}
+  .features-panel{display:block!important;padding-left:0}
+  .feat-tab{border-color:var(--border)!important;padding:16px}
+  .feat-tab.active{border-color:var(--border-hi)!important;background:rgba(24,116,239,.08)}
   .feat-tab-desc{display:none}
-  .features-panel{display:none!important}
-  .feat-mobile-content{overflow:hidden;max-height:0;transition:max-height .45s cubic-bezier(.4,0,.2,1);padding:0 4px}
-  .feat-tab.active .feat-mobile-content{max-height:600px}
-  .feat-mobile-content .feat-panel-card{margin:12px 0 4px;border-radius:14px}
-  .feat-panel-body{padding:16px}
-  .fp-stat-val{font-size:26px}
-  .fp-pay-grid{grid-template-columns:repeat(3,1fr)}
+  .feat-tab-pills{display:none}
+  .feat-mobile-content{display:none!important}
 
   /* How it works */
   .how-inner{grid-template-columns:1fr;gap:24px}
@@ -448,8 +445,9 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
 
   /* Features */
   .fp-pay-grid{grid-template-columns:repeat(3,1fr)}
-  .fp-stat-val{font-size:24px}
-  .feat-tab-pills{display:none}
+  .fp-stat-val{font-size:22px}
+  .feat-panel-body{padding:14px}
+  .fp-stat-row{gap:10px}
 
   /* Clients */
   .clients-stat-num{font-size:32px}
@@ -1091,28 +1089,7 @@ function activateFeat(idx) {
   if(idx===3){ document.querySelectorAll('#f3-chart .fp-bar-col').forEach(b=>b.style.height='0%'); }
   setTimeout(()=>animatePanel(idx),100);
 }
-// On mobile: move panel cards inside each tab body (accordion style)
-if (window.innerWidth <= 768) {
-  const featPanelWrapper = document.querySelector('.features-panel');
-  featPanels.forEach((panel, i) => {
-    const mobileWrap = document.createElement('div');
-    mobileWrap.className = 'feat-mobile-content';
-    mobileWrap.appendChild(panel.cloneNode(true));
-    const tabBody = featTabs[i].querySelector('.feat-tab-body');
-    if (tabBody) tabBody.appendChild(mobileWrap);
-  });
-  if (featPanelWrapper) featPanelWrapper.style.display = 'none';
-  // Re-wire animation for mobile panels
-  featTabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => {
-      featTabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      setTimeout(() => animatePanel(i), 100);
-    });
-  });
-} else {
-  featTabs.forEach((tab,i) => tab.addEventListener('click', ()=>activateFeat(i)));
-}
+featTabs.forEach((tab,i) => tab.addEventListener('click', ()=>activateFeat(i)));
 setTimeout(()=>animatePanel(0), 800);
 
 document.querySelectorAll('.faq-item').forEach(item => {
