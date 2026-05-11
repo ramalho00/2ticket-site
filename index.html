@@ -714,69 +714,106 @@
     align-self: center;
   }
 
-  /* client tiles grid */
-  .clients-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+  /* client category rows */
+  .clients-categories {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter-x);
+    box-sizing: border-box;
   }
 
-  .client-tile {
+  .clients-cat-row {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 20px;
-    padding: 32px 20px 28px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    text-align: center;
-    cursor: default;
-    transition: border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s;
-  }
-
-  .client-tile:hover {
-    border-color: rgba(24,116,239,0.45);
-    background: rgba(24,116,239,0.07);
-    transform: translateY(-6px);
-    box-shadow: 0 16px 40px rgba(24,116,239,0.12);
-  }
-
-  .client-tile-logo {
-    width: 72px; height: 72px;
-    border-radius: 18px;
-    background: rgba(24,116,239,0.15);
-    border: 1px solid rgba(24,116,239,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Manrope', sans-serif;
-    font-size: 16px; font-weight: 800;
-    color: #1874EF;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    flex-shrink: 0;
+    padding: 22px 28px 26px;
     overflow: hidden;
   }
-  .client-tile-logo img {
-    width: 54px; height: 54px;
-    object-fit: contain;
-  }
 
-  .client-tile-name {
+  .clients-cat-label {
+    display: block;
     font-family: 'Manrope', sans-serif;
-    font-size: 15px; font-weight: 700;
-    color: white;
-    line-height: 1.2;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
   }
 
-  .client-tile-type {
-    font-size: 12px;
-    color: rgba(255,255,255,0.35);
-    font-weight: 400;
+  .clients-cat-strip {
+    display: flex;
+    align-items: center;
+    gap: 52px;
+    overflow: hidden;
+  }
+
+  .clients-cat-strip--static {
+    flex-wrap: wrap;
+    gap: 40px 52px;
+  }
+
+  .clients-marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+    width: max-content;
+    animation: marquee-scroll 50s linear infinite;
+  }
+
+  .clients-cat-strip:hover .clients-marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .clients-cat-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .clients-cat-logo img {
+    height: 38px;
+    width: auto;
+    max-width: 100px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.4;
+    transition: opacity 0.3s;
+  }
+
+  .clients-cat-logo img:hover { opacity: 0.85; }
+
+  .clients-cat-logo-text {
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.38);
     letter-spacing: 0.04em;
     text-transform: uppercase;
+    white-space: nowrap;
+    transition: color 0.3s;
   }
-    border: 1px solid rgba(24,116,239,0.25);
-    display: flex; align-items: center; justify-content: center;
+
+  .clients-cat-logo-text:hover { color: rgba(255,255,255,0.85); }
+
+  .clients-bottom-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter-x);
+    box-sizing: border-box;
+  }
   /* ─── FAQ ─── */
   .faq-section {
     background: var(--ink);
@@ -1458,10 +1495,10 @@
     nav ul { gap: 20px; }
     nav ul a { font-size: 13px; }
 
-    /* Clients grid */
-    .clients-grid { grid-template-columns: repeat(3, 1fr); }
+    /* Clients */
     .clients-stats { gap: 36px; }
     .clients-stat-num { font-size: 32px; }
+    .clients-bottom-rows { grid-template-columns: 1fr; }
 
     /* Features bar */
     .feature-pill { padding: 20px 20px; }
@@ -1494,10 +1531,10 @@
   ══════════════════════════════════════════ */
   @media (max-width: 768px) {
 
-    /* Clients grid */
-    .clients-grid { grid-template-columns: repeat(2, 1fr); }
+    /* Clients */
     .clients-stats { gap: 24px; flex-wrap: wrap; }
     .clients-stat-divider { display: none; }
+    .clients-bottom-rows { grid-template-columns: 1fr; }
 
     /* ── Nav: hide links, show hamburger ── */
     .nav-links { display: none; }
@@ -1639,9 +1676,10 @@
     .nav-links.open { top: 64px; }
 
     /* Clients */
-    .clients-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .client-tile { padding: 24px 14px 20px; }
-    .client-tile-logo { width: 56px; height: 56px; font-size: 13px; }
+    .clients-categories { padding: 0 16px; }
+    .clients-bottom-rows { padding: 0 16px; gap: 10px; }
+    .clients-cat-logo img { height: 30px; }
+    .clients-cat-strip--static { gap: 28px; }
 
     /* Hero */
     .hero { padding: 88px 0 48px; }
@@ -3478,202 +3516,89 @@
     </div>
   </div>
 
-  <!-- Client tiles grid -->
-  <div class="clients-grid wrap">
-
-    <div class="client-tile">
-      <div class="client-tile-logo">SCP</div>
-      <div class="client-tile-name">Sporting CP</div>
-      <div class="client-tile-type">Futebol</div>
+  <!-- Futebol row (marquee) -->
+  <div class="clients-categories">
+    <div class="clients-cat-row">
+      <span class="clients-cat-label">Futebol</span>
+      <div class="clients-cat-strip">
+        <div class="clients-marquee-track">
+          <div class="clients-cat-logo"><span class="clients-cat-logo-text">Sporting CP</span></div>
+          <div class="clients-cat-logo"><span class="clients-cat-logo-text">FC Porto</span></div>
+          <div class="clients-cat-logo"><span class="clients-cat-logo-text">SC Braga</span></div>
+          <div class="clients-cat-logo"><img src="BoavistaFc.png" alt="Boavista FC"></div>
+          <div class="clients-cat-logo"><img src="casapia.png" alt="Casa Pia AC"></div>
+          <div class="clients-cat-logo"><img src="GilVicente.png" alt="Gil Vicente FC"></div>
+          <div class="clients-cat-logo"><img src="SantaClara.png" alt="SC Santa Clara"></div>
+          <div class="clients-cat-logo"><img src="moreirense.png" alt="Moreirense FC"></div>
+          <div class="clients-cat-logo"><img src="maritimo.png" alt="CS Marítimo"></div>
+          <div class="clients-cat-logo"><img src="Estoril.png" alt="GD Estoril"></div>
+          <div class="clients-cat-logo"><img src="estrelaamadora.png" alt="CF Estrela Amadora"></div>
+          <div class="clients-cat-logo"><img src="academico_viseu.png" alt="Académica"></div>
+          <div class="clients-cat-logo"><img src="cdtondela.png" alt="CD Tondela"></div>
+          <div class="clients-cat-logo"><img src="AVS.png" alt="AC Viseu"></div>
+          <div class="clients-cat-logo"><img src="Leiria.png" alt="UD Leiria"></div>
+          <div class="clients-cat-logo"><img src="Mafra.png" alt="CD Mafra"></div>
+          <div class="clients-cat-logo"><img src="FCAlverca.png" alt="FC Alverca"></div>
+          <div class="clients-cat-logo"><img src="feirense.png" alt="SC Feirense"></div>
+          <div class="clients-cat-logo"><img src="Oliveirense.png" alt="Oliveirense SC"></div>
+          <div class="clients-cat-logo"><img src="Anadia.png" alt="FC Anadia"></div>
+          <div class="clients-cat-logo"><img src="Amora.png" alt="Amora FC"></div>
+          <div class="clients-cat-logo"><img src="FCFelgueiras.png" alt="FC Felgueiras"></div>
+          <div class="clients-cat-logo"><img src="scf.png" alt="SC Farense"></div>
+          <div class="clients-cat-logo"><img src="pinhel-cidade-falcao.png" alt="Pinhel Cidade Falcão"></div>
+          <div class="clients-cat-logo"><img src="FAV.png" alt="FAV"></div>
+          <!-- duplicate set for seamless loop -->
+          <div class="clients-cat-logo"><span class="clients-cat-logo-text">Sporting CP</span></div>
+          <div class="clients-cat-logo"><span class="clients-cat-logo-text">FC Porto</span></div>
+          <div class="clients-cat-logo"><span class="clients-cat-logo-text">SC Braga</span></div>
+          <div class="clients-cat-logo"><img src="BoavistaFc.png" alt="Boavista FC"></div>
+          <div class="clients-cat-logo"><img src="casapia.png" alt="Casa Pia AC"></div>
+          <div class="clients-cat-logo"><img src="GilVicente.png" alt="Gil Vicente FC"></div>
+          <div class="clients-cat-logo"><img src="SantaClara.png" alt="SC Santa Clara"></div>
+          <div class="clients-cat-logo"><img src="moreirense.png" alt="Moreirense FC"></div>
+          <div class="clients-cat-logo"><img src="maritimo.png" alt="CS Marítimo"></div>
+          <div class="clients-cat-logo"><img src="Estoril.png" alt="GD Estoril"></div>
+          <div class="clients-cat-logo"><img src="estrelaamadora.png" alt="CF Estrela Amadora"></div>
+          <div class="clients-cat-logo"><img src="academico_viseu.png" alt="Académica"></div>
+          <div class="clients-cat-logo"><img src="cdtondela.png" alt="CD Tondela"></div>
+          <div class="clients-cat-logo"><img src="AVS.png" alt="AC Viseu"></div>
+          <div class="clients-cat-logo"><img src="Leiria.png" alt="UD Leiria"></div>
+          <div class="clients-cat-logo"><img src="Mafra.png" alt="CD Mafra"></div>
+          <div class="clients-cat-logo"><img src="FCAlverca.png" alt="FC Alverca"></div>
+          <div class="clients-cat-logo"><img src="feirense.png" alt="SC Feirense"></div>
+          <div class="clients-cat-logo"><img src="Oliveirense.png" alt="Oliveirense SC"></div>
+          <div class="clients-cat-logo"><img src="Anadia.png" alt="FC Anadia"></div>
+          <div class="clients-cat-logo"><img src="Amora.png" alt="Amora FC"></div>
+          <div class="clients-cat-logo"><img src="FCFelgueiras.png" alt="FC Felgueiras"></div>
+          <div class="clients-cat-logo"><img src="scf.png" alt="SC Farense"></div>
+          <div class="clients-cat-logo"><img src="pinhel-cidade-falcao.png" alt="Pinhel Cidade Falcão"></div>
+          <div class="clients-cat-logo"><img src="FAV.png" alt="FAV"></div>
+        </div>
+      </div>
     </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo">FCP</div>
-      <div class="client-tile-name">FC Porto</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo">SCB</div>
-      <div class="client-tile-name">SC Braga</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo">LP</div>
-      <div class="client-tile-name">Liga Portugal</div>
-      <div class="client-tile-type">Organização</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="maritimo.png" alt="CS Marítimo"></div>
-      <div class="client-tile-name">CS Marítimo</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="Estoril.png" alt="GD Estoril"></div>
-      <div class="client-tile-name">GD Estoril</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="academico_viseu.png" alt="Académica"></div>
-      <div class="client-tile-name">Académica</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="cdtondela.png" alt="CD Tondela"></div>
-      <div class="client-tile-name">CD Tondela</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="AVS.png" alt="AC Viseu"></div>
-      <div class="client-tile-name">AC Viseu</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="feira_saomateus.png" alt="Feira S. Mateus"></div>
-      <div class="client-tile-name">Feira S. Mateus</div>
-      <div class="client-tile-type">Feira Popular</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="ficton.png" alt="FICTON"></div>
-      <div class="client-tile-name">FICTON</div>
-      <div class="client-tile-type">Evento</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo">CMM</div>
-      <div class="client-tile-name">CM Mangualde</div>
-      <div class="client-tile-type">Município</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="BoavistaFc.png" alt="Boavista FC"></div>
-      <div class="client-tile-name">Boavista FC</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="casapia.png" alt="Casa Pia AC"></div>
-      <div class="client-tile-name">Casa Pia AC</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="GilVicente.png" alt="Gil Vicente FC"></div>
-      <div class="client-tile-name">Gil Vicente FC</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="SantaClara.png" alt="SC Santa Clara"></div>
-      <div class="client-tile-name">SC Santa Clara</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="moreirense.png" alt="Moreirense FC"></div>
-      <div class="client-tile-name">Moreirense FC</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="estrelaamadora.png" alt="CF Estrela Amadora"></div>
-      <div class="client-tile-name">CF Estrela Amadora</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="Leiria.png" alt="UD Leiria"></div>
-      <div class="client-tile-name">UD Leiria</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="Mafra.png" alt="CD Mafra"></div>
-      <div class="client-tile-name">CD Mafra</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="FCAlverca.png" alt="FC Alverca"></div>
-      <div class="client-tile-name">FC Alverca</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="feirense.png" alt="SC Feirense"></div>
-      <div class="client-tile-name">SC Feirense</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="Oliveirense.png" alt="Oliveirense SC"></div>
-      <div class="client-tile-name">Oliveirense SC</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="Anadia.png" alt="FC Anadia"></div>
-      <div class="client-tile-name">FC Anadia</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="Amora.png" alt="Amora FC"></div>
-      <div class="client-tile-name">Amora FC</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="FCFelgueiras.png" alt="FC Felgueiras"></div>
-      <div class="client-tile-name">FC Felgueiras</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="scf.png" alt="SC Farense"></div>
-      <div class="client-tile-name">SC Farense</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="pinhel-cidade-falcao.png" alt="Pinhel Cidade Falcão"></div>
-      <div class="client-tile-name">Pinhel Cidade Falcão</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="FAV.png" alt="FAV"></div>
-      <div class="client-tile-name">FAV</div>
-      <div class="client-tile-type">Futebol</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="scut.png" alt="SCUT"></div>
-      <div class="client-tile-name">SCUT</div>
-      <div class="client-tile-type">Organização</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="allianzcup.png" alt="Allianz Cup"></div>
-      <div class="client-tile-name">Allianz Cup</div>
-      <div class="client-tile-type">Competição</div>
-    </div>
-
-    <div class="client-tile">
-      <div class="client-tile-logo"><img src="thedayafter.png" alt="The Day After"></div>
-      <div class="client-tile-name">The Day After</div>
-      <div class="client-tile-type">Evento</div>
-    </div>
-
   </div>
+
+  <!-- Bottom rows: Organização & Eventos -->
+  <div class="clients-bottom-rows">
+    <div class="clients-cat-row">
+      <span class="clients-cat-label">Organização & Competições</span>
+      <div class="clients-cat-strip clients-cat-strip--static">
+        <div class="clients-cat-logo"><span class="clients-cat-logo-text">Liga Portugal</span></div>
+        <div class="clients-cat-logo"><img src="allianzcup.png" alt="Allianz Cup"></div>
+        <div class="clients-cat-logo"><img src="scut.png" alt="SCUT"></div>
+      </div>
+    </div>
+    <div class="clients-cat-row">
+      <span class="clients-cat-label">Eventos, Feiras & Municípios</span>
+      <div class="clients-cat-strip clients-cat-strip--static">
+        <div class="clients-cat-logo"><img src="ficton.png" alt="FICTON"></div>
+        <div class="clients-cat-logo"><img src="feira_saomateus.png" alt="Feira S. Mateus"></div>
+        <div class="clients-cat-logo"><img src="thedayafter.png" alt="The Day After"></div>
+        <div class="clients-cat-logo"><span class="clients-cat-logo-text">CM Mangualde</span></div>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <!-- FAQ -->
