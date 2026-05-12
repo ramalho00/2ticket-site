@@ -286,9 +286,9 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 .clients-marquee-wrap:hover .clients-marquee-track{animation-play-state:paused}
 @keyframes mq-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @keyframes mq-right{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
-.cl-item{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:140px;height:80px;padding:0 20px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,.3);transition:border-color .3s,background .3s,transform .3s,box-shadow .3s;cursor:default}
+.cl-item{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:140px;height:80px;padding:0 16px;box-sizing:border-box;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,.3);transition:border-color .3s,background .3s,transform .3s,box-shadow .3s;cursor:default;overflow:hidden}
 .cl-item:hover{border-color:rgba(24,116,239,.5);background:rgba(24,116,239,.1);transform:translateY(-4px);box-shadow:0 8px 24px rgba(24,116,239,.15)}
-.cl-item img{height:44px;width:100%;max-width:110px;object-fit:contain;filter:brightness(0) invert(1);opacity:.85;transition:opacity .3s}
+.cl-item img{display:block;width:auto;max-width:100%;height:auto;max-height:52px;min-width:0;object-fit:contain;object-position:center;opacity:.92;transition:opacity .3s}
 .cl-item:hover img{opacity:1}
 .cl-item-text{font-family:'Space Mono',sans-serif;font-size:12px;font-weight:700;color:rgba(255,255,255,.75);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;text-align:center;transition:color .25s}
 .cl-item:hover .cl-item-text{color:white}
@@ -476,7 +476,7 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
 
   /* Clients */
   .clients-stat-num{font-size:32px}
-  .cl-item img{height:32px}
+  .cl-item img{max-height:40px}
 
   /* Footer */
   .footer-top{grid-template-columns:1fr}
@@ -907,74 +907,72 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
         <div class="cl-item"><span class="cl-item-text">Sporting CP</span></div>
         <div class="cl-item"><span class="cl-item-text">FC Porto</span></div>
         <div class="cl-item"><span class="cl-item-text">SC Braga</span></div>
-        <div class="cl-item"><img src="BoavistaFc.png" alt="Boavista FC"></div>
-        <div class="cl-item"><img src="casapia.png" alt="Casa Pia AC"></div>
-        <div class="cl-item"><img src="GilVicente.png" alt="Gil Vicente FC"></div>
-        <div class="cl-item"><img src="SantaClara.png" alt="SC Santa Clara"></div>
-        <div class="cl-item"><img src="moreirense.png" alt="Moreirense FC"></div>
-        <div class="cl-item"><img src="maritimo.png" alt="CS Marítimo"></div>
-        <div class="cl-item"><img src="Estoril.png" alt="GD Estoril"></div>
+        <div class="cl-item"><img src="logos clientes/BoavistaFc.png" alt="Boavista FC"></div>
+        <div class="cl-item"><img src="logos clientes/casapia.png" alt="Casa Pia AC"></div>
+        <div class="cl-item"><img src="logos clientes/GilVicente.png" alt="Gil Vicente FC"></div>
+        <div class="cl-item"><img src="logos clientes/SantaClara.png" alt="SC Santa Clara"></div>
+        <div class="cl-item"><img src="logos clientes/moreirense.png" alt="Moreirense FC"></div>
+        <div class="cl-item"><img src="logos clientes/maritimo.png" alt="CS Marítimo"></div>
+        <div class="cl-item"><img src="logos clientes/Estoril.png" alt="GD Estoril"></div>
         <div class="cl-item"><span class="cl-item-text">Liga Portugal</span></div>
-        <div class="cl-item"><img src="allianzcup.png" alt="Allianz Cup"></div>
-        <div class="cl-item"><img src="ficton.png" alt="FICTON"></div>
+        <div class="cl-item"><img src="logos clientes/allianzcup.png" alt="Allianz Cup"></div>
+        <div class="cl-item"><img src="logos clientes/ficton.png" alt="FICTON"></div>
         <!-- duplicate for seamless loop -->
         <div class="cl-item"><span class="cl-item-text">Sporting CP</span></div>
         <div class="cl-item"><span class="cl-item-text">FC Porto</span></div>
         <div class="cl-item"><span class="cl-item-text">SC Braga</span></div>
-        <div class="cl-item"><img src="BoavistaFc.png" alt="Boavista FC"></div>
-        <div class="cl-item"><img src="casapia.png" alt="Casa Pia AC"></div>
-        <div class="cl-item"><img src="GilVicente.png" alt="Gil Vicente FC"></div>
-        <div class="cl-item"><img src="SantaClara.png" alt="SC Santa Clara"></div>
-        <div class="cl-item"><img src="moreirense.png" alt="Moreirense FC"></div>
-        <div class="cl-item"><img src="maritimo.png" alt="CS Marítimo"></div>
-        <div class="cl-item"><img src="Estoril.png" alt="GD Estoril"></div>
+        <div class="cl-item"><img src="logos clientes/BoavistaFc.png" alt="Boavista FC"></div>
+        <div class="cl-item"><img src="logos clientes/casapia.png" alt="Casa Pia AC"></div>
+        <div class="cl-item"><img src="logos clientes/GilVicente.png" alt="Gil Vicente FC"></div>
+        <div class="cl-item"><img src="logos clientes/SantaClara.png" alt="SC Santa Clara"></div>
+        <div class="cl-item"><img src="logos clientes/moreirense.png" alt="Moreirense FC"></div>
+        <div class="cl-item"><img src="logos clientes/maritimo.png" alt="CS Marítimo"></div>
+        <div class="cl-item"><img src="logos clientes/Estoril.png" alt="GD Estoril"></div>
         <div class="cl-item"><span class="cl-item-text">Liga Portugal</span></div>
-        <div class="cl-item"><img src="allianzcup.png" alt="Allianz Cup"></div>
-        <div class="cl-item"><img src="ficton.png" alt="FICTON"></div>
+        <div class="cl-item"><img src="logos clientes/allianzcup.png" alt="Allianz Cup"></div>
+        <div class="cl-item"><img src="logos clientes/ficton.png" alt="FICTON"></div>
       </div>
     </div>
     <!-- Row 2: scroll right — remaining clubs + events -->
     <div class="clients-marquee-row">
       <div class="clients-marquee-track clients-marquee-track--rev">
-        <div class="cl-item"><img src="estrelaamadora.png" alt="CF Estrela Amadora"></div>
-        <div class="cl-item"><img src="academico_viseu.png" alt="Académica"></div>
-        <div class="cl-item"><img src="cdtondela.png" alt="CD Tondela"></div>
-        <div class="cl-item"><img src="AVS.png" alt="AC Viseu"></div>
-        <div class="cl-item"><img src="Leiria.png" alt="UD Leiria"></div>
-        <div class="cl-item"><img src="Mafra.png" alt="CD Mafra"></div>
-        <div class="cl-item"><img src="FCAlverca.png" alt="FC Alverca"></div>
-        <div class="cl-item"><img src="feirense.png" alt="SC Feirense"></div>
-        <div class="cl-item"><img src="Oliveirense.png" alt="Oliveirense SC"></div>
-        <div class="cl-item"><img src="Anadia.png" alt="FC Anadia"></div>
-        <div class="cl-item"><img src="Amora.png" alt="Amora FC"></div>
-        <div class="cl-item"><img src="FCFelgueiras.png" alt="FC Felgueiras"></div>
-        <div class="cl-item"><img src="scf.png" alt="SC Farense"></div>
-        <div class="cl-item"><img src="pinhel-cidade-falcao.png" alt="Pinhel Cidade Falcão"></div>
-        <div class="cl-item"><img src="FAV.png" alt="FAV"></div>
-        <div class="cl-item"><img src="scut.png" alt="SCUT"></div>
-        <div class="cl-item"><img src="feira_saomateus.png" alt="Feira S. Mateus"></div>
-        <div class="cl-item"><img src="thedayafter.png" alt="The Day After"></div>
-        <div class="cl-item"><span class="cl-item-text">CM Mangualde</span></div>
+        <div class="cl-item"><img src="logos clientes/estrelaamadora.png" alt="CF Estrela Amadora"></div>
+        <div class="cl-item"><img src="logos clientes/academico_viseu.png" alt="Académica"></div>
+        <div class="cl-item"><img src="logos clientes/cdtondela.png" alt="CD Tondela"></div>
+        <div class="cl-item"><img src="logos clientes/AVS.png" alt="AC Viseu"></div>
+        <div class="cl-item"><img src="logos clientes/Leiria.png" alt="UD Leiria"></div>
+        <div class="cl-item"><img src="logos clientes/Mafra.png" alt="CD Mafra"></div>
+        <div class="cl-item"><img src="logos clientes/FCAlverca.png" alt="FC Alverca"></div>
+        <div class="cl-item"><img src="logos clientes/feirense.png" alt="SC Feirense"></div>
+        <div class="cl-item"><img src="logos clientes/Oliveirense.png" alt="Oliveirense SC"></div>
+        <div class="cl-item"><img src="logos clientes/Anadia.png" alt="FC Anadia"></div>
+        <div class="cl-item"><img src="logos clientes/Amora.png" alt="Amora FC"></div>
+        <div class="cl-item"><img src="logos clientes/FCFelgueiras.png" alt="FC Felgueiras"></div>
+        <div class="cl-item"><img src="logos clientes/scf.png" alt="SC Farense"></div>
+        <div class="cl-item"><img src="logos clientes/pinhel-cidade-falcao.png" alt="Pinhel Cidade Falcão"></div>
+        <div class="cl-item"><img src="logos clientes/FAV.png" alt="FAV"></div>
+        <div class="cl-item"><img src="logos clientes/scut.png" alt="SCUT"></div>
+        <div class="cl-item"><img src="logos clientes/feira_saomateus.png" alt="Feira S. Mateus"></div>
+        <div class="cl-item"><img src="logos clientes/thedayafter.png" alt="The Day After"></div>
         <!-- duplicate for seamless loop -->
-        <div class="cl-item"><img src="estrelaamadora.png" alt="CF Estrela Amadora"></div>
-        <div class="cl-item"><img src="academico_viseu.png" alt="Académica"></div>
-        <div class="cl-item"><img src="cdtondela.png" alt="CD Tondela"></div>
-        <div class="cl-item"><img src="AVS.png" alt="AC Viseu"></div>
-        <div class="cl-item"><img src="Leiria.png" alt="UD Leiria"></div>
-        <div class="cl-item"><img src="Mafra.png" alt="CD Mafra"></div>
-        <div class="cl-item"><img src="FCAlverca.png" alt="FC Alverca"></div>
-        <div class="cl-item"><img src="feirense.png" alt="SC Feirense"></div>
-        <div class="cl-item"><img src="Oliveirense.png" alt="Oliveirense SC"></div>
-        <div class="cl-item"><img src="Anadia.png" alt="FC Anadia"></div>
-        <div class="cl-item"><img src="Amora.png" alt="Amora FC"></div>
-        <div class="cl-item"><img src="FCFelgueiras.png" alt="FC Felgueiras"></div>
-        <div class="cl-item"><img src="scf.png" alt="SC Farense"></div>
-        <div class="cl-item"><img src="pinhel-cidade-falcao.png" alt="Pinhel Cidade Falcão"></div>
-        <div class="cl-item"><img src="FAV.png" alt="FAV"></div>
-        <div class="cl-item"><img src="scut.png" alt="SCUT"></div>
-        <div class="cl-item"><img src="feira_saomateus.png" alt="Feira S. Mateus"></div>
-        <div class="cl-item"><img src="thedayafter.png" alt="The Day After"></div>
-        <div class="cl-item"><span class="cl-item-text">CM Mangualde</span></div>
+        <div class="cl-item"><img src="logos clientes/estrelaamadora.png" alt="CF Estrela Amadora"></div>
+        <div class="cl-item"><img src="logos clientes/academico_viseu.png" alt="Académica"></div>
+        <div class="cl-item"><img src="logos clientes/cdtondela.png" alt="CD Tondela"></div>
+        <div class="cl-item"><img src="logos clientes/AVS.png" alt="AC Viseu"></div>
+        <div class="cl-item"><img src="logos clientes/Leiria.png" alt="UD Leiria"></div>
+        <div class="cl-item"><img src="logos clientes/Mafra.png" alt="CD Mafra"></div>
+        <div class="cl-item"><img src="logos clientes/FCAlverca.png" alt="FC Alverca"></div>
+        <div class="cl-item"><img src="logos clientes/feirense.png" alt="SC Feirense"></div>
+        <div class="cl-item"><img src="logos clientes/Oliveirense.png" alt="Oliveirense SC"></div>
+        <div class="cl-item"><img src="logos clientes/Anadia.png" alt="FC Anadia"></div>
+        <div class="cl-item"><img src="logos clientes/Amora.png" alt="Amora FC"></div>
+        <div class="cl-item"><img src="logos clientes/FCFelgueiras.png" alt="FC Felgueiras"></div>
+        <div class="cl-item"><img src="logos clientes/scf.png" alt="SC Farense"></div>
+        <div class="cl-item"><img src="logos clientes/pinhel-cidade-falcao.png" alt="Pinhel Cidade Falcão"></div>
+        <div class="cl-item"><img src="logos clientes/FAV.png" alt="FAV"></div>
+        <div class="cl-item"><img src="logos clientes/scut.png" alt="SCUT"></div>
+        <div class="cl-item"><img src="logos clientes/feira_saomateus.png" alt="Feira S. Mateus"></div>
+        <div class="cl-item"><img src="logos clientes/thedayafter.png" alt="The Day After"></div>
       </div>
     </div>
   </div>
