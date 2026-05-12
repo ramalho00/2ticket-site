@@ -135,10 +135,9 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 .feat-tab.active{background:rgba(24,116,239,.1);border-color:var(--border-hi)}
 .feat-tab-num{font-size:11px;font-weight:700;color:var(--blue);letter-spacing:.1em;min-width:24px;padding-top:3px}
 .feat-tab-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
-.feat-tab-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px}
-.feat-tab-pills{display:flex;flex-wrap:wrap;gap:6px}
-.feat-tab-pill{font-size:10px;font-weight:600;color:var(--blue);background:var(--blue-dim);border:1px solid var(--border-hi);padding:3px 10px;border-radius:50px;letter-spacing:.04em}
-.features-panel{position:relative;padding-left:40px}
+.feat-tab-desc{display:none}
+.feat-tab-pills{display:none}
+.features-panel{position:sticky;top:100px;padding-left:40px;align-self:start}
 .feat-panel{display:none}
 .feat-panel.active{display:block;animation:fadeInUp .4s ease}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
@@ -245,16 +244,14 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 ═══════════════════════════════════════ */
 .cashless-section{padding:120px 0;background:var(--bg);position:relative;overflow:hidden}
 .cashless-section::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(ellipse,rgba(24,116,239,.08),transparent 65%);pointer-events:none}
-.cashless-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.cashless-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.cashless-left{position:sticky;top:100px;align-self:start}
 .cashless-left .section-sub{margin-top:16px;margin-bottom:36px;max-width:440px}
-.cashless-pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px}
-.cashless-pill{display:flex;align-items:center;gap:8px;padding:9px 16px;background:rgba(24,116,239,.08);border:1px solid rgba(24,116,239,.25);border-radius:50px;font-size:13px;font-weight:600;color:rgba(255,255,255,.85)}
-.cashless-pill svg{width:15px;height:15px;flex-shrink:0;opacity:.8}
 .cashless-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--blue);color:white;border-radius:50px;font-size:14px;font-weight:600;transition:opacity .2s,transform .2s}
 .cashless-cta:hover{opacity:.85;transform:translateY(-2px)}
 
 /* right: flow diagram */
-.cashless-right{position:relative;display:flex;flex-direction:column;gap:12px}
+.cashless-right{display:flex;flex-direction:column;gap:12px}
 .cashless-flow-step{display:flex;align-items:flex-start;gap:16px;padding:20px 22px;background:var(--card);border:1px solid var(--border);border-radius:20px;position:relative;transition:border-color .3s,background .3s}
 .cashless-flow-step:hover{border-color:rgba(24,116,239,.35);background:rgba(24,116,239,.05)}
 .cashless-step-icon{width:48px;height:48px;border-radius:14px;background:rgba(24,116,239,.12);border:1px solid rgba(24,116,239,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -410,7 +407,7 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
   /* Features: single column, panel shows below tabs */
   .features-inner{grid-template-columns:1fr;gap:16px}
   .features-nav{position:static;gap:8px}
-  .features-panel{display:block!important;padding-left:0}
+  .features-panel{display:block!important;padding-left:0;position:static}
   .feat-tab{border-color:var(--border)!important;padding:16px}
   .feat-tab.active{border-color:var(--border-hi)!important;background:rgba(24,116,239,.08)}
   .feat-tab-desc{display:none}
@@ -425,6 +422,7 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
   /* Cashless */
   .cashless-inner{grid-template-columns:1fr;gap:48px}
   .cashless-section::before{display:none}
+  .cashless-left{position:static}
 
   /* Clients */
   .clients-stats{gap:24px;flex-wrap:wrap;justify-content:center;padding:20px 16px}
@@ -508,12 +506,10 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
   </button>
   <ul class="nav-links" id="nav-links">
     <li><a href="#home">Home</a></li>
-    <li><a href="#funcionalidades">Funcionalidades</a></li>
-    <li class="mobile-hide"><a href="#como-funciona">Como Funciona</a></li>
+    <li class="mobile-hide"><a href="#funcionalidades">Funcionalidades</a></li>
     <li class="mobile-hide"><a href="#cashless">Cashless</a></li>
     <li class="mobile-hide"><a href="#clientes">Clientes</a></li>
-    <li class="mobile-hide"><a href="#areas">Áreas</a></li>
-    <li class="mobile-hide"><a href="#questoes">Questões</a></li>
+    <li class="mobile-hide"><a href="#questoes">FAQ</a></li>
     <li><a href="#contactos">Contactos</a></li>
     <li><a href="#contactos" class="btn-nav">Fale Connosco</a></li>
   </ul>
@@ -829,34 +825,16 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
 <!-- CASHLESS -->
 <section class="cashless-section" id="cashless">
   <div class="wrap cashless-inner">
-    <!-- LEFT: copy -->
+    <!-- LEFT: sticky copy -->
     <div class="cashless-left" data-aos="fade-right">
       <span class="section-tag">Cashless</span>
       <h2 style="margin-top:12px">Pagamentos sem <em>fricção</em></h2>
       <p class="section-sub">Pulseiras NFC personalizadas com a identidade do evento. O público carrega saldo, consome, e o organizador monitoriza tudo — em tempo real, com o nosso sistema do início ao fim.</p>
-      <div class="cashless-pills">
-        <div class="cashless-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M7 15h.01M11 15h2"/></svg>
-          Pulseiras NFC personalizadas
-        </div>
-        <div class="cashless-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"/></svg>
-          Sistema 100% proprietário
-        </div>
-        <div class="cashless-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m12-9 2 9M9 21h6"/></svg>
-          Postos de carregamento com PDA
-        </div>
-        <div class="cashless-pill">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          Dashboard em tempo real
-        </div>
-      </div>
       <a href="#contactos" class="cashless-cta">Saber mais →</a>
     </div>
-    <!-- RIGHT: flow steps -->
-    <div class="cashless-right" data-aos="fade-left" data-aos-delay="100">
-      <div class="cashless-flow-step">
+    <!-- RIGHT: flow steps scroll-reveal -->
+    <div class="cashless-right">
+      <div class="cashless-flow-step" data-aos="fade-left" data-aos-delay="0">
         <div class="cashless-step-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M7 15h.01M11 15h2"/></svg>
         </div>
@@ -867,7 +845,7 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
         </div>
       </div>
       <div class="cashless-flow-connector"></div>
-      <div class="cashless-flow-step">
+      <div class="cashless-flow-step" data-aos="fade-left" data-aos-delay="100">
         <div class="cashless-step-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         </div>
@@ -878,7 +856,7 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
         </div>
       </div>
       <div class="cashless-flow-connector"></div>
-      <div class="cashless-flow-step">
+      <div class="cashless-flow-step" data-aos="fade-left" data-aos-delay="200">
         <div class="cashless-step-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m12-9 2 9M9 21h6"/></svg>
         </div>
@@ -889,7 +867,7 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
         </div>
       </div>
       <div class="cashless-flow-connector"></div>
-      <div class="cashless-flow-step">
+      <div class="cashless-flow-step" data-aos="fade-left" data-aos-delay="300">
         <div class="cashless-step-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         </div>
