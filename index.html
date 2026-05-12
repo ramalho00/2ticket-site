@@ -245,13 +245,13 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 .cashless-section{padding:120px 0;background:var(--bg);position:relative;overflow:hidden}
 .cashless-section::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(ellipse,rgba(24,116,239,.08),transparent 65%);pointer-events:none}
 .cashless-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
-.cashless-left{position:sticky;top:100px;align-self:start}
+.cashless-left{margin-bottom:0}
 .cashless-left .section-sub{margin-top:16px;margin-bottom:36px;max-width:440px}
 .cashless-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:var(--blue);color:white;border-radius:50px;font-size:14px;font-weight:600;transition:opacity .2s,transform .2s}
 .cashless-cta:hover{opacity:.85;transform:translateY(-2px)}
 
-/* right: flow diagram */
-.cashless-right{display:flex;flex-direction:column;gap:12px}
+/* right: flow diagram — sticky */
+.cashless-right{position:sticky;top:100px;align-self:start;display:flex;flex-direction:column;gap:12px}
 .cashless-flow-step{display:flex;align-items:flex-start;gap:16px;padding:20px 22px;background:var(--card);border:1px solid var(--border);border-radius:20px;position:relative;transition:border-color .3s,background .3s}
 .cashless-flow-step:hover{border-color:rgba(24,116,239,.35);background:rgba(24,116,239,.05)}
 .cashless-step-icon{width:48px;height:48px;border-radius:14px;background:rgba(24,116,239,.12);border:1px solid rgba(24,116,239,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -312,26 +312,32 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 /* ═══════════════════════════════════════
    CONTACT
 ═══════════════════════════════════════ */
-.contact-section{padding:120px 0;background:var(--surface)}
-.contact-inner{display:grid;grid-template-columns:1fr 1.4fr;gap:60px;align-items:start;max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
+.contact-section{padding:120px 0;background:var(--surface);position:relative;overflow:hidden}
+.contact-section::before{content:'';position:absolute;bottom:-200px;left:-100px;width:600px;height:600px;background:radial-gradient(ellipse,rgba(24,116,239,.07),transparent 65%);pointer-events:none}
+.contact-inner{display:grid;grid-template-columns:1fr 1.5fr;gap:72px;align-items:start;max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
 .contact-left>.section-tag{margin-bottom:20px}
-.contact-left-title{font-family:'Syne',sans-serif;font-size:clamp(26px,3vw,42px);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:36px}
-.contact-info-item{display:flex;align-items:center;gap:16px;margin-bottom:20px}
-.contact-info-icon{font-size:22px;width:44px;height:44px;background:var(--card);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.contact-info-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
-.contact-info-text{font-size:15px;font-weight:600}
-.contact-right-title{font-size:18px;font-weight:700;margin-bottom:28px}
-.contact-form{display:flex;flex-direction:column;gap:16px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.form-group{display:flex;flex-direction:column;gap:7px}
-.form-group label{font-size:12px;font-weight:600;color:var(--muted);letter-spacing:.05em}
-.form-group input,.form-group select,.form-group textarea{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--text);font-family:'Inter',sans-serif;transition:border-color .2s,box-shadow .2s;outline:none}
-.form-group input::placeholder,.form-group textarea::placeholder{color:var(--muted2)}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--border-hi);box-shadow:0 0 0 3px rgba(24,116,239,.12)}
+.contact-left-title{font-family:'Syne',sans-serif;font-size:clamp(26px,3vw,44px);font-weight:800;line-height:1.08;letter-spacing:-.02em;margin-bottom:40px}
+.contact-info-item{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.contact-info-icon{width:40px;height:40px;background:rgba(24,116,239,.1);border:1px solid rgba(24,116,239,.25);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-info-icon svg{width:18px;height:18px;color:var(--blue)}
+.contact-info-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px}
+.contact-info-text{font-size:14px;font-weight:600;color:var(--text)}
+/* form card */
+.contact-right{background:var(--card);border:1px solid var(--border);border-radius:28px;padding:36px}
+.contact-right-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:6px}
+.contact-right-sub{font-size:13px;color:var(--muted);margin-bottom:28px}
+.contact-form{display:flex;flex-direction:column;gap:14px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.07em;text-transform:uppercase}
+.form-group input,.form-group select,.form-group textarea{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 16px;font-size:14px;color:var(--text);font-family:'Inter',sans-serif;transition:border-color .2s,background .2s,box-shadow .2s;outline:none;-webkit-appearance:none;appearance:none}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.22)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:rgba(24,116,239,.5);background:rgba(24,116,239,.04);box-shadow:0 0 0 3px rgba(24,116,239,.1)}
+.form-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
 .form-group select option{background:#0d1117;color:white}
-.form-group textarea{resize:vertical;min-height:100px}
-.btn-submit{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--blue);color:white;font-size:15px;font-weight:600;font-family:'Inter',sans-serif;padding:14px 32px;border-radius:50px;transition:box-shadow .3s,transform .25s;margin-top:4px;position:relative;overflow:hidden}
-.btn-submit:hover{box-shadow:0 0 32px rgba(24,116,239,.55);transform:translateY(-2px)}
+.form-group textarea{resize:vertical;min-height:110px;line-height:1.6}
+.btn-submit{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--blue);color:white;font-size:15px;font-weight:600;font-family:'Inter',sans-serif;padding:16px 32px;border-radius:14px;transition:box-shadow .3s,transform .25s,background .2s;margin-top:6px;position:relative;overflow:hidden}
+.btn-submit:hover{box-shadow:0 0 32px rgba(24,116,239,.5);transform:translateY(-2px);background:#1565d8}
 .form-success{display:none;text-align:center;padding:48px 24px}
 .form-success-icon{font-size:48px;margin-bottom:16px}
 .form-success h3{font-size:22px;font-weight:700;margin-bottom:8px}
@@ -422,7 +428,7 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
   /* Cashless */
   .cashless-inner{grid-template-columns:1fr;gap:48px}
   .cashless-section::before{display:none}
-  .cashless-left{position:static}
+  .cashless-right{position:static}
 
   /* Clients */
   .clients-stats{gap:24px;flex-wrap:wrap;justify-content:center;padding:20px 16px}
@@ -550,7 +556,6 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
       <div class="area-card-grad"></div>
       <span class="area-card-tag">Desporto</span>
       <div class="area-card-content">
-        <span class="area-card-icon">🏟️</span>
         <div class="area-card-title">Estádios</div>
         <div class="area-card-desc">Gestão completa de bilheteira para futebol e desporto.</div>
       </div>
@@ -560,7 +565,6 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
       <div class="area-card-grad"></div>
       <span class="area-card-tag">Indoor</span>
       <div class="area-card-content">
-        <span class="area-card-icon">🏀</span>
         <div class="area-card-title">Pavilhões</div>
         <div class="area-card-desc">Controlo de acessos e lotação em tempo real.</div>
       </div>
@@ -570,7 +574,6 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
       <div class="area-card-grad"></div>
       <span class="area-card-tag">Ao ar livre</span>
       <div class="area-card-content">
-        <span class="area-card-icon">🎡</span>
         <div class="area-card-title">Feiras</div>
         <div class="area-card-desc">Venda de passes e ingressos diários para grandes eventos.</div>
       </div>
@@ -580,7 +583,6 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
       <div class="area-card-grad"></div>
       <span class="area-card-tag">Música</span>
       <div class="area-card-content">
-        <span class="area-card-icon">🎵</span>
         <div class="area-card-title">Concertos</div>
         <div class="area-card-desc">Venda de bilhetes com mapa de lugares interativo.</div>
       </div>
@@ -590,7 +592,6 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
       <div class="area-card-grad"></div>
       <span class="area-card-tag">Cultura</span>
       <div class="area-card-content">
-        <span class="area-card-icon">🎭</span>
         <div class="area-card-title">Teatros</div>
         <div class="area-card-desc">Reservas de lugares e gestão de temporadas.</div>
       </div>
@@ -998,11 +999,18 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
     <div class="contact-left" data-aos="fade-right">
       <span class="section-tag">Contactos</span>
       <div class="contact-left-title">Pronto para transformar a sua bilhética?</div>
-      <div class="contact-info-item"><div class="contact-info-icon">✉️</div><div><div class="contact-info-label">Email</div><div class="contact-info-text">geral@2ticket.pt</div></div></div>
-      <div class="contact-info-item"><div class="contact-info-icon">📍</div><div><div class="contact-info-label">Localização</div><div class="contact-info-text">Portugal 🇵🇹</div></div></div>
+      <div class="contact-info-item">
+        <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><div class="contact-info-label">Email</div><div class="contact-info-text">geral@2ticket.pt</div></div>
+      </div>
+      <div class="contact-info-item">
+        <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="contact-info-label">Localização</div><div class="contact-info-text">Portugal</div></div>
+      </div>
     </div>
     <div class="contact-right" data-aos="fade-left">
       <div class="contact-right-title">Envie-nos uma mensagem</div>
+      <div class="contact-right-sub">Respondemos em menos de 24 horas.</div>
       <div id="contact-form-wrap">
         <div class="contact-form" id="contact-form">
           <div class="form-row">
