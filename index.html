@@ -193,6 +193,8 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
    HOW IT WORKS
 ═══════════════════════════════════════ */
 .how-section{padding:120px 0}
+.how-section-header{text-align:center;margin-bottom:56px}
+.how-section-header h2{margin-top:12px}
 .how-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
 .how-vc{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;position:sticky;top:100px}
 .how-vc-bar{display:flex;align-items:center;gap:8px;padding:12px 18px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02)}
@@ -223,8 +225,6 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 .how-vc-gate-ok{font-size:10px;color:#22c55e;margin-top:2px}
 .how-vc-gate-cnt{font-family:'Syne',sans-serif;font-size:24px;font-weight:800}
 .how-acc-wrap{display:flex;flex-direction:column;gap:4px}
-.how-acc-wrap>.section-tag{margin-bottom:8px;align-self:flex-start}
-.how-acc-wrap>h2{margin-bottom:32px}
 .how-acc-item{border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .25s}
 .how-acc-item.active{border-color:var(--border-hi)}
 .how-acc-header{display:flex;align-items:center;gap:16px;padding:20px 24px;cursor:pointer}
@@ -242,7 +242,7 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 /* ═══════════════════════════════════════
    CASHLESS
 ═══════════════════════════════════════ */
-.cashless-section{padding:120px 0;background:var(--bg);position:relative;overflow:hidden}
+.cashless-section{padding:120px 0;background:var(--bg);position:relative}
 .cashless-section::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(ellipse,rgba(24,116,239,.08),transparent 65%);pointer-events:none}
 .cashless-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
 .cashless-left{position:sticky;top:100px;align-self:start}
@@ -312,7 +312,7 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 /* ═══════════════════════════════════════
    CONTACT
 ═══════════════════════════════════════ */
-.contact-section{padding:120px 0;background:var(--surface);position:relative;overflow:hidden}
+.contact-section{padding:120px 0;background:var(--surface);position:relative}
 .contact-section::before{content:'';position:absolute;bottom:-200px;left:-100px;width:600px;height:600px;background:radial-gradient(ellipse,rgba(24,116,239,.07),transparent 65%);pointer-events:none}
 .contact-inner{display:grid;grid-template-columns:1fr 1.5fr;gap:72px;align-items:start;max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
 .contact-left{position:sticky;top:100px;align-self:start}
@@ -424,7 +424,6 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
   /* How it works */
   .how-inner{grid-template-columns:1fr;gap:24px}
   .how-vc{position:static;display:none}
-  .how-acc-wrap>h2{font-size:clamp(26px,8vw,40px)}
 
   /* Cashless */
   .cashless-inner{grid-template-columns:1fr;gap:48px}
@@ -765,6 +764,10 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
 
 <!-- HOW IT WORKS -->
 <section class="how-section" id="como-funciona">
+  <div class="wrap how-section-header" data-aos="fade-up">
+    <span class="section-tag">Como Funciona</span>
+    <h2>Simples. Rápido. <em>Poderoso.</em></h2>
+  </div>
   <div class="how-inner">
     <div class="how-vc" data-aos="fade-right">
       <div class="how-vc-bar">
@@ -805,8 +808,6 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
       </div>
     </div>
     <div class="how-acc-wrap" data-aos="fade-left">
-      <span class="section-tag">Como Funciona</span>
-      <h2>Simples. Rápido. <em>Poderoso.</em></h2>
       <div class="how-acc" id="how-acc">
         <div class="how-acc-item active" data-step="0">
           <div class="how-acc-header"><div class="how-acc-num">01</div><div class="how-acc-title">Cria o teu evento</div><div class="how-acc-arrow">+</div></div>
@@ -837,7 +838,7 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
     </div>
     <!-- RIGHT: flow steps scroll-reveal -->
     <div class="cashless-right">
-      <div class="cashless-flow-step" data-aos="fade-left" data-aos-delay="0">
+      <div class="cashless-flow-step" data-aos="fade-up" data-aos-delay="0">
         <div class="cashless-step-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M7 15h.01M11 15h2"/></svg>
         </div>
@@ -848,7 +849,7 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
         </div>
       </div>
       <div class="cashless-flow-connector"></div>
-      <div class="cashless-flow-step" data-aos="fade-left" data-aos-delay="100">
+      <div class="cashless-flow-step" data-aos="fade-up" data-aos-delay="100">
         <div class="cashless-step-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         </div>
@@ -859,7 +860,7 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
         </div>
       </div>
       <div class="cashless-flow-connector"></div>
-      <div class="cashless-flow-step" data-aos="fade-left" data-aos-delay="200">
+      <div class="cashless-flow-step" data-aos="fade-up" data-aos-delay="200">
         <div class="cashless-step-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m12-9 2 9M9 21h6"/></svg>
         </div>
@@ -870,7 +871,7 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
         </div>
       </div>
       <div class="cashless-flow-connector"></div>
-      <div class="cashless-flow-step" data-aos="fade-left" data-aos-delay="300">
+      <div class="cashless-flow-step" data-aos="fade-up" data-aos-delay="300">
         <div class="cashless-step-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         </div>
