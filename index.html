@@ -224,7 +224,7 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 .how-vc-gate-name{font-size:12px;font-weight:600;color:var(--text)}
 .how-vc-gate-ok{font-size:10px;color:#22c55e;margin-top:2px}
 .how-vc-gate-cnt{font-family:'Space Mono',sans-serif;font-size:24px;font-weight:700}
-.how-acc-wrap{display:flex;flex-direction:column;gap:4px}
+.how-acc-wrap{display:flex;flex-direction:column;gap:12px}
 .how-acc-item{border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .25s}
 .how-acc-item.active{border-color:var(--border-hi)}
 .how-acc-header{display:flex;align-items:center;gap:16px;padding:20px 24px;cursor:pointer}
@@ -323,6 +323,10 @@ nav.scrolled{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-back
 .contact-info-icon svg{width:18px;height:18px;color:var(--blue)}
 .contact-info-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px}
 .contact-info-text{font-size:14px;font-weight:600;color:var(--text)}
+.contact-social{display:flex;gap:12px;margin-top:32px}
+.contact-social-link{width:42px;height:42px;border-radius:12px;background:rgba(24,116,239,.1);border:1px solid rgba(24,116,239,.25);display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s,transform .2s}
+.contact-social-link:hover{background:rgba(24,116,239,.22);border-color:rgba(24,116,239,.55);transform:translateY(-2px)}
+.contact-social-link svg{width:18px;height:18px;color:var(--blue)}
 /* form card */
 .contact-right{background:var(--card);border:1px solid var(--border);border-radius:28px;padding:36px}
 .contact-right-title{font-family:'Space Mono',sans-serif;font-size:20px;font-weight:700;margin-bottom:6px}
@@ -355,10 +359,16 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
 .footer-col h4{font-size:12px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
 .footer-col a{display:block;font-size:14px;color:var(--muted);margin-bottom:10px;transition:color .2s}
 .footer-col a:hover{color:white}
-.footer-bottom-wrap{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid var(--border);font-size:13px;color:var(--muted2)}
-.footer-bottom-right{display:flex;gap:24px;align-items:center}
-.footer-bottom-right a{font-size:13px;color:var(--muted2);transition:color .2s}
-.footer-bottom-right a:hover{color:white}
+.footer-bottom-wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:24px;border-top:1px solid var(--border)}
+.footer-bottom-left{display:flex;flex-direction:column;gap:8px}
+.footer-bottom-copy{font-size:11px;color:var(--muted2);letter-spacing:.04em;text-transform:uppercase}
+.footer-bottom-links{display:flex;gap:20px;align-items:center}
+.footer-bottom-links a{font-size:11px;color:var(--muted2);letter-spacing:.04em;text-transform:uppercase;transition:color .2s}
+.footer-bottom-links a:hover{color:white}
+.footer-bottom-links span{color:rgba(255,255,255,.15);font-size:10px}
+.footer-bottom-logos{display:flex;align-items:center;gap:16px;flex-shrink:0}
+.footer-eu-logo{height:36px;width:auto;opacity:.7;filter:brightness(0) invert(1);transition:opacity .2s}
+.footer-eu-logo:hover{opacity:1}
 
 /* ═══════════════════════════════════════
    MISC / ANIMATIONS
@@ -444,8 +454,9 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
 
   /* Footer */
   .footer-top{grid-template-columns:1fr 1fr}
-  .footer-bottom-wrap{flex-direction:column;gap:12px;text-align:center}
-  .footer-bottom-right{flex-wrap:wrap;justify-content:center;gap:16px}
+  .footer-bottom-wrap{flex-direction:column;gap:16px;text-align:center}
+  .footer-bottom-links{flex-wrap:wrap;justify-content:center;gap:10px}
+  .footer-bottom-logos{justify-content:center}
 
   /* FAQ */
   .faq-q{font-size:14px}
@@ -1007,6 +1018,14 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
         <div class="contact-info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
         <div><div class="contact-info-label">Localização</div><div class="contact-info-text">Portugal</div></div>
       </div>
+      <div class="contact-social">
+        <a href="https://www.linkedin.com/company/2ticket/" target="_blank" rel="noopener" class="contact-social-link" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://www.instagram.com/2ticket.pt/" target="_blank" rel="noopener" class="contact-social-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
     </div>
     <div class="contact-right" data-aos="fade-left">
       <div class="contact-right-title">Envie-nos uma mensagem</div>
@@ -1084,11 +1103,20 @@ footer{background:#030509;border-top:1px solid var(--border);padding:72px 0 32px
       </div>
     </div>
     <div class="footer-bottom-wrap">
-      <span>© 2026 2TICKET. Todos os direitos reservados.</span>
-      <div class="footer-bottom-right">
-        <a href="#">Política de Privacidade</a>
-        <a href="#">Termos de Uso</a>
-        <span>Portugal 🇵🇹</span>
+      <div class="footer-bottom-left">
+        <span class="footer-bottom-copy">© 2TICKET. Todos os direitos reservados. Powered by Xtendit</span>
+        <div class="footer-bottom-links">
+          <a href="#">Termos e Condições</a>
+          <span>·</span>
+          <a href="#">Política de Privacidade</a>
+          <span>·</span>
+          <a href="#">Livro de Reclamações</a>
+        </div>
+      </div>
+      <div class="footer-bottom-logos">
+        <img class="footer-eu-logo" src="https://www.compete2030.pt/wp-content/uploads/2023/03/PRR.png" alt="PRR" onerror="this.style.display='none'">
+        <img class="footer-eu-logo" src="https://www.compete2030.pt/wp-content/uploads/2023/03/Republica-Portuguesa.png" alt="República Portuguesa" onerror="this.style.display='none'">
+        <img class="footer-eu-logo" src="https://www.compete2030.pt/wp-content/uploads/2023/03/EU.png" alt="NextGenerationEU" onerror="this.style.display='none'">
       </div>
     </div>
   </div>
