@@ -67,6 +67,8 @@ nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(20px);-webkit
 .nav-logo svg{height:30px;width:auto}
 .nav-logo-poly{fill:white;transition:fill .4s}
 nav.scrolled .nav-logo-poly{fill:#0a0f1e}
+nav.scrolled .nav-logo svg{display:none}
+nav.scrolled .nav-logo-img{display:block!important}
 .nav-links{display:flex;align-items:center;gap:4px}
 .nav-links a{font-size:13px;font-weight:500;color:rgba(255,255,255,.8);padding:6px 14px;border-radius:8px;transition:color .2s,background .2s}
 .nav-links a:hover{color:white;background:rgba(255,255,255,0.12)}
@@ -180,6 +182,25 @@ nav.scrolled .hamburger span{background:#0a0f1e}
 .fp-pay-info-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center}
 .fp-pay-info-val{font-family:'Space Mono',sans-serif;font-size:22px;font-weight:700;color:var(--blue)}
 .fp-pay-info-lbl{font-size:11px;color:var(--muted);margin-top:2px}
+/* ── panel tables ── */
+.fp-panel-table{padding:0!important;overflow-x:auto}
+.fp-table{width:100%;border-collapse:collapse}
+.fp-table thead th{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;background:rgba(0,0,0,.02)}
+.fp-table tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+.fp-table tbody tr:last-child{border:none}
+.fp-table tbody tr:hover{background:rgba(24,116,239,.04)}
+.fp-table tbody td{padding:11px 14px;vertical-align:middle;font-size:12px;color:var(--text)}
+.fp-tbl-badge-green{font-size:10px;font-weight:600;background:rgba(34,197,94,.12);color:#16a34a;border:1px solid rgba(34,197,94,.25);padding:3px 9px;border-radius:50px;white-space:nowrap}
+.fp-tbl-badge-blue{font-size:10px;font-weight:600;background:var(--blue-dim);color:var(--blue);border:1px solid var(--border-hi);padding:3px 9px;border-radius:50px;white-space:nowrap}
+.fp-tbl-badge-gray{font-size:10px;font-weight:600;background:rgba(0,0,0,.06);color:var(--muted);border:1px solid var(--border);padding:3px 9px;border-radius:50px;white-space:nowrap}
+.fp-tbl-event-name{font-size:12px;font-weight:600;color:var(--text);display:block}
+.fp-tbl-mini-bar{height:3px;background:rgba(0,0,0,.08);border-radius:2px;width:72px;margin-top:4px}
+.fp-tbl-mini-bar div{height:100%;background:linear-gradient(90deg,#5aabff,var(--blue));border-radius:2px}
+.fp-tbl-valid{font-size:10px;color:#16a34a;font-weight:600;display:block;margin-top:2px}
+.fp-member-cell{display:flex;align-items:center;gap:8px}
+.fp-member-av{width:30px;height:30px;border-radius:50%;background:var(--blue-dim);border:1px solid var(--border-hi);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--blue);flex-shrink:0;letter-spacing:-.02em}
+.fp-member-n{font-size:12px;font-weight:600;color:var(--text);line-height:1.2}
+.fp-member-type{font-size:9px;font-weight:600;background:var(--blue-dim);color:var(--blue);padding:1px 7px;border-radius:50px;display:inline-block;margin-top:2px}
 
 /* ═══════════════════════════════════════
    HOW IT WORKS
@@ -368,8 +389,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .footer-bottom-links,.footer-bottom-links a,.footer-bottom-links span{color:#111!important;-webkit-text-fill-color:#111!important}
 }
 .footer-bottom-logos{display:flex;align-items:center;justify-content:flex-end;flex-shrink:0}
-.footer-prr-link{display:block;line-height:0;background:#f4f6fb;border:1px solid rgba(0,0,0,.09);border-radius:10px;padding:10px 18px;transition:opacity .2s,box-shadow .2s}
-.footer-prr-link:hover,.footer-prr-link:focus-visible{box-shadow:0 2px 12px rgba(0,0,0,.1)}
+.footer-prr-link{display:block;line-height:0;opacity:.9;transition:opacity .2s}
+.footer-prr-link:hover,.footer-prr-link:focus-visible{opacity:1}
 .footer-prr-banner{height:clamp(40px,5vw,56px);width:auto;max-width:min(100%,440px);object-fit:contain;display:block}
 
 /* ═══════════════════════════════════════
@@ -525,6 +546,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
       <polygon class="nav-logo-poly" points="506.9 304.9 507 305.4 554.5 305.4 554.5 293.8 554.6 257.8 506.9 257.8 506.9 304.9"/>
       <polygon class="nav-logo-poly" points="1006.7 5.3 959.1 5.3 959.1 88.7 916.2 131.6 884.8 131.6 884.8 5.3 837.2 5.3 837.2 305.4 884.8 305.4 884.8 179.2 916.2 179.2 959.1 222.1 959.1 305.4 1006.7 305.4 1006.7 202.3 959.7 155.4 1006.7 108.4 1006.7 5.3"/>
     </svg>
+    <img class="nav-logo-img" src="logo-dark.png" alt="2TICKET" style="height:30px;width:auto;display:none">
   </a>
   <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
@@ -672,17 +694,33 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
             <div class="feat-panel-dot" style="background:#1874EF"></div>
             <div class="feat-panel-dot" style="background:#1874EF"></div>
             <div class="feat-panel-dot" style="background:#1874EF"></div>
-            <span class="feat-panel-topbar-title">Painel de Eventos</span>
+            <span class="feat-panel-topbar-title">Gestão de Eventos</span>
             <span class="feat-panel-topbar-badge">Live</span>
           </div>
-          <div class="feat-panel-body">
-            <div class="fp-stat-row">
-              <div class="fp-stat"><div class="fp-stat-val" id="f0-v1">0</div><div class="fp-stat-label">Bilhetes vendidos</div></div>
-              <div class="fp-stat"><div class="fp-stat-val" id="f0-v2">0%</div><div class="fp-stat-label">Ocupação</div></div>
-            </div>
-            <div class="fp-bar-row"><span class="fp-bar-label">Cat. A</span><div class="fp-bar-track"><div class="fp-bar-fill" data-w="82"></div></div><span class="fp-bar-pct">82%</span></div>
-            <div class="fp-bar-row"><span class="fp-bar-label">Cat. B</span><div class="fp-bar-track"><div class="fp-bar-fill" data-w="65"></div></div><span class="fp-bar-pct">65%</span></div>
-            <div class="fp-bar-row"><span class="fp-bar-label">VIP</span><div class="fp-bar-track"><div class="fp-bar-fill" data-w="40"></div></div><span class="fp-bar-pct">40%</span></div>
+          <div class="feat-panel-body fp-panel-table">
+            <table class="fp-table">
+              <thead><tr><th>Evento</th><th>Data</th><th>Bilhetes</th><th>Estado</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><span class="fp-tbl-event-name">Estoril × Gil Vicente</span></td>
+                  <td style="color:var(--muted)">29 Mar</td>
+                  <td><span style="font-size:11px;color:var(--muted)">3 482 / 5 200</span><div class="fp-tbl-mini-bar"><div style="width:67%"></div></div></td>
+                  <td><span class="fp-tbl-badge-green">Ativo</span></td>
+                </tr>
+                <tr>
+                  <td><span class="fp-tbl-event-name">Académico de Viseu × Felgueiras</span></td>
+                  <td style="color:var(--muted)">22 Mar</td>
+                  <td><span style="font-size:11px;color:var(--muted)">1 200 / 4 000</span><div class="fp-tbl-mini-bar"><div style="width:30%"></div></div></td>
+                  <td><span class="fp-tbl-badge-gray">Fechado</span></td>
+                </tr>
+                <tr>
+                  <td><span class="fp-tbl-event-name">Feira de São Mateus 2025</span></td>
+                  <td style="color:var(--muted)">2–10 Ago</td>
+                  <td><span style="font-size:11px;color:var(--muted)">— / 12 000</span></td>
+                  <td><span class="fp-tbl-badge-blue">Em breve</span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -692,13 +730,42 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
             <div class="feat-panel-dot" style="background:#1874EF"></div>
             <div class="feat-panel-dot" style="background:#1874EF"></div>
             <div class="feat-panel-dot" style="background:#1874EF"></div>
-            <span class="feat-panel-topbar-title">Perfil do Sócio</span>
+            <span class="feat-panel-topbar-title">Gestão de Sócios</span>
           </div>
-          <div class="feat-panel-body">
-            <div class="fp-row"><div class="fp-row-dot"></div><div style="flex:1"><div class="fp-row-name">Académico de Viseu × Felgueiras</div><span class="fp-row-sub">22 Mar · Bancada Sul A3</span></div><span class="fp-row-val">€18</span></div>
-            <div class="fp-row"><div class="fp-row-dot"></div><div style="flex:1"><div class="fp-row-name">CS Marítimo × Penafiel</div><span class="fp-row-sub">15 Mar · Bancada Norte</span></div><span class="fp-row-val">€12</span></div>
-            <div class="fp-row"><div class="fp-row-dot" style="background:#1874EF"></div><div style="flex:1"><div class="fp-row-name">Quota Anual 2026</div><span class="fp-row-sub">Regularizado · Jan 2026</span></div><span class="fp-row-val" style="color:#1874EF">€80</span></div>
-            <div class="fp-row" style="opacity:.45"><div class="fp-row-dot" style="background:#0a0f1e"></div><div style="flex:1"><div class="fp-row-name">Feira de São Mateus</div><span class="fp-row-sub">Ago 2025 · Entrada Geral</span></div><span class="fp-row-val" style="color:#0a0f1e">€5</span></div>
+          <div class="feat-panel-body fp-panel-table">
+            <table class="fp-table">
+              <thead><tr><th>Nome</th><th>Nº</th><th>NIF</th><th>Quota</th><th>Estado</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><div class="fp-member-cell"><div class="fp-member-av">HB</div><div><div class="fp-member-n">Hermínio Borrajo 2</div><span class="fp-member-type">Sócio</span></div></div></td>
+                  <td style="color:var(--muted)">1</td>
+                  <td style="color:var(--muted)">PT999999990</td>
+                  <td><span style="font-size:11px">31/01/2029</span><span class="fp-tbl-valid">Válida</span></td>
+                  <td><span class="fp-tbl-badge-green">Ativo</span></td>
+                </tr>
+                <tr>
+                  <td><div class="fp-member-cell"><div class="fp-member-av" style="background:rgba(139,92,246,.12);color:#7c3aed;border-color:rgba(139,92,246,.3)">RC</div><div><div class="fp-member-n">RONALDO cr7</div><span class="fp-member-type">Sócio</span></div></div></td>
+                  <td style="color:var(--muted)">2</td>
+                  <td style="color:var(--muted)">PT261686712</td>
+                  <td><span style="font-size:11px">30/06/2040</span><span class="fp-tbl-valid">Válida</span></td>
+                  <td><span class="fp-tbl-badge-green">Ativo</span></td>
+                </tr>
+                <tr>
+                  <td><div class="fp-member-cell"><div class="fp-member-av" style="background:rgba(249,115,22,.12);color:#ea580c;border-color:rgba(249,115,22,.3)">007</div><div><div class="fp-member-n">007</div><span class="fp-member-type">Sócio</span></div></div></td>
+                  <td style="color:var(--muted)">007</td>
+                  <td style="color:var(--muted)">PT999999990</td>
+                  <td><span style="font-size:11px">31/08/2036</span><span class="fp-tbl-valid">Válida</span></td>
+                  <td><span class="fp-tbl-badge-green">Ativo</span></td>
+                </tr>
+                <tr>
+                  <td><div class="fp-member-cell"><div class="fp-member-av" style="background:rgba(20,184,166,.12);color:#0d9488;border-color:rgba(20,184,166,.3)">TE</div><div><div class="fp-member-n">teste</div><span class="fp-member-type">Sócio</span></div></div></td>
+                  <td style="color:var(--muted)">123</td>
+                  <td style="color:var(--muted)">PT999999990</td>
+                  <td><span style="font-size:11px">30/06/2042</span><span class="fp-tbl-valid">Válida</span></td>
+                  <td><span class="fp-tbl-badge-green">Ativo</span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
