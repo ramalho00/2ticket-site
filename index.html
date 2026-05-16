@@ -34,7 +34,7 @@
    RESET
 ═══════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body{background:var(--bg);color:var(--text);font-family:'Work Sans',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
@@ -68,7 +68,7 @@ nav.scrolled{background:rgba(255,255,255,.95);backdrop-filter:blur(20px);-webkit
 .nav-logo-poly{fill:white;transition:fill .4s}
 nav.scrolled .nav-logo-poly{fill:#0a0f1e}
 nav.scrolled .nav-logo svg{display:none}
-nav.scrolled .nav-logo-img{display:block!important;height:38px;width:auto;object-fit:contain}
+nav.scrolled .nav-logo-img{display:block!important;height:56px;width:auto;object-fit:contain}
 .nav-links{display:flex;align-items:center;gap:4px}
 .nav-links a{font-size:13px;font-weight:500;color:rgba(255,255,255,.8);padding:6px 14px;border-radius:8px;transition:color .2s,background .2s}
 .nav-links a:hover{color:white;background:rgba(255,255,255,0.12)}
@@ -256,7 +256,7 @@ nav.scrolled .hamburger span{background:#0a0f1e}
 /* ═══════════════════════════════════════
    CASHLESS
 ═══════════════════════════════════════ */
-.cashless-section{padding:120px 0;background:var(--bg);position:relative}
+.cashless-section{padding:120px 0;background:var(--bg);position:relative;overflow-x:clip}
 .cashless-section::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(ellipse,rgba(24,116,239,.08),transparent 65%);pointer-events:none}
 .cashless-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
 .cashless-left{position:sticky;top:100px;align-self:start}
@@ -327,7 +327,7 @@ nav.scrolled .hamburger span{background:#0a0f1e}
 /* ═══════════════════════════════════════
    CONTACT
 ═══════════════════════════════════════ */
-.contact-section{padding:120px 0;background:var(--surface);position:relative}
+.contact-section{padding:120px 0;background:var(--surface);position:relative;overflow-x:clip}
 .contact-section::before{content:'';position:absolute;bottom:-200px;left:-100px;width:600px;height:600px;background:radial-gradient(ellipse,rgba(24,116,239,.07),transparent 65%);pointer-events:none}
 .contact-inner{display:grid;grid-template-columns:1fr 1.5fr;gap:72px;align-items:start;max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
 .contact-left{position:sticky;top:100px;align-self:start}
