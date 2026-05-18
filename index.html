@@ -403,7 +403,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
 /* ═══════════════════════════════════════
    MOBILE NAV
 ═══════════════════════════════════════ */
-@media(max-width:768px){
+@media(max-width:1024px){
   .hamburger{display:flex}
   .nav-links{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(255,255,255,.98);backdrop-filter:blur(20px);flex-direction:column;align-items:stretch;padding:16px;gap:4px;border-bottom:1px solid var(--border)}
   .nav-links.open{display:flex}
@@ -1195,7 +1195,7 @@ let navLastY = 0;
 window.addEventListener('scroll', () => {
   const y = window.scrollY;
   nav.classList.toggle('scrolled', y > 40);
-  if (window.innerWidth <= 768) { nav.style.transform = (y > 80 && y > navLastY) ? 'translateY(-100%)' : ''; }
+  if (window.innerWidth <= 1024) { nav.style.transform = (y > 80 && y > navLastY) ? 'translateY(-100%)' : ''; }
   else { nav.style.transform = ''; }
   navLastY = y;
 }, { passive: true });
