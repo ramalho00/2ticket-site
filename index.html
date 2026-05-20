@@ -325,32 +325,33 @@ nav.scrolled .hamburger span{background:#0a0f1e}
 /* ═══════════════════════════════════════
    CLIENTS
 ═══════════════════════════════════════ */
-.clients-section{padding:var(--space-section) 0;background:var(--gray-1);overflow:hidden;position:relative;z-index:1}
-.clients-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:400px;background:radial-gradient(ellipse,rgba(24,116,239,.1),transparent 70%);pointer-events:none}
+.clients-section{padding:var(--space-section) 0;background:var(--dark-1);overflow:hidden;position:relative;z-index:2;border-radius:40px 40px 0 0;margin-top:-40px}
+.clients-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:400px;background:radial-gradient(ellipse,rgba(24,116,239,.15),transparent 65%);pointer-events:none}
 .clients-header{text-align:center;margin-bottom:48px}
-.clients-header .section-sub{margin:12px auto 0}
-.clients-stats{display:flex;justify-content:center;align-items:center;gap:0;margin-bottom:72px;max-width:560px;margin-left:auto;margin-right:auto;background:#ffffff;border:none;border-radius:24px;padding:28px 0;box-shadow:0 2px 4px rgba(14,26,64,.04),0 8px 28px rgba(14,26,64,.08)}
+.clients-header h2{color:#ffffff}
+.clients-header .section-sub{margin:12px auto 0;color:rgba(255,255,255,.55)}
+.clients-header .section-tag{background:rgba(24,116,239,.18);border-color:rgba(24,116,239,.4);color:#7ab8ff}
+.clients-stats{display:flex;justify-content:center;align-items:center;gap:0;margin-bottom:72px;max-width:560px;margin-left:auto;margin-right:auto;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:28px 0}
 .clients-stat{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:0 24px}
-.clients-stat-num{font-family:'Space Mono',sans-serif;font-size:40px;font-weight:700;letter-spacing:-2px;line-height:1}
+.clients-stat-num{font-family:'Space Mono',sans-serif;font-size:40px;font-weight:700;letter-spacing:-2px;line-height:1;color:#ffffff}
 .clients-stat-num em{background:linear-gradient(135deg,#5aabff,var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.clients-stat-label{font-size:12px;color:var(--muted);font-weight:400;text-align:center}
-.clients-stat-divider{width:1px;height:40px;background:var(--border);flex-shrink:0}
+.clients-stat-label{font-size:12px;color:rgba(255,255,255,.45);font-weight:400;text-align:center}
+.clients-stat-divider{width:1px;height:40px;background:rgba(255,255,255,.12);flex-shrink:0}
 
 /* marquee */
-.clients-marquee-wrap{display:flex;flex-direction:column;gap:16px;mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%)}
+.clients-marquee-wrap{display:flex;flex-direction:column;gap:20px;mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%)}
 .clients-marquee-row{display:flex;overflow:hidden}
-.clients-marquee-track{display:flex;align-items:center;gap:14px;width:max-content;animation:mq-left 45s linear infinite}
-.clients-marquee-track--rev{animation:mq-right 50s linear infinite}
-.clients-marquee-wrap:hover .clients-marquee-track{animation-play-state:paused}
-.clients-marquee-wrap:hover .clients-marquee-track--rev{animation-play-state:paused}
+.clients-marquee-track{display:flex;align-items:center;gap:20px;width:max-content;animation:mq-left 50s linear infinite}
+.clients-marquee-track--rev{animation:mq-right 55s linear infinite}
+.clients-marquee-wrap:hover .clients-marquee-track,.clients-marquee-wrap:hover .clients-marquee-track--rev{animation-play-state:paused}
 @keyframes mq-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @keyframes mq-right{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
-.cl-item{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:150px;height:80px;padding:0 20px;box-sizing:border-box;background:#ffffff;border:1px solid rgba(0,0,0,.07);border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:border-color .3s,box-shadow .3s,transform .3s;cursor:default;overflow:hidden}
-.cl-item:hover{border-color:rgba(24,116,239,.2);box-shadow:0 8px 24px rgba(0,0,0,.1);transform:translateY(-4px)}
-.cl-item img{display:block;width:auto;max-width:100%;height:auto;max-height:44px;min-width:0;object-fit:contain;object-position:center;filter:grayscale(60%) opacity(.65);transition:filter .35s ease}
-.cl-item:hover img{filter:grayscale(0%) opacity(1)}
-.cl-item-text{font-family:'Space Mono',sans-serif;font-size:12px;font-weight:700;color:rgba(0,0,0,.35);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;text-align:center;transition:color .25s}
-.cl-item:hover .cl-item-text{color:var(--text)}
+.cl-item{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:130px;height:72px;padding:0 16px;box-sizing:border-box;cursor:default;transition:transform .35s cubic-bezier(.23,1,.32,1)}
+.cl-item:hover{transform:scale(1.1) translateY(-2px)}
+.cl-item img{display:block;width:auto;max-width:100%;height:auto;max-height:48px;min-width:0;object-fit:contain;object-position:center;filter:brightness(0) invert(1) opacity(.3);transition:filter .4s ease,opacity .4s ease}
+.cl-item:hover img{filter:brightness(0) invert(1) opacity(.9)}
+.cl-item-text{font-family:'Space Mono',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;text-align:center;transition:color .3s ease}
+.cl-item:hover .cl-item-text{color:rgba(255,255,255,.85)}
 
 /* ═══════════════════════════════════════
    FAQ
@@ -476,8 +477,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
 ═══════════════════════════════════════ */
 @media(max-width:768px){
   /* General spacing */
-  .areas-section,.features-section,.cashless-section,.clients-section,.faq-section{padding:72px 0}
-  .how-section,.contact-section{padding:88px 0 72px;border-radius:24px 24px 0 0;margin-top:-24px}
+  .areas-section,.features-section,.cashless-section,.faq-section{padding:72px 0}
+  .how-section,.contact-section,.clients-section{padding:88px 0 72px;border-radius:24px 24px 0 0;margin-top:-24px}
   footer{padding:52px 0 28px}
 
   /* Hero */
@@ -1008,7 +1009,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
 <!-- CLIENTS -->
 <section class="clients-section" id="clientes">
   <div class="clients-header wrap" data-aos="fade-up">
-    <h2>Quem confia <em>em nós</em></h2>
+    <span class="section-tag">Clientes</span>
+    <h2 style="margin-top:12px">Quem confia <em>em nós</em></h2>
     <p class="section-sub">Clubes, federações e organizadores de eventos que escolheram a 2TICKET para gerir a sua bilhética.</p>
   </div>
   <div class="clients-stats" data-aos="fade-up" data-aos-delay="100">
