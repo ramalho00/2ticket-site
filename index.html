@@ -299,6 +299,7 @@ nav.scrolled .hamburger span{background:#0a0f1e}
    CASHLESS
 ═══════════════════════════════════════ */
 .cashless-section{padding:var(--space-section) var(--gutter);background:var(--bg);position:relative;overflow-x:clip;z-index:1}
+.cashless-mobile-header{display:none}
 .cashless-section::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(ellipse,rgba(24,116,239,.08),transparent 65%);pointer-events:none}
 .cashless-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
 .cashless-left{position:sticky;top:100px;align-self:start}
@@ -409,7 +410,7 @@ nav.scrolled .hamburger span{background:#0a0f1e}
 .form-success{display:none;text-align:center;padding:56px 24px}
 .form-success-icon{width:64px;height:64px;border-radius:50%;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:#10b981}
 .form-success-icon svg{width:28px;height:28px}
-.form-success h3{font-size:20px;font-weight:700;margin-bottom:10px;color:#ffffff;letter-spacing:.02em}
+.form-success h3{font-size:20px;font-weight:700;margin-bottom:10px;color:#ffffff;font-family:'Work Sans',sans-serif;text-transform:none;word-spacing:normal;letter-spacing:.01em}
 .form-success p{color:rgba(255,255,255,.55);font-size:14px;line-height:1.6;max-width:280px;margin:0 auto}
 
 /* ═══════════════════════════════════════
@@ -529,12 +530,13 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .how-inner{grid-template-columns:1fr;gap:24px}
   .how-vc{position:static;display:none}
 
-  /* Cashless */
-  .cashless-inner{grid-template-columns:1fr;gap:48px}
+  /* Cashless: esconde coluna esquerda no mobile, mostra só header+steps */
+  .cashless-inner{grid-template-columns:1fr;gap:0}
   .cashless-section::before{display:none}
-  .cashless-left{position:static}
+  .cashless-left{display:none}
+  .cashless-mobile-header{display:block;margin-bottom:24px}
   /* Fix fundo dark a sobrepor o card — padding-bottom extra nas secções claras */
-  .cashless-section{padding-bottom:120px}
+  .cashless-section{padding-bottom:140px}
   .features-section{padding-bottom:120px}
   .faq-section{padding-bottom:120px}
   /* How section needs extra bottom padding before cashless */
@@ -1178,6 +1180,11 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
     </div>
     <!-- RIGHT: flow steps scroll-reveal -->
     <div class="cashless-right">
+      <div class="cashless-mobile-header">
+        <span class="section-tag">Cashless</span>
+        <h2 style="margin-top:12px">Pagamentos sem <em>complicações</em></h2>
+        <p class="section-sub" style="margin-top:12px;margin-bottom:28px">Pulseiras NFC com o teu branding. O público carrega e consome; tu monitorizas tudo em tempo real.</p>
+      </div>
       <div class="cashless-flow-step" data-aos="fade-up" data-aos-delay="0">
         <div class="cashless-step-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M7 15h.01M11 15h2"/></svg>
