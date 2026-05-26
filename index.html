@@ -505,18 +505,25 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .feat-tab-desc{display:none}
   .feat-tab-pills{display:none}
   .feat-mobile-content{display:none!important}
-  /* Fix table overflow on mobile */
-  .feat-panel-card{overflow-x:auto}
-  .fp-table{font-size:11px;min-width:380px}
+  /* Fix table overflow: override overflow:hidden com !important */
+  .feat-panel-card{overflow:auto!important}
+  .fp-table{font-size:11px;min-width:300px}
   .fp-table thead th{font-size:9px;padding:8px 10px}
   .fp-table tbody td{padding:9px 10px}
-  /* Members table: hide NIF column (too many cols) */
+  /* Eventos table: esconde coluna BILHETES (3ª) — fica EVENTO DATA ESTADO */
+  .feat-panel[data-panel="0"] .fp-table th:nth-child(3),
+  .feat-panel[data-panel="0"] .fp-table td:nth-child(3){display:none}
+  /* Sócios table: esconde coluna NIF (3ª) — fica NOME Nº QUOTA ESTADO */
   .feat-panel[data-panel="1"] .fp-table th:nth-child(3),
   .feat-panel[data-panel="1"] .fp-table td:nth-child(3){display:none}
-  /* Section cards: small margin from screen edge */
+  /* Section cards: margem lateral */
   .features-section .section-card,
   .cashless-section .section-card,
   .faq-section .section-card{margin-left:12px;margin-right:12px}
+  /* Clip GSAP x-animations que causam overflow horizontal */
+  .areas-section,.features-section,.cashless-section,.faq-section{overflow:hidden}
+  /* Fix how-section accordion overflow do GSAP x:50 inicial */
+  .how-inner{overflow:hidden}
 
   /* How it works */
   .how-inner{grid-template-columns:1fr;gap:24px}
@@ -526,6 +533,10 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .cashless-inner{grid-template-columns:1fr;gap:48px}
   .cashless-section::before{display:none}
   .cashless-left{position:static}
+  /* Fix fundo dark a sobrepor o card — padding-bottom extra nas secções claras */
+  .cashless-section{padding-bottom:72px}
+  .features-section{padding-bottom:72px}
+  .faq-section{padding-bottom:72px}
 
   /* Clients */
   .clients-stats{gap:24px;flex-wrap:wrap;justify-content:center;padding:20px 16px}
@@ -1477,29 +1488,55 @@ gsap.from('.features-section .section-card', {
   y: 56, opacity: 0, duration: 1, ease: 'power3.out',
   scrollTrigger: { trigger: '.features-section .section-card', start: 'top 85%' }
 });
-gsap.from('.features-nav', {
-  x: -44, opacity: 0, duration: 0.9, ease: 'power3.out',
-  scrollTrigger: { trigger: '.features-inner', start: 'top 83%' }
+// ── Animações com x apenas em desktop (evita overflow no mobile) ──
+const mm = gsap.matchMedia();
+mm.add('(min-width: 769px)', () => {
+  gsap.from('.features-nav', {
+    x: -44, opacity: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '.features-inner', start: 'top 83%' }
+  });
+  gsap.from('.features-panel', {
+    x: 44, opacity: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '.features-inner', start: 'top 83%' }
+  });
+  gsap.from('.how-vc', {
+    x: -50, opacity: 0, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.how-inner', start: 'top 83%' }
+  });
+  gsap.from('.how-acc-item', {
+    x: 50, opacity: 0, duration: 0.8, stagger: 0.12, ease: 'power3.out',
+    scrollTrigger: { trigger: '.how-acc-wrap', start: 'top 83%' }
+  });
+  gsap.from('.cashless-left', {
+    x: -44, opacity: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '.cashless-inner', start: 'top 83%' }
+  });
+  gsap.from('.contact-left', {
+    x: -44, opacity: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '.contact-inner', start: 'top 83%' }
+  });
+  gsap.from('.contact-right', {
+    x: 44, opacity: 0, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '.contact-inner', start: 'top 83%' }
+  });
 });
-gsap.from('.features-panel', {
-  x: 44, opacity: 0, duration: 0.9, ease: 'power3.out',
-  scrollTrigger: { trigger: '.features-inner', start: 'top 83%' }
-});
-
-// ── How it works ──
-gsap.from('.how-vc', {
-  x: -50, opacity: 0, duration: 1, ease: 'power3.out',
-  scrollTrigger: { trigger: '.how-inner', start: 'top 83%' }
-});
-gsap.from('.how-acc-item', {
-  x: 50, opacity: 0, duration: 0.8, stagger: 0.12, ease: 'power3.out',
-  scrollTrigger: { trigger: '.how-acc-wrap', start: 'top 83%' }
-});
-
-// ── Cashless ──
-gsap.from('.cashless-left', {
-  x: -44, opacity: 0, duration: 0.9, ease: 'power3.out',
-  scrollTrigger: { trigger: '.cashless-inner', start: 'top 83%' }
+mm.add('(max-width: 768px)', () => {
+  gsap.from('.features-nav, .features-panel', {
+    y: 30, opacity: 0, duration: 0.8, ease: 'power3.out',
+    scrollTrigger: { trigger: '.features-inner', start: 'top 83%' }
+  });
+  gsap.from('.how-acc-item', {
+    y: 30, opacity: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.how-acc-wrap', start: 'top 83%' }
+  });
+  gsap.from('.cashless-left', {
+    y: 30, opacity: 0, duration: 0.8, ease: 'power3.out',
+    scrollTrigger: { trigger: '.cashless-inner', start: 'top 83%' }
+  });
+  gsap.from('.contact-left, .contact-right', {
+    y: 30, opacity: 0, duration: 0.8, ease: 'power3.out',
+    scrollTrigger: { trigger: '.contact-inner', start: 'top 83%' }
+  });
 });
 gsap.from('.cashless-flow-step', {
   y: 50, opacity: 0, duration: 0.8, stagger: 0.14, ease: 'power3.out',
@@ -1529,16 +1566,6 @@ gsap.utils.toArray('.clients-stat-num').forEach(el => {
 gsap.from('.faq-item', {
   y: 28, opacity: 0, duration: 0.7, stagger: 0.08, ease: 'power2.out',
   scrollTrigger: { trigger: '.faq-list', start: 'top 86%' }
-});
-
-// ── Contact ──
-gsap.from('.contact-left', {
-  x: -44, opacity: 0, duration: 0.9, ease: 'power3.out',
-  scrollTrigger: { trigger: '.contact-inner', start: 'top 83%' }
-});
-gsap.from('.contact-right', {
-  x: 44, opacity: 0, duration: 0.9, ease: 'power3.out',
-  scrollTrigger: { trigger: '.contact-inner', start: 'top 83%' }
 });
 
 // ── Section card 3D tilt (GSAP powered) ──
