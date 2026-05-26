@@ -535,10 +535,12 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .cashless-section::before{display:none}
   .cashless-left{display:none}
   .cashless-mobile-header{display:block;margin-bottom:24px}
-  /* Fix fundo dark a sobrepor o card — padding-bottom extra nas secções claras */
-  .cashless-section{padding-bottom:140px}
+  /* Card branco cobre o fundo cinza até à secção escura */
+  .cashless-section .section-card{padding-bottom:100px}
+  .cashless-section{padding-bottom:0}
   .features-section{padding-bottom:120px}
-  .faq-section{padding-bottom:120px}
+  .faq-section .section-card{padding-bottom:100px}
+  .faq-section{padding-bottom:0}
   /* How section needs extra bottom padding before cashless */
   .how-section{padding-bottom:100px!important}
 
