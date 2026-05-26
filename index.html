@@ -13,26 +13,26 @@
    TOKENS
 ═══════════════════════════════════════ */
 :root {
-  --bg:        #080b12;
-  --surface:   #0d1018;
-  --card:      rgba(255,255,255,.04);
-  --border:    rgba(255,255,255,.08);
-  --border-hi: rgba(24,116,239,.4);
+  --bg:        #EEF1F9;
+  --surface:   #ffffff;
+  --card:      rgba(0,0,0,0.04);
+  --border:    rgba(0,0,0,0.09);
+  --border-hi: rgba(24,116,239,0.35);
   --blue:      #1874EF;
-  --blue-dim:  rgba(24,116,239,.14);
-  --purple:    #4a6cf7;
-  --text:      #f0f3fc;
-  --muted:     rgba(240,243,252,.52);
-  --muted2:    rgba(240,243,252,.35);
+  --blue-dim:  rgba(24,116,239,0.12);
+  --purple:    #0a4fc4;
+  --text:      #0a0f1e;
+  --muted:     rgba(0,0,0,0.5);
+  --muted2:    rgba(0,0,0,0.35);
   --r:         20px;
   --r-sm:      12px;
   --container: 1200px;
   --gutter:    clamp(20px,4vw,60px);
   /* section palette */
-  --gray-1:    #0d1018;
-  --gray-2:    #080b12;
-  --dark-1:    #050609;
-  --blue-wash: rgba(24,116,239,.08);
+  --gray-1:    #F4F6FA;
+  --gray-2:    #EDF0F7;
+  --dark-1:    #0a0f1e;
+  --blue-wash: #EBF2FF;
   /* vertical rhythm */
   --space-section:    clamp(80px,10vw,140px);
   --space-section-lg: clamp(100px,12vw,180px);
@@ -751,169 +751,6 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
 .fp-gate-count,
 .how-vc-stat-val { font-variant-numeric: tabular-nums; }
 
-/* ═══════════════════════════════════════
-   DARK THEME OVERRIDES
-═══════════════════════════════════════ */
-
-/* ── Nav ── */
-nav.scrolled {
-  background: rgba(5,6,9,.92) !important;
-  border-bottom-color: rgba(255,255,255,.07) !important;
-}
-nav.scrolled .nav-logo-poly  { fill: #fff; }
-nav.scrolled .nav-logo svg   { display: block !important; }
-nav.scrolled .nav-logo-img   { display: none !important; }
-nav.scrolled .nav-links a    { color: rgba(255,255,255,.6); }
-nav.scrolled .nav-links a:hover { color: #fff; background: rgba(255,255,255,.07); }
-nav.scrolled .hamburger span { background: #fff; }
-@media(max-width:1024px) {
-  .nav-links {
-    background: rgba(5,6,9,.97) !important;
-    border-bottom-color: rgba(255,255,255,.07) !important;
-  }
-  .nav-links a { color: rgba(255,255,255,.65) !important; }
-  .nav-links a:hover { color: #fff !important; background: rgba(255,255,255,.07) !important; }
-}
-
-/* ── Section card ── */
-.section-card {
-  background: #0d1018;
-  box-shadow: 0 1px 2px rgba(0,0,0,.6), 0 4px 16px rgba(0,0,0,.5), 0 20px 56px rgba(0,0,0,.4);
-}
-.section-card:hover {
-  box-shadow: 0 2px 4px rgba(0,0,0,.7), 0 8px 32px rgba(0,0,0,.6), 0 32px 80px rgba(0,0,0,.5) !important;
-}
-
-/* ── Feature panel ── */
-.feat-panel-card {
-  background: rgba(255,255,255,.03) !important;
-  border-color: rgba(255,255,255,.08) !important;
-}
-.feat-panel-topbar {
-  background: rgba(255,255,255,.04) !important;
-  border-color: rgba(255,255,255,.08) !important;
-}
-.feat-panel-topbar-title { color: rgba(240,243,252,.5) !important; }
-.fp-row { border-color: rgba(255,255,255,.07); }
-.fp-gate { border-color: rgba(255,255,255,.07); }
-.fp-row-name, .fp-gate-name { color: var(--text); }
-.fp-row-val { color: rgba(240,243,252,.5); }
-
-/* ── Feature tabs ── */
-.feat-tab { border-color: rgba(255,255,255,.06) !important; }
-.feat-tab:hover { background: rgba(255,255,255,.04); transform: translateX(5px); }
-.feat-tab.active {
-  background: rgba(24,116,239,.1) !important;
-  border-color: rgba(24,116,239,.35) !important;
-}
-.feat-tab-name { color: var(--text); }
-
-/* ── Table ── */
-.fp-table thead th {
-  background: rgba(255,255,255,.04);
-  border-color: rgba(255,255,255,.07);
-  color: rgba(240,243,252,.4);
-}
-.fp-table tbody tr { border-color: rgba(255,255,255,.06); }
-.fp-table tbody td { color: var(--text); }
-.fp-tbl-event-name { color: var(--text) !important; }
-.fp-tbl-badge-gray {
-  background: rgba(255,255,255,.07);
-  color: rgba(240,243,252,.5);
-  border-color: rgba(255,255,255,.12);
-}
-.fp-tbl-mini-bar { background: rgba(255,255,255,.08); }
-
-/* ── Member avatars ── */
-.fp-member-n { color: var(--text); }
-
-/* ── Payments panel ── */
-.fp-pay-info-lbl { color: rgba(240,243,252,.45); }
-
-/* ── FAQ ── */
-.faq-item {
-  background: rgba(255,255,255,.025);
-  border-color: rgba(255,255,255,.07);
-}
-.faq-item:hover { box-shadow: 0 4px 16px rgba(24,116,239,.1); }
-.faq-item.open  { border-color: rgba(24,116,239,.4); box-shadow: 0 4px 20px rgba(24,116,239,.12); }
-.faq-q  { color: var(--text); }
-.faq-a  { color: rgba(240,243,252,.52); }
-.faq-icon { color: rgba(240,243,252,.45); }
-
-/* ── Cashless flow steps ── */
-.cashless-flow-step {
-  background: rgba(255,255,255,.03);
-  border-color: rgba(255,255,255,.07);
-}
-.cashless-flow-step:hover {
-  background: rgba(24,116,239,.07);
-  border-color: rgba(24,116,239,.3);
-  box-shadow: 0 10px 36px rgba(24,116,239,.14) !important;
-}
-.cashless-step-title { color: var(--text); }
-.cashless-flow-connector { background: linear-gradient(to bottom, rgba(255,255,255,.12), rgba(255,255,255,.04)); }
-
-/* ── How section accordion ── */
-.how-acc-item { background: rgba(255,255,255,.04); }
-.how-acc-title { color: #fff; }
-
-/* ── Section glow orbs (non-hero sections) ── */
-.areas-section::before {
-  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(24,116,239,.11) 0%, transparent 70%);
-}
-.features-section {
-  position: relative;
-  overflow: hidden;
-}
-.features-section::before {
-  content: '';
-  position: absolute;
-  top: -300px; right: -300px;
-  width: 900px; height: 900px;
-  background: radial-gradient(ellipse, rgba(24,116,239,.07), transparent 65%);
-  pointer-events: none;
-}
-.cashless-section::before {
-  background: radial-gradient(ellipse, rgba(24,116,239,.1), transparent 65%);
-}
-.faq-section {
-  position: relative;
-  overflow: hidden;
-}
-.faq-section::before {
-  content: '';
-  position: absolute;
-  bottom: -300px; left: -200px;
-  width: 800px; height: 800px;
-  background: radial-gradient(ellipse, rgba(24,116,239,.07), transparent 65%);
-  pointer-events: none;
-}
-
-/* ── Subtle section dividers ── */
-.areas-section,
-.features-section,
-.faq-section {
-  border-top: 1px solid rgba(255,255,255,.05);
-}
-
-/* ── Footer ── */
-footer {
-  background: #050609;
-  border-top-color: rgba(255,255,255,.07);
-}
-.footer-brand svg polygon   { fill: #f0f3fc; }
-.footer-brand-tagline       { color: rgba(240,243,252,.45); }
-.footer-brand-tagline em    { -webkit-text-fill-color: var(--blue) !important; color: var(--blue); }
-.footer-col h4              { color: rgba(240,243,252,.3); }
-.footer-col a               { color: rgba(240,243,252,.45); }
-.footer-col a:hover         { color: var(--text); }
-.footer-bottom-copy         { color: rgba(240,243,252,.3); }
-.footer-bottom-copy a       { color: rgba(240,243,252,.3); }
-.footer-bottom-copy a:hover { color: var(--text); }
-.footer-bottom-links a      { color: rgba(240,243,252,.3); }
-.footer-bottom-links a:hover{ color: var(--text); }
-.footer-bottom-links span   { color: rgba(240,243,252,.15); }
 </style>
 </head>
 <body>
