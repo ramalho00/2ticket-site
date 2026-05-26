@@ -477,7 +477,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
 @media(max-width:768px){
   /* General spacing */
   .areas-section,.features-section,.cashless-section,.faq-section{padding:72px 0}
-  .how-section,.contact-section,.clients-section{padding:88px 0 72px;border-radius:24px 24px 0 0;margin-top:-24px}
+  .how-section,.contact-section,.clients-section{padding:88px 0 100px;border-radius:24px 24px 0 0;margin-top:-24px}
   footer{padding:52px 0 28px}
 
   /* Hero */
@@ -520,10 +520,11 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .features-section .section-card,
   .cashless-section .section-card,
   .faq-section .section-card{margin-left:12px;margin-right:12px}
-  /* Clip GSAP x-animations que causam overflow horizontal */
-  .areas-section,.features-section,.cashless-section,.faq-section{overflow:hidden}
-  /* Fix how-section accordion overflow do GSAP x:50 inicial */
-  .how-inner{overflow:hidden}
+  /* Clip GSAP x-animations — só horizontal, não vertical */
+  .areas-section,.features-section,.cashless-section,.faq-section{overflow-x:clip}
+  /* Fix how-section accordion overflow do GSAP x:50 inicial — só horizontal */
+  .how-section{overflow-x:clip}
+  .how-inner{overflow-x:clip}
 
   /* How it works */
   .how-inner{grid-template-columns:1fr;gap:24px}
