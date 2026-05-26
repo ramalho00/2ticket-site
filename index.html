@@ -406,10 +406,11 @@ nav.scrolled .hamburger span{background:#0a0f1e}
 .form-group textarea{resize:vertical;min-height:110px;line-height:1.6}
 .btn-submit{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--blue);color:white;font-size:15px;font-weight:600;font-family:'Work Sans',sans-serif;padding:16px 32px;border-radius:14px;transition:box-shadow .3s,transform .25s,background .2s;margin-top:6px;position:relative;overflow:hidden}
 .btn-submit:hover{box-shadow:0 0 40px rgba(24,116,239,.6);transform:translateY(-2px);background:#1565d8}
-.form-success{display:none;text-align:center;padding:48px 24px}
-.form-success-icon{font-size:48px;margin-bottom:16px}
-.form-success h3{font-size:22px;font-weight:700;margin-bottom:8px;color:#ffffff}
-.form-success p{color:rgba(255,255,255,.55);font-size:14px}
+.form-success{display:none;text-align:center;padding:56px 24px}
+.form-success-icon{width:64px;height:64px;border-radius:50%;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:#10b981}
+.form-success-icon svg{width:28px;height:28px}
+.form-success h3{font-size:20px;font-weight:700;margin-bottom:10px;color:#ffffff;letter-spacing:.02em}
+.form-success p{color:rgba(255,255,255,.55);font-size:14px;line-height:1.6;max-width:280px;margin:0 auto}
 
 /* ═══════════════════════════════════════
    FOOTER
@@ -476,7 +477,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
 ═══════════════════════════════════════ */
 @media(max-width:768px){
   /* General spacing */
-  .areas-section,.features-section,.cashless-section,.faq-section{padding:72px 0}
+  .areas-section,.features-section,.cashless-section,.faq-section{padding:72px 16px}
   .how-section,.contact-section,.clients-section{padding:88px 0 100px;border-radius:24px 24px 0 0;margin-top:-24px}
   footer{padding:52px 0 28px}
 
@@ -520,11 +521,9 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .features-section .section-card,
   .cashless-section .section-card,
   .faq-section .section-card{margin-left:12px;margin-right:12px}
-  /* Clip GSAP x-animations — só horizontal, não vertical */
-  .areas-section,.features-section,.cashless-section,.faq-section{overflow-x:clip}
-  /* Fix how-section accordion overflow do GSAP x:50 inicial — só horizontal */
-  .how-section{overflow-x:clip}
-  .how-inner{overflow-x:clip}
+  /* html/body já têm overflow-x:hidden — secções não precisam de clip extra */
+  /* Garantir que nenhum elemento "rompe" para fora nas secções */
+  .areas-section,.features-section,.cashless-section,.faq-section,.how-section{max-width:100vw}
 
   /* How it works */
   .how-inner{grid-template-columns:1fr;gap:24px}
@@ -1367,7 +1366,9 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
           <button class="btn-submit" onclick="submitForm()">Enviar mensagem <span>→</span></button>
         </div>
         <div class="form-success" id="form-success">
-          <div class="form-success-icon">✅</div>
+          <div class="form-success-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
           <h3>Mensagem enviada!</h3>
           <p>Obrigado pelo contacto. A equipa 2Ticket responderá em breve.</p>
         </div>
