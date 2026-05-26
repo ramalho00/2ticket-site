@@ -505,6 +505,18 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .feat-tab-desc{display:none}
   .feat-tab-pills{display:none}
   .feat-mobile-content{display:none!important}
+  /* Fix table overflow on mobile */
+  .feat-panel-card{overflow-x:auto}
+  .fp-table{font-size:11px;min-width:380px}
+  .fp-table thead th{font-size:9px;padding:8px 10px}
+  .fp-table tbody td{padding:9px 10px}
+  /* Members table: hide NIF column (too many cols) */
+  .feat-panel[data-panel="1"] .fp-table th:nth-child(3),
+  .feat-panel[data-panel="1"] .fp-table td:nth-child(3){display:none}
+  /* Section cards: small margin from screen edge */
+  .features-section .section-card,
+  .cashless-section .section-card,
+  .faq-section .section-card{margin-left:12px;margin-right:12px}
 
   /* How it works */
   .how-inner{grid-template-columns:1fr;gap:24px}
