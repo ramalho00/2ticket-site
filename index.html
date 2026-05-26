@@ -1355,11 +1355,11 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
       <div id="contact-form-wrap">
         <div class="contact-form" id="contact-form">
           <div class="form-row">
-            <div class="form-group"><label>Nome</label><input type="text" placeholder="O seu nome" id="f-name"></div>
-            <div class="form-group"><label>Organização</label><input type="text" placeholder="Clube / entidade" id="f-org"></div>
+            <div class="form-group"><label for="f-name">Nome</label><input type="text" placeholder="O seu nome" id="f-name"></div>
+            <div class="form-group"><label for="f-org">Organização</label><input type="text" placeholder="Clube / entidade" id="f-org"></div>
           </div>
-          <div class="form-group"><label>Email</label><input type="email" placeholder="email@exemplo.pt" id="f-email"></div>
-          <div class="form-group"><label>Tipo de evento</label>
+          <div class="form-group"><label for="f-email">Email</label><input type="email" placeholder="email@exemplo.pt" id="f-email"></div>
+          <div class="form-group"><label for="f-type">Tipo de evento</label>
             <select id="f-type">
               <option value="" disabled selected>Selecione uma opção</option>
               <option>Futebol / Desporto</option>
@@ -1369,7 +1369,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
               <option>Outro</option>
             </select>
           </div>
-          <div class="form-group"><label>Mensagem</label><textarea placeholder="Conte-nos mais sobre o seu projeto..." id="f-msg"></textarea></div>
+          <div class="form-group"><label for="f-msg">Mensagem</label><textarea placeholder="Conte-nos mais sobre o seu projeto..." id="f-msg"></textarea></div>
           <button class="btn-submit" onclick="submitForm()">Enviar mensagem <span>→</span></button>
         </div>
         <div class="form-success" id="form-success">
