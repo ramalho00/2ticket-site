@@ -479,7 +479,9 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
 @media(max-width:768px){
   /* General spacing */
   .areas-section,.features-section,.cashless-section,.faq-section{padding:72px 16px}
-  .how-section,.contact-section,.clients-section{padding:88px 0 100px;border-radius:24px 24px 0 0;margin-top:-48px}
+  .how-section,.contact-section{padding:88px 0 100px;border-radius:24px 24px 0 0;margin-top:-48px}
+  /* Clientes sobrepõe menos para não cortar o cashless card */
+  .clients-section{padding:88px 0 100px;border-radius:24px 24px 0 0;margin-top:-24px}
   footer{padding:52px 0 28px}
 
   /* Hero */
@@ -534,10 +536,9 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .cashless-inner{grid-template-columns:1fr;gap:0}
   .cashless-section::before{display:none}
   .cashless-left{display:none}
-  .cashless-mobile-header{display:block;margin-bottom:16px}
-  .cashless-section .section-card{padding-top:28px;padding-bottom:40px}
-  /* Card branco cobre o fundo cinza até à secção escura */
-  .cashless-section .section-card{padding-bottom:40px}
+  .cashless-mobile-header{display:block;margin-bottom:8px}
+  /* padding-top pequeno + padding-bottom suficiente para o clientes não cortar (margin-top:-24px) */
+  .cashless-section .section-card{padding-top:20px;padding-bottom:48px}
   .cashless-section{padding-bottom:0}
   .features-section{padding-bottom:120px}
   .faq-section .section-card{padding-bottom:40px}
@@ -1185,8 +1186,8 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
     <div class="cashless-right">
       <div class="cashless-mobile-header">
         <span class="section-tag">Cashless</span>
-        <h2 style="margin-top:12px">Pagamentos sem <em>complicações</em></h2>
-        <p class="section-sub" style="margin-top:10px;margin-bottom:16px">Pulseiras NFC com o teu branding. O público carrega e consome; tu monitorizas tudo em tempo real.</p>
+        <h2 style="margin-top:6px;margin-bottom:6px">Pagamentos sem <em>complicações</em></h2>
+        <p class="section-sub" style="margin-top:0;margin-bottom:0">Pulseiras NFC com o teu branding. O público carrega e consome; tu monitorizas tudo em tempo real.</p>
       </div>
       <div class="cashless-flow-step" data-aos="fade-up" data-aos-delay="0">
         <div class="cashless-step-icon">
