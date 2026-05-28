@@ -769,9 +769,6 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
     0 0 0 1px rgba(24,116,239,.28),
     inset 0 0 48px rgba(24,116,239,.06) !important;
 }
-.cashless-flow-step:hover {
-  box-shadow: 0 10px 36px rgba(24,116,239,.16) !important;
-}
 
 /* ═══════════════════════════════════════
    NUMBER FONT TABULAR
@@ -1172,9 +1169,11 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
 
 <!-- CASHLESS -->
 <section class="cashless-section" id="cashless">
+  <div class="section-card">
   <div class="wrap cashless-inner">
     <!-- LEFT: sticky copy -->
     <div class="cashless-left" data-aos="fade-right">
+      <span class="section-tag">Cashless</span>
       <h2 style="margin-top:12px">Pagamentos sem <em>complicações</em></h2>
       <p class="section-sub">Pulseiras NFC personalizadas com a identidade do evento. O público carrega saldo, consome, e o organizador monitoriza tudo — em tempo real, com o nosso sistema do início ao fim.</p>
       <a href="#contactos" class="cashless-cta">Saber mais →</a>
@@ -1220,6 +1219,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
       </div>
     </div>
   </div>
+  </div><!-- /section-card -->
 </section>
 
 <!-- CLIENTS -->
@@ -1551,6 +1551,7 @@ mm.add('(max-width: 768px)', () => {
 });
 gsap.from('.cashless-flow-step', {
   y: 50, opacity: 0, duration: 0.8, stagger: 0.14, ease: 'power3.out',
+  clearProps: 'transform',
   scrollTrigger: { trigger: '.cashless-right', start: 'top 83%' }
 });
 
