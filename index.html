@@ -1580,19 +1580,6 @@ gsap.from('.faq-item', {
   scrollTrigger: { trigger: '.faq-list', start: 'top 86%' }
 });
 
-// ── Section card 3D tilt (GSAP powered) ──
-document.querySelectorAll('.section-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    const dx = (e.clientX - (r.left + r.width/2))  / (r.width/2);
-    const dy = (e.clientY - (r.top  + r.height/2)) / (r.height/2);
-    gsap.to(card, { rotationX: -dy*1.4, rotationY: dx*1.4, transformPerspective: 2400, y: -4, duration: 0.4, ease: 'power2.out' });
-  });
-  card.addEventListener('mouseleave', () => {
-    gsap.to(card, { rotationX: 0, rotationY: 0, y: 0, duration: 0.7, ease: 'power3.out' });
-  });
-});
-
 // ── Area cards mouse spotlight ──
 document.querySelectorAll('.area-card').forEach(card => {
   card.addEventListener('mousemove', e => {
