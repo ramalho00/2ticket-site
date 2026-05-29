@@ -145,7 +145,7 @@ nav.scrolled .hamburger span{background:#0a0f1e}
 .areas-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(24,116,239,.07) 0%,transparent 70%);pointer-events:none;z-index:0}
 .areas-header{text-align:center;margin-bottom:60px;position:relative;z-index:1}
 .areas-header .section-sub{margin:16px auto 0}
-.areas-bento{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:280px 280px;gap:14px;position:relative;z-index:1}
+.areas-bento{display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:280px 280px;gap:14px;position:relative;z-index:1;max-width:var(--container);margin:0 auto;padding:0 var(--gutter)}
 .area-card{position:relative;border-radius:22px;overflow:hidden;cursor:pointer;border:1px solid rgba(0,0,0,.1);transition:transform .5s cubic-bezier(.23,1,.32,1),box-shadow .5s cubic-bezier(.23,1,.32,1),border-color .4s}
 .area-card--tall{grid-row:1/3}
 .area-card::before{content:'';position:absolute;inset:0;z-index:3;background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,transparent 50%);opacity:0;transition:opacity .4s;pointer-events:none}
@@ -492,7 +492,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .hero-badge{font-size:11px;padding:5px 14px}
 
   /* Areas */
-  .areas-bento{grid-template-columns:1fr 1fr;grid-template-rows:160px 160px 160px;gap:10px}
+  .areas-bento{grid-template-columns:1fr 1fr;grid-template-rows:160px 160px 160px;gap:10px;padding:0}
   .area-card--tall{grid-row:1/3}
   .area-card-title{font-size:17px}
   .area-card-desc{display:none}
@@ -538,12 +538,9 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .cashless-left{display:none}
   .cashless-mobile-header{display:block;margin-bottom:16px}
   .cashless-section .section-card{padding-top:24px;padding-bottom:48px}
-  .cashless-section{padding:120px 0 180px}
+  .cashless-section{padding-bottom:80px}
   .features-section{padding-bottom:80px}
   .faq-section{padding-bottom:80px}
-  .faq-section{padding-bottom:0}
-  /* How section needs extra bottom padding before cashless */
-  .how-section{padding-bottom:100px!important}
 
   /* Clients */
   .clients-stats{gap:24px;flex-wrap:wrap;justify-content:center;padding:20px 16px}
@@ -581,7 +578,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .hero-eyebrow{font-size:12px}
 
   /* Areas: single column */
-  .areas-bento{grid-template-columns:1fr;grid-template-rows:auto;gap:10px}
+  .areas-bento{grid-template-columns:1fr;grid-template-rows:auto;gap:10px;padding:0}
   .area-card--tall{grid-row:auto;height:200px}
   .area-card{height:180px}
 
@@ -850,7 +847,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
     <h2 style="margin-top:12px">As áreas onde <em>atuamos</em></h2>
     <p class="section-sub">Da bilheteira de futebol às feiras populares — uma plataforma para tudo.</p>
   </div>
-  <div class="areas-bento wrap" id="areas-bento">
+  <div class="areas-bento" id="areas-bento">
     <div class="area-card area-card--tall" data-aos="fade-right" data-aos-duration="800">
       <img class="area-card-img" src="cadeiras 24.png" alt="Estádios">
       <div class="area-card-grad"></div>
