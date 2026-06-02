@@ -472,6 +472,59 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
 }
 
 /* ═══════════════════════════════════════
+   RESPONSIVE — TABLET / iPAD (769px–1024px)
+═══════════════════════════════════════ */
+@media(min-width:769px) and (max-width:1024px){
+  /* Hero */
+  .hero{padding:120px 32px 80px}
+  .hero h1{font-size:clamp(40px,6vw,58px)}
+  .hero-sub{font-size:16px}
+
+  /* Light sections padding */
+  .areas-section,.features-section,.cashless-section,.faq-section{padding:72px 24px}
+  .features-section{padding-bottom:88px}
+  .cashless-section{padding-bottom:88px}
+  .faq-section{padding-bottom:88px}
+
+  /* Dark sections: keep 40px border-radius, reduce margin overlap */
+  .how-section,.contact-section{padding:88px 0 100px;border-radius:32px 32px 0 0;margin-top:-40px}
+  .clients-section{padding:88px 0 100px;border-radius:32px 32px 0 0;margin-top:-24px}
+
+  /* Section cards: small side margin */
+  .features-section .section-card,
+  .cashless-section .section-card,
+  .faq-section .section-card{margin-left:8px;margin-right:8px}
+
+  /* Areas bento — already 2-col via 1024px rule, just fine-tune */
+  .areas-bento{grid-template-rows:200px 200px 200px;gap:12px}
+
+  /* Features: narrower nav so panel has more room */
+  .features-inner{grid-template-columns:240px 1fr;gap:24px}
+
+  /* How it works: show vc panel but smaller */
+  .how-inner{gap:32px}
+  .how-vc{position:sticky;top:100px}
+  .how-vc-stat-val{font-size:24px}
+
+  /* Cashless: keep 2 columns, reduce gap */
+  .cashless-inner{grid-template-columns:1fr 1fr;gap:40px}
+  .cashless-left{position:sticky;top:100px}
+  .cashless-mobile-header{display:none}
+
+  /* Clients */
+  .clients-stats{gap:28px}
+  .clients-stat-num{font-size:40px}
+
+  /* Contact: keep 2 columns, reduce gap */
+  .contact-inner{grid-template-columns:1fr 1.3fr;gap:48px}
+  .contact-left{position:static}
+  .contact-left-title{font-size:clamp(24px,4vw,36px)}
+
+  /* Footer */
+  .footer-top{grid-template-columns:1fr 1fr;gap:28px}
+}
+
+/* ═══════════════════════════════════════
    RESPONSIVE — MOBILE (≤768px)
 ═══════════════════════════════════════ */
 @media(max-width:768px){
