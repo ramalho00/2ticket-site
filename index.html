@@ -506,9 +506,13 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .features-inner{grid-template-columns:240px 1fr;gap:24px}
 
   /* How it works: show vc panel but smaller */
+  .how-section-header{margin-bottom:40px}
   .how-inner{gap:32px}
   .how-vc{position:sticky;top:100px}
   .how-vc-stat-val{font-size:24px}
+  .how-vc-row{grid-template-columns:1fr;gap:8px}
+  .how-acc-header{padding:20px 22px}
+  .how-acc-body p{font-size:13px}
 
   /* Cashless: keep 2 columns, reduce gap */
   .cashless-inner{grid-template-columns:1fr 1fr;gap:40px}
@@ -585,8 +589,15 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .areas-section,.features-section,.cashless-section,.faq-section,.how-section{max-width:100vw}
 
   /* How it works */
-  .how-inner{grid-template-columns:1fr;gap:24px}
+  .how-section-header{margin-bottom:28px}
+  .how-inner{grid-template-columns:1fr;gap:0;padding:0 16px}
   .how-vc{position:static;display:none}
+  .how-acc-wrap{padding:0}
+  .how-acc-item{border-radius:12px}
+  .how-acc-header{padding:18px 20px}
+  .how-acc-body p{padding:0 20px 14px}
+  .how-acc-tags{padding:0 20px 14px}
+  .how-acc-cta{margin:0 20px 16px}
 
   /* Cashless: esconde coluna esquerda no mobile, mostra só header+steps */
   .cashless-inner{grid-template-columns:1fr;gap:0}
