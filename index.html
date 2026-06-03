@@ -368,7 +368,8 @@ nav.scrolled .hamburger span{background:#0a0f1e}
 .faq-q{font-size:15px;font-weight:600;flex:1;text-align:left}
 .faq-icon{font-size:20px;color:var(--muted);transition:transform .3s;line-height:1;flex-shrink:0}
 .faq-item.open .faq-icon{transform:rotate(45deg);color:var(--blue)}
-.faq-body{overflow:hidden;height:0;transition:height .4s ease}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-item.open .faq-body{max-height:200px}
 .faq-a{padding:0 24px 20px;font-size:14px;color:var(--muted);line-height:1.7}
 
 /* ═══════════════════════════════════════
@@ -1710,25 +1711,14 @@ function activateFeat(idx) {
 featTabs.forEach((tab,i) => tab.addEventListener('click', ()=>activateFeat(i)));
 setTimeout(()=>animatePanel(0), 800);
 
-function setFaqHeight(item, open) {
-  const body = item.querySelector('.faq-body');
-  if (open) {
-    body.style.height = body.scrollHeight + 'px';
-    item.classList.add('open');
-  } else {
-    body.style.height = body.scrollHeight + 'px';
-    requestAnimationFrame(() => { body.style.height = '0'; });
-    item.classList.remove('open');
-  }
-}
 document.querySelectorAll('.faq-item').forEach(item => {
   item.querySelector('.faq-header').addEventListener('click', () => {
     const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => setFaqHeight(i, false));
-    if (!isOpen) setFaqHeight(item, true);
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
   });
 });
-(()=>{ const first = document.querySelector('.faq-item'); if(first) setFaqHeight(first, true); })();
+document.querySelector('.faq-item')?.classList.add('open');
 
 function submitForm() {
   const name=document.getElementById('f-name')?.value.trim();
