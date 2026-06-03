@@ -391,7 +391,7 @@ nav.scrolled .hamburger span{background:#0a0f1e}
 .contact-info-text{font-size:14px;font-weight:600;color:#ffffff}
 .contact-social{display:flex;gap:12px;margin-top:32px}
 .contact-social-link{width:42px;height:42px;border-radius:12px;background:rgba(24,116,239,.15);border:1px solid rgba(24,116,239,.35);display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s,transform .2s}
-.contact-social-link:hover{background:rgba(24,116,239,.35);border-color:rgba(24,116,239,.7);transform:translateY(-2px)}
+.contact-social-link:hover{background:rgba(24,116,239,.35);border-color:rgba(24,116,239,.7)}
 .contact-social-link svg{width:18px;height:18px;color:#7ab8ff}
 /* form card */
 .contact-right{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:36px}
@@ -407,8 +407,8 @@ nav.scrolled .hamburger span{background:#0a0f1e}
 .form-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237ab8ff' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
 .form-group select option{background:#0a0f1e;color:#ffffff}
 .form-group textarea{resize:vertical;min-height:110px;line-height:1.6}
-.btn-submit{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--blue);color:white;font-size:15px;font-weight:600;font-family:'Work Sans',sans-serif;padding:16px 32px;border-radius:14px;transition:box-shadow .3s,transform .25s,background .2s;margin-top:6px;position:relative;overflow:hidden}
-.btn-submit:hover{box-shadow:0 0 40px rgba(24,116,239,.6);transform:translateY(-2px);background:#1565d8}
+.btn-submit{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:var(--blue);color:white;font-size:15px;font-weight:600;font-family:'Work Sans',sans-serif;padding:16px 32px;border-radius:14px;transition:box-shadow .3s,background .2s;margin-top:6px;position:relative;overflow:hidden}
+.btn-submit:hover{box-shadow:0 6px 24px rgba(24,116,239,.45);background:#1565d8}
 .form-success{display:none;text-align:center;padding:56px 24px}
 .form-success-icon{width:64px;height:64px;border-radius:50%;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:#10b981}
 .form-success-icon svg{width:28px;height:28px}
@@ -1743,7 +1743,7 @@ document.querySelectorAll('.btn-submit,.hero-cta,.btn-nav').forEach(btn=>{
   btn.addEventListener('click',e=>{ const r=btn.getBoundingClientRect(),size=Math.max(r.width,r.height),el=document.createElement('span'); el.className='btn-ripple'; el.style.cssText=`width:${size}px;height:${size}px;left:${e.clientX-r.left-size/2}px;top:${e.clientY-r.top-size/2}px`; btn.appendChild(el); setTimeout(()=>el.remove(),600); });
 });
 
-document.querySelectorAll('.hero-cta,.btn-submit').forEach(btn=>{
+document.querySelectorAll('.hero-cta').forEach(btn=>{
   btn.addEventListener('mousemove',e=>{ const r=btn.getBoundingClientRect(); btn.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.2}px,${(e.clientY-r.top-r.height/2)*.3-2}px)`; });
   btn.addEventListener('mouseleave',()=>btn.style.transform='');
 });
