@@ -368,8 +368,9 @@ nav.scrolled .hamburger span{background:#0a0f1e}
 .faq-q{font-size:15px;font-weight:600;flex:1;text-align:left}
 .faq-icon{font-size:20px;color:var(--muted);transition:transform .3s;line-height:1;flex-shrink:0}
 .faq-item.open .faq-icon{transform:rotate(45deg);color:var(--blue)}
-.faq-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
-.faq-item.open .faq-body{max-height:300px}
+.faq-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+.faq-body .faq-a{overflow:hidden;min-height:0}
+.faq-item.open .faq-body{grid-template-rows:1fr}
 .faq-a{padding:0 24px 20px;font-size:14px;color:var(--muted);line-height:1.7}
 
 /* ═══════════════════════════════════════
