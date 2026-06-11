@@ -574,12 +574,18 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:72px
   .area-card-content{padding:16px}
   .area-card-tag{opacity:1;transform:translateY(0)}
 
-  /* Features: single column, panel shows below tabs */
-  .features-inner{grid-template-columns:1fr;gap:16px}
-  .features-nav{position:static;gap:8px}
-  .features-panel{display:block!important;padding-left:0;position:static}
-  .feat-tab{border-color:var(--border)!important;padding:16px}
+  /* Features: accordion — cada painel aparece logo por baixo do seu separador */
+  .features-inner{grid-template-columns:1fr;gap:0}
+  .features-nav{position:static;gap:10px}
+  .features-panel{display:contents!important;padding-left:0;position:static}
+  .feat-tab{border-color:var(--border)!important;padding:16px 18px;align-items:center}
   .feat-tab.active{border-color:var(--border-hi)!important;background:rgba(24,116,239,.08)}
+  /* seta indicadora de expansão */
+  .feat-tab::after{content:'+';margin-left:auto;font-size:22px;line-height:1;color:var(--muted2);font-weight:300;transition:transform .3s,color .3s}
+  .feat-tab.active::after{transform:rotate(45deg);color:var(--blue)}
+  .feat-tab-body{flex:1}
+  /* painel encostado ao separador activo */
+  .feat-panel{margin:-2px 0 4px}
   .feat-tab-desc{display:none}
   .feat-tab-pills{display:none}
   .feat-mobile-content{display:none!important}
@@ -1722,6 +1728,25 @@ function activateFeat(idx) {
   setTimeout(()=>animatePanel(idx),100);
 }
 featTabs.forEach((tab,i) => tab.addEventListener('click', ()=>activateFeat(i)));
+
+// ── Mobile: transforma os separadores num acordeão (painel logo por baixo do seu separador) ──
+(function(){
+  const featNav = document.querySelector('.features-nav');
+  const featPanelWrap = document.querySelector('.features-panel');
+  const tabsArr = [...featTabs];
+  const panelsArr = [...featPanels];
+  const mqFeat = window.matchMedia('(max-width:768px)');
+  function layoutFeatures(){
+    if (mqFeat.matches) {
+      tabsArr.forEach((tab,i) => tab.insertAdjacentElement('afterend', panelsArr[i]));
+    } else {
+      panelsArr.forEach(p => featPanelWrap.appendChild(p));
+    }
+  }
+  layoutFeatures();
+  mqFeat.addEventListener('change', layoutFeatures);
+})();
+
 setTimeout(()=>animatePanel(0), 800);
 
 document.querySelectorAll('.faq-item').forEach(item => {
